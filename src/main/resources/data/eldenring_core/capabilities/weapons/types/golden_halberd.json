@@ -1,0 +1,22 @@
+{
+  "category": "spear",
+  "usable_in_offhand": false,
+  "hit_particle": "epicfight:hit_blunt",
+  "swing_sound": "epicfight:entity.weapon.whoosh_rod",
+  "hit_sound": "epicfight:entity.hit.blunt",
+  "collider": { "number": 3, "size": [0.4, 0.4, 1.4], "center": [0.0, 0.0, -1.4] },
+  "styles": { "default": "two_hand" },
+  "combos": {
+    "two_hand": ["epicfight:biped/combat/spear_twohand_auto1", "epicfight:biped/combat/axe_auto1", "epicfight:biped/combat/spear_twohand_auto2", "epicfight:biped/combat/spear_dash", "epicfight:biped/combat/spear_twohand_airslash"],
+    "mount": ["epicfight:biped/combat/spear_mount_attack"]
+  },
+  "livingmotion_modifier": {
+    "two_hand": {
+      "idle": "epicfight:biped/living/hold_spear",
+      "walk": "epicfight:biped/living/walk_spear",
+      "run": "epicfight:biped/living/run_spear",
+      "chase": "epicfight:biped/living/run_spear",
+      "block": "epicfight:biped/skill/guard_spear"
+    }
+  }
+}

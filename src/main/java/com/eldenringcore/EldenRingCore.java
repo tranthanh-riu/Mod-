@@ -38,6 +38,7 @@ public class EldenRingCore {
         ModWorldgen.BIOME_SOURCES.register(modEventBus);
 
         modEventBus.addListener(this::registerAttributes);
+        modEventBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> event.enqueueWork(com.eldenringcore.network.ModNetwork::register));
 
         MinecraftForge.EVENT_BUS.register(new StatusBuildupManager());
         MinecraftForge.EVENT_BUS.register(new RegionDifficultyManager());

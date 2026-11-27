@@ -1,5 +1,5 @@
 {
-  "type": "epicfight:greatsword",
+  "type": "eldenring_core:starscourge_greatsword",
   "attributes": {
     "common": {
       "armor_negation": 28.0,

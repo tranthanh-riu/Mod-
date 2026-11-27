@@ -58,24 +58,42 @@ public class EldenWeaponItem extends SwordItem {
         return super.hurtEnemy(stack, target, attacker);
     }
 
+    /**
+     * Right-click: in Epic Fight's battle mode right-click is Guard, so the Ash of War is cast with
+     * Epic Fight's "Weapon Innate Skill" key instead (see AshOfWarKeyHandler). In vanilla/mining mode
+     * right-click still casts it.
+     */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (this.ashOfWar == AshOfWarType.NONE || player.getCooldowns().isOnCooldown(this)) {
+        if (this.ashOfWar == AshOfWarType.NONE || player.getCooldowns().isOnCooldown(this)
+                || EpicFightAshAnimations.isBattleMode(player)) {
             return InteractionResultHolder.pass(stack);
         }
-
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-            float fpCost = getAshFpCost(player);
-            if (!FocusPointsManager.tryConsumeFp(player, fpCost)) {
+            if (!activateAshOfWar(serverLevel, player, stack)) {
                 return InteractionResultHolder.fail(stack);
             }
-            float dmgMult = WeaponUpgradeManager.getAshDamageMultiplier(stack);
-            int cooldownTicks = executeAshOfWar(serverLevel, player, dmgMult);
-            player.getCooldowns().addCooldown(this, cooldownTicks);
         }
         player.swing(hand);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+    }
+
+    /** Casts this weapon's Ash of War (server side): FP, cooldown, Epic Fight animation and effect. */
+    public boolean activateAshOfWar(ServerLevel level, Player player, ItemStack stack) {
+        if (this.ashOfWar == AshOfWarType.NONE || player.getCooldowns().isOnCooldown(this)) {
+            return false;
+        }
+        float fpCost = getAshFpCost(player);
+        if (!FocusPointsManager.tryConsumeFp(player, fpCost)) {
+            return false;
+        }
+        int stage = AshOfWarComboManager.getActiveComboStage(player, this.ashOfWar);
+        EpicFightAshAnimations.play(player, this.ashOfWar, stage, player.isShiftKeyDown());
+        float dmgMult = WeaponUpgradeManager.getAshDamageMultiplier(stack);
+        int cooldownTicks = executeAshOfWar(level, player, dmgMult);
+        player.getCooldowns().addCooldown(this, cooldownTicks);
+        return true;
     }
 
     protected float getAshFpCost(Player player) {

@@ -1,0 +1,22 @@
+{
+  "category": "uchigatana",
+  "usable_in_offhand": false,
+  "hit_particle": "epicfight:hit_blade",
+  "swing_sound": "epicfight:entity.weapon.whoosh_sharp",
+  "hit_sound": "epicfight:entity.hit.blade",
+  "collider": { "number": 3, "size": [0.4, 0.4, 1.0], "center": [0.0, 0.0, -1.0] },
+  "styles": { "default": "two_hand" },
+  "combos": {
+    "two_hand": ["epicfight:biped/combat/uchigatana_sheath_auto", "epicfight:biped/combat/uchigatana_auto1", "epicfight:biped/combat/uchigatana_auto3", "epicfight:biped/combat/uchigatana_sheath_dash", "epicfight:biped/combat/uchigatana_sheath_airslash"],
+    "mount": ["epicfight:biped/combat/sword_mount_attack"]
+  },
+  "livingmotion_modifier": {
+    "two_hand": {
+      "idle": "epicfight:biped/living/hold_uchigatana_sheath",
+      "walk": "epicfight:biped/living/walk_uchigatana_sheath",
+      "run": "epicfight:biped/living/run_uchigatana_sheath",
+      "chase": "epicfight:biped/living/run_uchigatana_sheath",
+      "block": "epicfight:biped/skill/guard_uchigatana"
+    }
+  }
+}

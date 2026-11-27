@@ -1,0 +1,22 @@
+{
+  "category": "tachi",
+  "usable_in_offhand": false,
+  "hit_particle": "epicfight:eviscerate",
+  "swing_sound": "epicfight:entity.weapon.whoosh_small",
+  "hit_sound": "epicfight:entity.hit.blade",
+  "collider": { "number": 3, "size": [0.4, 0.4, 1.0], "center": [0.0, 0.0, -1.0] },
+  "styles": { "default": "two_hand" },
+  "combos": {
+    "two_hand": ["epicfight:biped/combat/tachi_auto1", "epicfight:biped/combat/sword_auto2", "epicfight:biped/combat/sword_auto3", "epicfight:biped/combat/sword_auto4", "epicfight:biped/combat/tachi_auto3", "epicfight:biped/combat/sword_dash", "epicfight:biped/combat/longsword_airslash"],
+    "mount": ["epicfight:biped/combat/sword_mount_attack"]
+  },
+  "livingmotion_modifier": {
+    "two_hand": {
+      "idle": "epicfight:biped/living/hold_tachi",
+      "walk": "epicfight:biped/living/walk_longsword",
+      "run": "epicfight:biped/living/run_longsword",
+      "chase": "epicfight:biped/living/run_longsword",
+      "block": "epicfight:biped/skill/guard_longsword"
+    }
+  }
+}

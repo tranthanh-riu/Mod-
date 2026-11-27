@@ -1,5 +1,5 @@
 {
-  "type": "epicfight:greatsword",
+  "type": "eldenring_core:dark_moon_greatsword",
   "attributes": {
     "common": {
       "armor_negation": 24.0,
