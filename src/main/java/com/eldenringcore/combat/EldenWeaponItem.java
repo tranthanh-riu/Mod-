@@ -59,11 +59,19 @@ public class EldenWeaponItem extends SwordItem {
         }
 
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+            float fpCost = getAshFpCost(player);
+            if (!FocusPointsManager.tryConsumeFp(player, fpCost)) {
+                return InteractionResultHolder.fail(stack);
+            }
             executeAshOfWar(serverLevel, player);
             player.getCooldowns().addCooldown(this, getAshCooldownTicks());
         }
         player.swing(hand);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+    }
+
+    protected float getAshFpCost(Player player) {
+        return this.ashOfWar.getBaseFpCost();
     }
 
     private int getAshCooldownTicks() {
@@ -132,6 +140,8 @@ public class EldenWeaponItem extends SwordItem {
         if (this.ashOfWar != AshOfWarType.NONE) {
             tooltip.add(Component.literal("Ash of War: " + this.ashOfWar.name().replace('_', ' '))
                     .withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.literal("FP Cost: " + (int) this.ashOfWar.getBaseFpCost())
+                    .withStyle(ChatFormatting.AQUA));
         }
         if (this.statusType != StatusEffectType.NONE) {
             tooltip.add(Component.literal("Status Build-up: " + this.statusType.name() + " (" + (int) this.statusBuildup + ")")
