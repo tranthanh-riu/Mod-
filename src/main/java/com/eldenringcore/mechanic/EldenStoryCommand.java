@@ -39,7 +39,7 @@ public class EldenStoryCommand {
                     if (ctx.getSource().getEntity() instanceof ServerPlayer player) {
                         ServerLevel landsBetween = player.server.getLevel(ModWorldgen.LANDS_BETWEEN_LEVEL);
                         if (landsBetween == null) {
-                            ctx.getSource().sendFailure(Component.literal("Chưa nạp được Dimension eldenring_core:lands_between! Hãy tạo thế giới mới (New World) để nạp 7 vùng đất Elden Ring."));
+                            ctx.getSource().sendFailure(Component.literal("Chưa có Dimension eldenring_core:lands_between. 7 vùng đất chỉ có trong modpack Elden Ring Core (cần Terralith + Open Loader); hãy chơi bằng modpack và tạo thế giới mới."));
                             return 0;
                         }
                         String dim = ModWorldgen.LANDS_BETWEEN_LEVEL.location().toString();

@@ -198,7 +198,7 @@ def stage2_headless_server_test():
         env["JAVA_HOME"] = JAVA17
         env["PATH"] = os.path.join(JAVA17, "bin") + os.pathsep + env.get("PATH", "")
 
-    cmd = [os.path.join(ROOT, "gradlew.bat"), "runServer", "--no-daemon", "--offline"]
+    cmd = [os.path.join(ROOT, "gradlew.bat"), "runServer", "--no-daemon", "-Pmodpack"]
     print("[INFO] Launching headless Forge 47.4.4 server with ALL 25 mods...")
     proc = subprocess.Popen(
         cmd,

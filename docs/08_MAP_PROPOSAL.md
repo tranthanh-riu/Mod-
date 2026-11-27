@@ -72,8 +72,7 @@ Các bản build Elden Ring miễn phí (block vanilla) tìm được trên Plan
 ```bash
 git fetch origin
 git checkout test/full-integration
-# Tải 22 mod miễn phí (Terralith, Cataclysm, Mowzie, Dungeons Arise...) vào libs_dev/
-python scripts/download_dev_mods.py
+# Không cần tải tay: play_test.bat chạy runClient -Pmodpack, Gradle tự tải đúng phiên bản trong modpack/mods.json
 # Chạy game (JDK 17)
 play_test.bat
 ```

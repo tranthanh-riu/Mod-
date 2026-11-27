@@ -70,7 +70,7 @@ Ngoài **13 Demigod Boss** tự làm của team, bản test đã cài thêm **5 
 ```bash
 git fetch origin
 git checkout test/full-integration
-python scripts/download_dev_mods.py   # Tự tải 22 mod miễn phí vào libs_dev/
+# Không cần tải tay: play_test.bat chạy runClient -Pmodpack, Gradle tự tải đúng phiên bản trong modpack/mods.json
 play_test.bat                         # Mở game test (dùng JDK 17)
 ```
 

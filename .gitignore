@@ -9,3 +9,4 @@ libs_dev/
 *.iml
 .vscode/
 *.log
+modpack/dist/

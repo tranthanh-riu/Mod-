@@ -56,9 +56,6 @@ mixin {
 
 repositories {
     mavenCentral()
-    flatDir {
-        dirs 'libs_dev'
-    }
     maven {
         name = 'GeckoLib'
         url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
@@ -92,13 +89,13 @@ dependencies {
     // Epic Fight (required): Souls-like stamina, roll, guard and animations
     implementation fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
 
-    // Local dev runtime mods in libs_dev/ (auto-loaded if present & deobfuscated by ForgeGradle)
-    // Teammates can run: python scripts/download_dev_mods.py to fetch all 22 free Modrinth jars
-    def libsDevDir = file('libs_dev')
-    if (libsDevDir.exists() && libsDevDir.isDirectory()) {
-        libsDevDir.listFiles()?.findAll { it.name.endsWith('.jar') }?.sort { it.name }?.each { jarFile ->
-            def baseName = jarFile.name.substring(0, jarFile.name.length() - 4)
-            runtimeOnly fg.deobf("local:${baseName}:1.0")
+    // Modpack mods (Terralith, structure and boss mods, Open Loader...) for runClient/runServer.
+    // Pinned in modpack/mods.json, fetched from Modrinth maven. Off by default so a plain
+    // build stays fast; turn on with: .\gradlew.bat runClient -Pmodpack
+    if (project.hasProperty('modpack')) {
+        def modpackSpec = new groovy.json.JsonSlurper().parse(file('modpack/mods.json'))
+        modpackSpec.mods.findAll { !(it.slug in ['epic-fight', 'geckolib']) }.each { m ->
+            runtimeOnly fg.deobf("maven.modrinth:${m.project_id}:${m.version_id}")
         }
     }
 
@@ -144,4 +141,14 @@ tasks.named('jar', Jar).configure {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+// With -Pmodpack, copy the modpack's overrides (Open Loader worldgen datapack, configs) into run/
+// so runClient/runServer play exactly like the published modpack.
+if (project.hasProperty('modpack')) {
+    def syncModpackOverrides = tasks.register('syncModpackOverrides', Copy) {
+        from 'modpack/overrides'
+        into 'run'
+    }
+    tasks.matching { it.name.startsWith('prepareRun') }.configureEach { dependsOn syncModpackOverrides }
 }
