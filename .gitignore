@@ -4,6 +4,8 @@ run/
 out/
 reference/*.jar
 reference/*.zip
+reference/elden_maps/
+reference/elden_schematics/
 libs_dev/
 .idea/
 *.iml
