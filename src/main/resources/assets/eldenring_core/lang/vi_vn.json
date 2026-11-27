@@ -12,5 +12,8 @@
   "block.eldenring_core.site_of_grace": "Site of Grace",
   "block.eldenring_core.fog_gate": "Cổng Sương Vàng (Fog Gate)",
   "block.eldenring_core.boss_arena_controller": "Bộ Điều Khiển Đấu Trường Boss",
-  "message.eldenring_core.arena.configure": "[Đấu Trường Boss] Bấm để chỉnh lệnh đổi BossId."
+  "message.eldenring_core.arena.configure": "[Đấu Trường Boss] Bấm để chỉnh lệnh đổi BossId.",
+  "message.eldenring_core.runes.balance": "Runes: %s",
+  "message.eldenring_core.runes.granted": "%s hiện có %s Runes.",
+  "message.eldenring_core.runes.recovered": "Đã thu hồi %s Runes."
 }
