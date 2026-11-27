@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "eldenring_core:caelid",
+    "eldenring_core:mountaintops",
+    "eldenring_core:haligtree"
+  ]
+}

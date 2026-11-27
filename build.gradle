@@ -35,6 +35,7 @@ minecraft {
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
             arg '-mixin.config=eldenring_core.mixins.json'
+            jvmArgs '-Xmx4G'
         }
 
         server {
@@ -102,6 +103,18 @@ dependencies {
     runtimeOnly fg.deobf("local:YungsBetterDungeons-1.20-Forge-4.0.4:1.0")
     runtimeOnly fg.deobf("local:YungsBetterStrongholds-1.20-Forge-4.0.3:1.0")
     runtimeOnly fg.deobf("local:YungsBetterMineshafts-1.20-Forge-4.0.4:1.0")
+
+    // DawnCraft-style Field Bosses & Mega Boss Dungeons (free Modrinth 1.20.1 Forge)
+    runtimeOnly fg.deobf("local:curios-forge-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:lionfishapi-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:L_Enders_Cataclysm-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:mowziesmobs-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:CerbonsAPI-Forge-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:cloth-config-forge-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:BOMD-Forge-1.20.1-1.1.2:1.0")
+    runtimeOnly fg.deobf("local:villagerstradingplus-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:graveyard-forge-4.0.1:1.0")
+    runtimeOnly fg.deobf("local:born_in_chaos-1.20.1:1.0")
 
     // Mixin annotation processor
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
