@@ -1,7 +1,7 @@
 {
   "type": "eldenring_core:lands_between",
   "generator": {
-    "type": "minecraft:noise",
+    "type": "eldenring_core:lands_between",
     "settings": "minecraft:overworld",
     "biome_source": {
       "type": "eldenring_core:lands_between",

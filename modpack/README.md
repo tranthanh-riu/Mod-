@@ -37,3 +37,13 @@ Chơi chung: cùng một bản `.mrpack`, một người mở LAN (qua Radmin VP
 2. Nếu cần chỉnh worldgen cho mod đó, thêm file vào datapack trong `overrides/`.
 3. Chạy `runServer -Pmodpack` kiểm tra, **và** chạy `runServer` không có cờ để chắc mod một mình vẫn vào được.
 4. Tăng `version` trong `mods.json` trước khi phát hành bản mới.
+
+## Địa hình Lands Between (map riêng của nhóm)
+
+![Bản đồ](../docs/images/lands_between_terrain.png)
+
+- Lục địa do nhóm tự thiết kế, sinh bằng `tools/mapgen/MapGen.java` → `src/main/resources/eldenring_core_worldgen/height.png` (độ cao, 16-bit) + `regions.png` (7 vùng + biển + vách biển). 1 pixel = 4×4 block, phủ X/Z -4096..4095.
+- Trong game, `eldenring_core:lands_between` (chunk generator) lấy độ cao từ `height.png`; surface, hang, quặng, cây vẫn theo `minecraft:overworld` + biome Terralith. Biome source đọc `regions.png` nên biome luôn khớp địa hình.
+- Sửa map: chỉnh vùng/độ cao trong `MapGen.java` rồi chạy
+  `java tools/mapgen/MapGen.java src/main/resources/eldenring_core_worldgen` (JDK 17), xem `preview.png`, build lại. Có thể vẽ tay thẳng lên `height.png` bằng app chỉnh ảnh hỗ trợ 16-bit (giá trị = (Y + 64) × 64).
+- Thế giới cũ đã sinh chunk thì không đổi; cần tạo thế giới mới để thấy địa hình mới.

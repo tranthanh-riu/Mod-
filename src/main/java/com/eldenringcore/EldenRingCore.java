@@ -36,6 +36,7 @@ public class EldenRingCore {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         ModWorldgen.BIOME_SOURCES.register(modEventBus);
+        ModWorldgen.CHUNK_GENERATORS.register(modEventBus);
 
         modEventBus.addListener(this::registerAttributes);
 

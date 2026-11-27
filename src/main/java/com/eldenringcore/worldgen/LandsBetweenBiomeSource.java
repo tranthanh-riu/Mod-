@@ -101,47 +101,37 @@ public class LandsBetweenBiomeSource extends BiomeSource {
 
     @Override
     public Holder<Biome> getNoiseBiome(int quartX, int quartY, int quartZ, Climate.Sampler sampler) {
-        // Wrap coordinates across an 8192x8192 ocean-bordered archipelago tile:
-        // - Inside [-4096, +4096]: full ~4800x5600 Lands Between continent + wide ocean border.
-        // - Beyond +-4096: invisible ocean-seam repeat so /locate & Cataclysm Eyes never hang in infinite ocean.
-        double bx = wrapTile(quartX * 4.0, 8192.0);
-        double bz = wrapTile(quartZ * 4.0, 8192.0);
+        // Regions come from the painted map (tools/mapgen/MapGen.java), so biomes follow the terrain.
+        double bx = quartX * 4.0;
+        double bz = quartZ * 4.0;
         int blockY = quartY * 4;
 
-        // Smooth organic coastline warp
-        double warpX = Math.sin(bz * 0.0028) * 140.0 + Math.cos(bz * 0.0072) * 55.0;
-        double warpZ = Math.cos(bx * 0.0028) * 140.0 + Math.sin(bx * 0.0072) * 55.0;
-        double x = bx + warpX;
-        double z = bz + warpZ;
-
-        double bestScore = 0.0;
-        RegionBiomes chosen = null;
-
-        double s;
-        if ((s = ellipseScore(x, z, -500,  1200, 1050, 850)) > bestScore) { bestScore = s; chosen = this.limgrave; }
-        if ((s = ellipseScore(x, z, 1150,   950,  950, 800)) > bestScore) { bestScore = s; chosen = this.caelid; }
-        if ((s = ellipseScore(x, z,-1300,  -250,  950, 950)) > bestScore) { bestScore = s; chosen = this.liurnia; }
-        if ((s = ellipseScore(x, z,  100, -1150,  950, 800)) > bestScore) { bestScore = s; chosen = this.altusPlateau; }
-        if ((s = ellipseScore(x, z,-1300, -1600,  780, 680)) > bestScore) { bestScore = s; chosen = this.mtGelmir; }
-        if ((s = ellipseScore(x, z, 1400, -1750,  950, 820)) > bestScore) { bestScore = s; chosen = this.mountaintops; }
-        if ((s = ellipseScore(x, z,    0, -2450,  680, 580)) > bestScore) { bestScore = s; chosen = this.haligtree; }
-
-        if (chosen == null) {
+        LandsBetweenMap map = LandsBetweenMap.get();
+        int id = map.region(bx, bz);
+        if (id == LandsBetweenMap.OCEAN) {
             return this.ocean;
         }
+        if (id == LandsBetweenMap.COAST) {
+            return blockY < 32 ? this.limgrave.cave() : this.coast;
+        }
+        RegionBiomes chosen = switch (id) {
+            case LandsBetweenMap.LIURNIA -> this.liurnia;
+            case LandsBetweenMap.CAELID -> this.caelid;
+            case LandsBetweenMap.ALTUS -> this.altusPlateau;
+            case LandsBetweenMap.GELMIR -> this.mtGelmir;
+            case LandsBetweenMap.MOUNTAINTOPS -> this.mountaintops;
+            case LandsBetweenMap.HALIGTREE -> this.haligtree;
+            default -> this.limgrave;
+        };
 
-        // Authentic 3D Underground Realms (Siofra River, Lake of Rot, Deeproot Depths, Volcano Depths, Giants' Catacombs)
-        if (blockY < 32) {
+        // Underground realms: well below the painted surface (and under Y 32).
+        if (blockY < 32 && blockY < map.surfaceY(bx, bz) - 24) {
             return chosen.cave();
         }
 
-        // Scenic coastal cliff rim along the ocean edge of Limgrave / Caelid / Liurnia
-        if (bestScore < 0.065 && (chosen == this.limgrave || chosen == this.liurnia)) {
-            return this.coast;
-        }
-
-        // Core center around each region's Site of Grace stays the iconic signature biome
-        if (bestScore > 0.72) {
+        // The area around each region's Site of Grace stays the signature biome.
+        double[] c = CENTRES[id];
+        if (Math.hypot(bx - c[0], bz - c[1]) < 320) {
             return chosen.main();
         }
 
@@ -156,16 +146,9 @@ public class LandsBetweenBiomeSource extends BiomeSource {
         return chosen.main();
     }
 
-    private static double wrapTile(double coord, double size) {
-        double half = size * 0.5;
-        double shifted = (coord + half) % size;
-        if (shifted < 0) shifted += size;
-        return shifted - half;
-    }
-
-    private static double ellipseScore(double x, double z, double cx, double cz, double rx, double rz) {
-        double dx = (x - cx) / rx;
-        double dz = (z - cz) / rz;
-        return 1.0 - Math.sqrt(dx * dx + dz * dz);
-    }
+    /** Site of Grace centre of each region, indexed by LandsBetweenMap region id. */
+    private static final double[][] CENTRES = {
+            {0, 0}, {-500, 1200}, {-1300, -250}, {1150, 950}, {100, -1150},
+            {-1300, -1600}, {1400, -1750}, {0, -2450}, {0, 0}
+    };
 }
