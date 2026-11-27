@@ -1,5 +1,6 @@
 package com.eldenringcore.boss;
 
+import com.eldenringcore.registry.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -7,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -15,11 +17,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Pilot Demigod Boss #1: Margit, the Fell Omen
- * Features:
- * - Signature Delayed Cane Overhead Slam (long telegraph to bait early rolls)
- * - Fast Golden Dagger Slash & Ranged Golden Dagger Throw
- * - Phase 2 (< 50% HP): Golden Hammer Leap AoE Slam & Holy Sword Combo
+ * Wave 1 Boss: Margit, the Fell Omen
+ * - Phase 1: Delayed Cane Overhead Slam, Quick Golden Dagger Slash, Tail Sweep, Ranged Golden Dagger Throw
+ * - Phase 2 (< 50% HP): Golden Hammer Leap AoE Slam, Holy Sword 3-Hit Combo
  */
 public class MargitEntity extends EldenBossEntity {
 
@@ -42,13 +42,23 @@ public class MargitEntity extends EldenBossEntity {
     }
 
     @Override
+    protected float getPhaseTwoThreshold() {
+        return 0.6f; // Authentic Elden Ring: Margit pulls out the Golden Hammer at 60% HP
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.WAX_ON;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "GREAT ENEMY FELLED";
     }
 
     @Override
     protected void initMoveset() {
-        // 1. Signature Delayed Cane Overhead Slam (24 ticks = 1.2s delay!)
+        // 1. Signature Delayed Cane Overhead Slam (24 ticks = 1.2s delay to bait early rolls)
         this.moveset.add(new BossAttackMove(
                 "delayed_cane_slam", "animation.margit.delayed_slam",
                 24, 6, 18, 0.0, 4.5, 16.0f, false, 35,
@@ -72,7 +82,19 @@ public class MargitEntity extends EldenBossEntity {
                 }
         ));
 
-        // 3. Ranged Golden Glintblade Throw (punishes healing / kiting)
+        // 3. Tail Sweep (360 close-range punish for players hugging the boss)
+        this.moveset.add(new BossAttackMove(
+                "tail_sweep", "animation.margit.tail_sweep",
+                10, 6, 14, 0.0, 3.2, 11.0f, false, 20,
+                (boss, target) -> {
+                    if (boss.getStateTick() == 2) {
+                        boss.playSound(SoundEvents.PLAYER_ATTACK_KNOCKBACK, 1.4f, 0.8f);
+                        boss.performAoeHitbox(3.6, 11.0f, 0.9, ParticleTypes.SWEEP_ATTACK);
+                    }
+                }
+        ));
+
+        // 4. Ranged Golden Glintblade Throw (punishes healing / kiting)
         this.moveset.add(new BossAttackMove(
                 "golden_dagger_throw", "animation.margit.throw_dagger",
                 12, 10, 16, 6.0, 22.0, 8.0f, false, 25,
@@ -96,7 +118,7 @@ public class MargitEntity extends EldenBossEntity {
                 }
         ));
 
-        // 4. Phase 2: Golden Hammer Leap Slam (jumps toward target and crashes down with AoE)
+        // 5. Phase 2: Golden Hammer Leap Slam
         this.moveset.add(new BossAttackMove(
                 "golden_hammer_leap", "animation.margit.hammer_leap",
                 18, 16, 24, 4.0, 16.0, 22.0f, true, 40,
@@ -112,6 +134,23 @@ public class MargitEntity extends EldenBossEntity {
                     }
                 }
         ));
+
+        // 6. Phase 2: Holy Sword 3-Hit Combo
+        this.moveset.add(new BossAttackMove(
+                "holy_sword_combo", "animation.margit.holy_sword_combo",
+                12, 20, 20, 0.0, 5.2, 13.0f, true, 35,
+                (boss, target) -> {
+                    int tick = boss.getStateTick();
+                    if (tick == 2 || tick == 9 || tick == 17) {
+                        if (target != null) {
+                            Vec3 step = target.position().subtract(boss.position()).multiply(1, 0, 1).normalize();
+                            boss.setDeltaMovement(step.x * 0.45, 0.0, step.z * 0.45);
+                        }
+                        boss.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1.6f, tick == 17 ? 0.7f : 1.1f);
+                        boss.performArcHitbox(5.2, 135.0, tick == 17 ? 17.0f : 12.0f, tick == 17 ? 0.9 : 0.4, ParticleTypes.END_ROD);
+                    }
+                }
+        ));
     }
 
     @Override
@@ -124,5 +163,12 @@ public class MargitEntity extends EldenBossEntity {
                 player.sendSystemMessage(quote);
             }
         }
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHit) {
+        super.dropCustomDeathLoot(source, looting, recentlyHit);
+        this.spawnAtLocation(ModItems.SOMBER_SMITHING_STONE.get());
+        this.spawnAtLocation(ModItems.SMITHING_STONE.get());
     }
 }

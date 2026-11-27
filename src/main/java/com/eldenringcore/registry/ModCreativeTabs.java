@@ -35,6 +35,18 @@ public class ModCreativeTabs {
                         output.accept(ModItems.FOG_GATE_ITEM.get());
                         output.accept(ModItems.BOSS_ARENA_CONTROLLER_ITEM.get());
                         output.accept(ModItems.MARGIT_SPAWN_EGG.get());
+                        output.accept(ModItems.TREE_SENTINEL_SPAWN_EGG.get());
+                        output.accept(ModItems.GODRICK_SPAWN_EGG.get());
+                        output.accept(ModItems.RENNALA_SPAWN_EGG.get());
+                        output.accept(ModItems.RADAHN_SPAWN_EGG.get());
+                        output.accept(ModItems.MORGOTT_SPAWN_EGG.get());
+                        output.accept(ModItems.RYKARD_SPAWN_EGG.get());
+                        output.accept(ModItems.MOHG_SPAWN_EGG.get());
+                        output.accept(ModItems.FIRE_GIANT_SPAWN_EGG.get());
+                        output.accept(ModItems.MALENIA_SPAWN_EGG.get());
+                        output.accept(ModItems.MALIKETH_SPAWN_EGG.get());
+                        output.accept(ModItems.GODFREY_SPAWN_EGG.get());
+                        output.accept(ModItems.RADAGON_SPAWN_EGG.get());
                     })
                     .build());
 }

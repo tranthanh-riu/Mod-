@@ -1,0 +1,13 @@
+summon eldenring_core:margit ~-18 ~ ~8
+summon eldenring_core:tree_sentinel ~-12 ~ ~8
+summon eldenring_core:godrick ~-6 ~ ~8
+summon eldenring_core:rennala ~0 ~ ~8
+summon eldenring_core:radahn ~6 ~ ~8
+summon eldenring_core:morgott ~12 ~ ~8
+summon eldenring_core:rykard ~18 ~ ~8
+summon eldenring_core:mohg ~-15 ~ ~16
+summon eldenring_core:fire_giant ~-8 ~ ~16
+summon eldenring_core:malenia ~0 ~ ~16
+summon eldenring_core:maliketh ~7 ~ ~16
+summon eldenring_core:godfrey ~14 ~ ~16
+summon eldenring_core:radagon ~20 ~ ~16

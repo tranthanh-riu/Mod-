@@ -6,6 +6,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,6 +41,13 @@ import java.util.List;
  * - Elden Ring Boss Bar & Victory Banner ("DEMIGOD FELLED" / "GREAT ENEMY FELLED")
  */
 public abstract class EldenBossEntity extends Monster implements GeoEntity {
+    private static final EntityDataAccessor<Integer> DATA_BOSS_STATE =
+            SynchedEntityData.defineId(EldenBossEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<String> DATA_CURRENT_ANIM =
+            SynchedEntityData.defineId(EldenBossEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Boolean> DATA_PHASE_TWO =
+            SynchedEntityData.defineId(EldenBossEntity.class, EntityDataSerializers.BOOLEAN);
+
     private final AnimatableInstanceCache animCache = GeckoLibUtil.createInstanceCache(this);
     protected final ServerBossEvent bossEvent;
     protected final List<BossAttackMove> moveset = new ArrayList<>();
@@ -62,6 +72,22 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
 
     protected float getPhaseTwoThreshold() {
         return 0.5f;
+    }
+
+    /**
+     * Authentic Elden Ring 2-Health-Bar bosses (Malenia, Rykard, Rennala, Radagon->Elden Beast):
+     * When true, hitting 0 HP in Phase 1 triggers an invulnerable Phase 2 transition and refills HP!
+     */
+    protected boolean usesSecondHealthBar() {
+        return false;
+    }
+
+    protected float getPhaseTwoStartHpRatio() {
+        return 1.0f;
+    }
+
+    protected ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.FLAME;
     }
 
     protected String getVictoryBannerText() {
@@ -105,9 +131,47 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         }
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_BOSS_STATE, BossState.IDLE.ordinal());
+        this.entityData.define(DATA_CURRENT_ANIM, "");
+        this.entityData.define(DATA_PHASE_TWO, false);
+    }
+
+    public boolean isSyncedPhaseTwo() {
+        return this.entityData.get(DATA_PHASE_TWO);
+    }
+
+    @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+        return false; // Bosses with aerial attacks (Radahn, Malenia, Margit) never take fall damage
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false; // Demigod Bosses never randomly despawn
+    }
+
+    public BossState getSyncedBossState() {
+        int ord = this.entityData.get(DATA_BOSS_STATE);
+        BossState[] values = BossState.values();
+        return (ord >= 0 && ord < values.length) ? values[ord] : BossState.IDLE;
+    }
+
+    public String getSyncedAnimName() {
+        return this.entityData.get(DATA_CURRENT_ANIM);
+    }
+
     protected void enterState(BossState next) {
         this.state = next;
         this.stateTick = 0;
+        this.entityData.set(DATA_BOSS_STATE, next.ordinal());
+        if ((next == BossState.TELEGRAPH || next == BossState.ATTACKING) && this.currentMove != null) {
+            this.entityData.set(DATA_CURRENT_ANIM, this.currentMove.animationName());
+        } else {
+            this.entityData.set(DATA_CURRENT_ANIM, "");
+        }
     }
 
     @Override
@@ -120,12 +184,17 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
             this.currentPoise = Math.min(this.maxPoise, this.currentPoise + 1.5f);
         }
 
-        // Trigger Phase 2 transition
-        if (!this.phaseTwo && (this.getHealth() / this.getMaxHealth()) <= this.getPhaseTwoThreshold()) {
-            this.phaseTwo = true;
-            this.currentMove = null;
-            this.enterState(BossState.PHASE_TRANSITION);
-            this.onPhaseTwoStart();
+        // Trigger mid-HP Phase 2 transition (for single-health-bar bosses)
+        if (!this.phaseTwo && !this.usesSecondHealthBar() && (this.getHealth() / this.getMaxHealth()) <= this.getPhaseTwoThreshold()) {
+            this.triggerPhaseTwo();
+        }
+
+        // Continuous Phase 2 Aura particles around the boss
+        if (this.phaseTwo && this.tickCount % 5 == 0 && this.level() instanceof ServerLevel serverLevel) {
+            ParticleOptions aura = this.getPhaseTwoAuraParticle();
+            if (aura != null) {
+                serverLevel.sendParticles(aura, getX(), getY() + 1.4, getZ(), 4, 0.7, 0.9, 0.7, 0.02);
+            }
         }
 
         LivingEntity target = this.getTarget();
@@ -247,7 +316,8 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         double minDot = Math.cos(Math.toRadians(arcDegrees * 0.5));
         AABB box = this.getBoundingBox().inflate(reach, 1.5, reach);
 
-        for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, box, e -> e != this && e.isAlive())) {
+        for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, box,
+                e -> e != this && e.isAlive() && !(e instanceof Player p && (p.isCreative() || p.isSpectator())))) {
             Vec3 toTarget = entity.position().subtract(this.position()).multiply(1, 0, 1);
             double dist = toTarget.length();
             if (dist <= reach && dist > 0.001) {
@@ -270,7 +340,8 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
      */
     public void performAoeHitbox(double radius, float damage, double knockback, ParticleOptions particle) {
         AABB box = this.getBoundingBox().inflate(radius, 2.0, radius);
-        for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, box, e -> e != this && e.isAlive())) {
+        for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, box,
+                e -> e != this && e.isAlive() && !(e instanceof Player p && (p.isCreative() || p.isSpectator())))) {
             if (this.distanceToSqr(entity) <= radius * radius) {
                 entity.hurt(this.damageSources().mobAttack(this), damage);
                 Vec3 dir = entity.position().subtract(this.position()).normalize();
@@ -280,6 +351,17 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         if (this.level() instanceof ServerLevel serverLevel && particle != null) {
             serverLevel.sendParticles(particle, getX(), getY() + 0.3, getZ(), 35, radius * 0.5, 0.2, radius * 0.5, 0.08);
         }
+    }
+
+    protected void triggerPhaseTwo() {
+        this.phaseTwo = true;
+        this.entityData.set(DATA_PHASE_TWO, true);
+        this.currentMove = null;
+        this.enterState(BossState.PHASE_TRANSITION);
+        if (this.usesSecondHealthBar()) {
+            this.setHealth(this.getMaxHealth() * this.getPhaseTwoStartHpRatio());
+        }
+        this.onPhaseTwoStart();
     }
 
     @Override
@@ -292,6 +374,14 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
             finalDamage *= 1.75f; // Critical Riposte bonus while staggered
             this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.5f, 0.8f);
         }
+
+        // True Second Health Bar: intercept lethal blow in Phase 1 and transition to Phase 2!
+        if (!this.phaseTwo && this.usesSecondHealthBar() && (this.getHealth() - finalDamage) <= 0.0f) {
+            this.setHealth(1.0f);
+            this.triggerPhaseTwo();
+            return true;
+        }
+
         boolean damaged = super.hurt(source, finalDamage);
         if (damaged && source.getEntity() instanceof LivingEntity) {
             this.applyPoiseDamage(Math.max(8.0f, amount * 1.2f));
@@ -328,14 +418,16 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "main_controller", 4, animState -> {
-            if (this.state == BossState.STAGGERED) {
+            BossState syncedState = this.getSyncedBossState();
+            String syncedAnim = this.getSyncedAnimName();
+            if (syncedState == BossState.STAGGERED) {
                 return animState.setAndContinue(RawAnimation.begin().thenLoop("animation.boss.staggered"));
             }
-            if (this.state == BossState.PHASE_TRANSITION) {
+            if (syncedState == BossState.PHASE_TRANSITION) {
                 return animState.setAndContinue(RawAnimation.begin().thenPlay("animation.boss.phase2"));
             }
-            if ((this.state == BossState.TELEGRAPH || this.state == BossState.ATTACKING) && this.currentMove != null) {
-                return animState.setAndContinue(RawAnimation.begin().thenPlay(this.currentMove.animationName()));
+            if ((syncedState == BossState.TELEGRAPH || syncedState == BossState.ATTACKING) && !syncedAnim.isEmpty()) {
+                return animState.setAndContinue(RawAnimation.begin().thenPlay(syncedAnim));
             }
             if (animState.isMoving()) {
                 return animState.setAndContinue(RawAnimation.begin().thenLoop("animation.boss.walk"));
