@@ -29,3 +29,26 @@ Mỗi vũ khí có **loại vũ khí Epic Fight riêng** trong `data/eldenring_c
 - Một số động tác kỹ năng của Epic Fight tự gây sát thương; cộng với sát thương Ash of War có thể hơi mạnh → giảm hệ số trong `EldenWeaponItem` nếu cần.
 - Vệt chém (trail) màu riêng cho từng vũ khí chưa làm (file `item_skins` phía client của Epic Fight).
 - Animation riêng hoàn toàn (không dùng của Epic Fight) là bước sau, cần làm bằng Blender + Epic Fight animation tool.
+
+## Xuất Huyết (Hemorrhage)
+
+- Khi thanh chảy máu đầy (Rivers of Blood, Moonveil, Hand of Malenia, Bloodhound's Fang): máu phun ra, rồi hiệu ứng **Xuất Huyết** trừ máu **từ từ**: 6 nhịp trong 3 giây, tổng **15% máu tối đa** (Boss: 8%), xuyên giáp, không đẩy lùi, có máu nhỏ giọt mỗi nhịp.
+- Có biểu tượng hiệu ứng riêng, chết vì nó hiện "… đã chảy máu đến chết" (tên người đánh được ghi công).
+- Code: `combat/HemorrhageEffect.java`, `registry/ModEffects.java`, damage type `data/eldenring_core/damage_type/hemorrhage.json`.
+
+## Hiệu ứng phát sáng (bloom) cho skill
+
+`combat/AshVfx.java` vẽ 3 lớp cho mỗi Ash of War, canh đúng lúc vung kiếm của animation: lõi tự phát sáng (end rod / tia lửa / lửa), quầng màu to mềm (dust cỡ lớn), và chớp sáng (flash) tại điểm ra đòn. Chạy với Minecraft gốc, không cần shader; bật shader (vd. Complementary) thì bloom thật còn rõ hơn.
+
+| Ash of War | Màu / dạng |
+|---|---|
+| Transient Moonlight | trăng xanh: vầng cung 150°, ngồi = sóng thẳng |
+| Moonlight Wave | sóng trăng trắng-xanh dài 10 block |
+| Corpse Piler | lửa máu đỏ, mỗi nhịp nghiêng một góc khác |
+| Waterfowl Dance | 3 vòng đỏ thắm + cánh hoa |
+| Taker's Flames | vầng lửa cam vàng 170° |
+| Starcaller Cry | vòng tím trọng lực + chớp lớn |
+| Destined Death | vòng lửa đen-đỏ 360° |
+| Bloodhound's Finesse | vệt lửa máu khi lộn |
+| Golden Vow | vòng vàng + cột sáng |
+| Ancient Lightning Spear | tia sét đỏ dài 16 block |

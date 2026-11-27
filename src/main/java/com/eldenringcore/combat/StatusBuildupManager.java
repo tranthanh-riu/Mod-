@@ -1,5 +1,6 @@
 package com.eldenringcore.combat;
 
+import com.eldenringcore.registry.ModEffects;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -46,9 +47,14 @@ public class StatusBuildupManager {
         }
         switch (type) {
             case BLEED -> {
-                float burst = Math.max(8.0f, target.getMaxHealth() * 0.12f);
-                target.hurt(attacker != null ? target.damageSources().mobAttack(attacker) : target.damageSources().magic(), burst);
-                serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + 1.2, target.getZ(), 20, 0.5, 0.5, 0.5, 0.1);
+                // Blood spray on proc, then Hemorrhage drains health over a few seconds.
+                if (attacker != null) {
+                    target.setLastHurtByMob(attacker);
+                }
+                target.addEffect(new MobEffectInstance(ModEffects.HEMORRHAGE.get(), HemorrhageEffect.DURATION_TICKS + 1, 0));
+                serverLevel.sendParticles(HemorrhageEffect.BLOOD, target.getX(), target.getY() + target.getBbHeight() * 0.6, target.getZ(),
+                        40, 0.4, 0.4, 0.4, 0.25);
+                serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + 1.2, target.getZ(), 8, 0.4, 0.4, 0.4, 0.1);
                 target.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.8f, 0.6f);
             }
             case FROSTBITE -> {

@@ -36,6 +36,7 @@ public class EldenRingCore {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         ModWorldgen.BIOME_SOURCES.register(modEventBus);
+        com.eldenringcore.registry.ModEffects.EFFECTS.register(modEventBus);
 
         modEventBus.addListener(this::registerAttributes);
         modEventBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> event.enqueueWork(com.eldenringcore.network.ModNetwork::register));

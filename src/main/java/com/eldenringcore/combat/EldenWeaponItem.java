@@ -90,6 +90,7 @@ public class EldenWeaponItem extends SwordItem {
         }
         int stage = AshOfWarComboManager.getActiveComboStage(player, this.ashOfWar);
         EpicFightAshAnimations.play(player, this.ashOfWar, stage, player.isShiftKeyDown());
+        AshVfx.play(level, player, this.ashOfWar, stage, player.isShiftKeyDown());
         float dmgMult = WeaponUpgradeManager.getAshDamageMultiplier(stack);
         int cooldownTicks = executeAshOfWar(level, player, dmgMult);
         player.getCooldowns().addCooldown(this, cooldownTicks);

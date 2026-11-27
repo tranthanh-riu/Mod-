@@ -67,5 +67,8 @@
   "message.eldenring_core.wave2.ready": "Bản đồ Wave 2 đã sẵn sàng. Dùng /function eldenring_core:wave2/enter để vào.",
   "message.eldenring_core.wave3_4.already_built": "Đã dựng bản đồ Wave 3–4. Dùng /function eldenring_core:wave3_4/enter để vào.",
   "message.eldenring_core.wave3_4.install_first": "Hãy chạy /function eldenring_core:wave3_4/install trước.",
-  "message.eldenring_core.wave3_4.ready": "Bản đồ Wave 3–4 đã sẵn sàng. Dùng /function eldenring_core:wave3_4/enter để vào."
+  "message.eldenring_core.wave3_4.ready": "Bản đồ Wave 3–4 đã sẵn sàng. Dùng /function eldenring_core:wave3_4/enter để vào.",
+  "effect.eldenring_core.hemorrhage": "Xuất Huyết",
+  "death.attack.eldenring_core.hemorrhage": "%1$s đã chảy máu đến chết",
+  "death.attack.eldenring_core.hemorrhage.player": "%1$s đã chảy máu đến chết khi đấu với %2$s"
 }
