@@ -1,0 +1,32 @@
+package com.eldenringcore.registry;
+
+import com.eldenringcore.EldenRingCore;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ModCreativeTabs {
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, EldenRingCore.MOD_ID);
+
+    public static final RegistryObject<CreativeModeTab> ELDEN_RING_TAB = CREATIVE_MODE_TABS.register("elden_ring_tab",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.eldenring_core"))
+                    .icon(() -> new ItemStack(ModItems.RIVERS_OF_BLOOD.get()))
+                    .displayItems((params, output) -> {
+                        output.accept(ModItems.RIVERS_OF_BLOOD.get());
+                        output.accept(ModItems.MOONVEIL.get());
+                        output.accept(ModItems.DARK_MOON_GREATSWORD.get());
+                        output.accept(ModItems.HAND_OF_MALENIA.get());
+                        output.accept(ModItems.FLASK_OF_CRIMSON_TEARS.get());
+                        output.accept(ModItems.SMITHING_STONE.get());
+                        output.accept(ModItems.SOMBER_SMITHING_STONE.get());
+                        output.accept(ModItems.SITE_OF_GRACE_ITEM.get());
+                        output.accept(ModItems.FOG_GATE_ITEM.get());
+                        output.accept(ModItems.MARGIT_SPAWN_EGG.get());
+                    })
+                    .build());
+}

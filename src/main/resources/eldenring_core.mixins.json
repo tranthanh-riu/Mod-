@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.eldenringcore.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "eldenring_core.refmap.json",
+  "mixins": [],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
