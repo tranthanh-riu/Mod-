@@ -35,8 +35,9 @@ public class SiteOfGraceBlock extends Block {
             serverPlayer.getFoodData().setFoodLevel(20);
             serverPlayer.setRespawnPosition(level.dimension(), pos.above(), 0.0f, true, false);
 
-            for (ItemStack stack : serverPlayer.getInventory().items) {
-                if (stack.getItem() instanceof CrimsonFlaskItem) {
+            for (int slot = 0; slot < serverPlayer.getInventory().getContainerSize(); slot++) {
+                ItemStack stack = serverPlayer.getInventory().getItem(slot);
+                if (stack.getItem() instanceof CrimsonFlaskItem || stack.getItem() instanceof CeruleanFlaskItem) {
                     CrimsonFlaskItem.refill(stack);
                 }
             }

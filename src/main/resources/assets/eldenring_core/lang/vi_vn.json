@@ -15,5 +15,9 @@
   "message.eldenring_core.arena.configure": "[Đấu Trường Boss] Bấm để chỉnh lệnh đổi BossId.",
   "message.eldenring_core.runes.balance": "Runes: %s",
   "message.eldenring_core.runes.granted": "%s hiện có %s Runes.",
-  "message.eldenring_core.runes.recovered": "Đã thu hồi %s Runes."
+  "message.eldenring_core.runes.recovered": "Đã thu hồi %s Runes.",
+  "item.eldenring_core.flask_of_cerulean_tears": "Bình Nước Mắt Xanh (Cerulean Tears)",
+  "message.eldenring_core.cerulean.fp": "FP: %s / %s",
+  "tooltip.eldenring_core.cerulean.charges": "Lượt dùng: %s / %s",
+  "tooltip.eldenring_core.cerulean.refill": "Nghỉ tại Site of Grace để hồi lượt dùng."
 }

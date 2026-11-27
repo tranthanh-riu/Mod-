@@ -15,5 +15,9 @@
   "message.eldenring_core.arena.configure": "[Boss Arena] Click to edit the BossId command.",
   "message.eldenring_core.runes.balance": "Runes: %s",
   "message.eldenring_core.runes.granted": "%s now has %s runes.",
-  "message.eldenring_core.runes.recovered": "Recovered %s runes."
+  "message.eldenring_core.runes.recovered": "Recovered %s runes.",
+  "item.eldenring_core.flask_of_cerulean_tears": "Flask of Cerulean Tears",
+  "message.eldenring_core.cerulean.fp": "FP: %s / %s",
+  "tooltip.eldenring_core.cerulean.charges": "Charges: %s / %s",
+  "tooltip.eldenring_core.cerulean.refill": "Rest at a Site of Grace to refill."
 }

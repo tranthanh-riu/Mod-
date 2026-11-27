@@ -5,6 +5,7 @@ import com.eldenringcore.combat.AshOfWarType;
 import com.eldenringcore.combat.EldenWeaponItem;
 import com.eldenringcore.combat.StatusEffectType;
 import com.eldenringcore.mechanic.CrimsonFlaskItem;
+import com.eldenringcore.mechanic.CeruleanFlaskItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -62,4 +63,7 @@ public class ModItems {
     // Boss Spawn Egg (for testing)
     public static final RegistryObject<Item> MARGIT_SPAWN_EGG = ITEMS.register("margit_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARGIT, 0x3D352E, 0xD4AF37, new Item.Properties()));
+
+    public static final RegistryObject<Item> FLASK_OF_CERULEAN_TEARS = ITEMS.register("flask_of_cerulean_tears",
+            () -> new CeruleanFlaskItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 }
