@@ -48,7 +48,7 @@
     [
       "minecraft:patch_grass_plain",
       "minecraft:trees_old_growth_pine_taiga",
-      "minecraft:flower_forest"
+      "minecraft:flower_default"
     ],
     [
       "minecraft:freeze_top_layer"
