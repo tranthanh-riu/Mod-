@@ -19,5 +19,14 @@
   "item.eldenring_core.flask_of_cerulean_tears": "Flask of Cerulean Tears",
   "message.eldenring_core.cerulean.fp": "FP: %s / %s",
   "tooltip.eldenring_core.cerulean.charges": "Charges: %s / %s",
-  "tooltip.eldenring_core.cerulean.refill": "Rest at a Site of Grace to refill."
+  "tooltip.eldenring_core.cerulean.refill": "Rest at a Site of Grace to refill.",
+  "menu.eldenring_core.grace.title": "Site of Grace Travel",
+  "menu.eldenring_core.grace.unnamed": "Grace (%s, %s, %s)",
+  "menu.eldenring_core.grace.empty": "Discover another Site of Grace to travel.",
+  "menu.eldenring_core.grace.previous": "Previous page",
+  "menu.eldenring_core.grace.next": "Next page",
+  "message.eldenring_core.grace.invalid_name": "Choose a Site of Grace and a name of 1–64 characters.",
+  "message.eldenring_core.grace.named": "Site of Grace named %s.",
+  "message.eldenring_core.grace.destination_unavailable": "This Site of Grace is missing or its landing area is blocked.",
+  "message.eldenring_core.grace.travel_hint": "Crouch and interact with empty hands to fast travel."
 }

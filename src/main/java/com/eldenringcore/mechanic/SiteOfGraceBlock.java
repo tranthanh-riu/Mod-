@@ -31,6 +31,11 @@ public class SiteOfGraceBlock extends Block {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            boolean discovered = GraceLocations.discover(serverPlayer, pos);
+            if (player.isShiftKeyDown() && !discovered) {
+                GraceTravelMenu.open(serverPlayer, pos);
+                return InteractionResult.CONSUME;
+            }
             serverPlayer.setHealth(serverPlayer.getMaxHealth());
             serverPlayer.getFoodData().setFoodLevel(20);
             serverPlayer.setRespawnPosition(level.dimension(), pos.above(), 0.0f, true, false);
@@ -42,9 +47,12 @@ public class SiteOfGraceBlock extends Block {
                 }
             }
 
-            serverPlayer.connection.send(new ClientboundSetTitlesAnimationPacket(10, 40, 15));
-            serverPlayer.connection.send(new ClientboundSetTitleTextPacket(
-                    Component.literal("LOST GRACE DISCOVERED").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)));
+            if (discovered) {
+                serverPlayer.connection.send(new ClientboundSetTitlesAnimationPacket(10, 40, 15));
+                serverPlayer.connection.send(new ClientboundSetTitleTextPacket(
+                        Component.literal("LOST GRACE DISCOVERED").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)));
+            }
+            serverPlayer.displayClientMessage(Component.translatable("message.eldenring_core.grace.travel_hint"), true);
 
             level.playSound(null, pos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.2f, 1.2f);
             if (level instanceof ServerLevel serverLevel) {

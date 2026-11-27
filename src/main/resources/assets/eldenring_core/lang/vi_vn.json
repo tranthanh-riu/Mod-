@@ -19,5 +19,14 @@
   "item.eldenring_core.flask_of_cerulean_tears": "Bình Nước Mắt Xanh (Cerulean Tears)",
   "message.eldenring_core.cerulean.fp": "FP: %s / %s",
   "tooltip.eldenring_core.cerulean.charges": "Lượt dùng: %s / %s",
-  "tooltip.eldenring_core.cerulean.refill": "Nghỉ tại Site of Grace để hồi lượt dùng."
+  "tooltip.eldenring_core.cerulean.refill": "Nghỉ tại Site of Grace để hồi lượt dùng.",
+  "menu.eldenring_core.grace.title": "Dịch chuyển qua Site of Grace",
+  "menu.eldenring_core.grace.unnamed": "Grace (%s, %s, %s)",
+  "menu.eldenring_core.grace.empty": "Khám phá thêm một Site of Grace để dịch chuyển.",
+  "menu.eldenring_core.grace.previous": "Trang trước",
+  "menu.eldenring_core.grace.next": "Trang sau",
+  "message.eldenring_core.grace.invalid_name": "Hãy chọn một Site of Grace và tên dài từ 1 đến 64 ký tự.",
+  "message.eldenring_core.grace.named": "Đã đặt tên Site of Grace là %s.",
+  "message.eldenring_core.grace.destination_unavailable": "Site of Grace này đã mất hoặc chỗ đáp bị chặn.",
+  "message.eldenring_core.grace.travel_hint": "Giữ Shift và tương tác bằng tay trống để dịch chuyển."
 }
