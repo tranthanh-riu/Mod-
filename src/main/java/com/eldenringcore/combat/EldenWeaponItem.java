@@ -70,7 +70,8 @@ public class EldenWeaponItem extends SwordItem {
             if (!FocusPointsManager.tryConsumeFp(player, fpCost)) {
                 return InteractionResultHolder.fail(stack);
             }
-            int cooldownTicks = executeAshOfWar(serverLevel, player);
+            float dmgMult = WeaponUpgradeManager.getAshDamageMultiplier(stack);
+            int cooldownTicks = executeAshOfWar(serverLevel, player, dmgMult);
             player.getCooldowns().addCooldown(this, cooldownTicks);
         }
         player.swing(hand);
@@ -104,18 +105,18 @@ public class EldenWeaponItem extends SwordItem {
         };
     }
 
-    private int executeAshOfWar(ServerLevel level, Player player) {
+    private int executeAshOfWar(ServerLevel level, Player player, float dmgMult) {
         Vec3 forward = player.getLookAngle().normalize();
         switch (this.ashOfWar) {
             case CORPSE_PILER -> {
-                return executeCorpsePiler(level, player);
+                return executeCorpsePiler(level, player, dmgMult);
             }
             case TRANSIENT_MOONLIGHT -> {
-                return executeTransientMoonlight(level, player, forward);
+                return executeTransientMoonlight(level, player, forward, dmgMult);
             }
             case MOONLIGHT_WAVE -> {
                 player.playSound(SoundEvents.GLASS_BREAK, 1.4f, 0.9f);
-                performLineSlash(level, player, forward, 10.0, 15.0f, ParticleTypes.SNOWFLAKE, StatusEffectType.FROSTBITE, 55.0f, 40.0f);
+                performLineSlash(level, player, forward, 10.0, 15.0f * dmgMult, ParticleTypes.SNOWFLAKE, StatusEffectType.FROSTBITE, 55.0f, 40.0f);
             }
             case WATERFOWL_DANCE -> {
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1.8f, 1.4f);
@@ -123,7 +124,7 @@ public class EldenWeaponItem extends SwordItem {
                 player.hurtMarked = true;
                 AABB box = player.getBoundingBox().inflate(4.5, 2.0, 4.5);
                 for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, box, e -> e != player && e.isAlive())) {
-                    target.hurt(player.damageSources().playerAttack(player), 16.0f);
+                    target.hurt(player.damageSources().playerAttack(player), 16.0f * dmgMult);
                     StatusBuildupManager.addBuildup(target, player, StatusEffectType.BLEED, 40.0f);
                     if (target instanceof EldenBossEntity boss) {
                         boss.applyPoiseDamage(30.0f);
@@ -132,22 +133,22 @@ public class EldenWeaponItem extends SwordItem {
                 level.sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX(), player.getY() + 1.1, player.getZ(), 16, 2.5, 0.6, 2.5, 0.1);
             }
             case TAKERS_FLAMES -> {
-                executeTakersFlames(level, player, forward);
+                executeTakersFlames(level, player, forward, dmgMult);
             }
             case STARCALLER_CRY -> {
-                executeStarcallerCry(level, player);
+                executeStarcallerCry(level, player, dmgMult);
             }
             case DESTINED_DEATH -> {
-                executeDestinedDeath(level, player, forward);
+                executeDestinedDeath(level, player, forward, dmgMult);
             }
             case BLOODHOUNDS_FINESSE -> {
-                executeBloodhoundsFinesse(level, player, forward);
+                executeBloodhoundsFinesse(level, player, forward, dmgMult);
             }
             case GOLDEN_VOW -> {
                 executeGoldenVow(level, player);
             }
             case ANCIENT_LIGHTNING_SPEAR -> {
-                executeAncientLightningSpear(level, player, forward);
+                executeAncientLightningSpear(level, player, forward, dmgMult);
             }
             default -> {
             }
@@ -161,35 +162,35 @@ public class EldenWeaponItem extends SwordItem {
      * Stage 1: Extended double cross blood slash (opens 1.6s combo window).
      * Stage 2: Heavy wide-arc blood finisher (resets combo and applies full cooldown).
      */
-    private int executeCorpsePiler(ServerLevel level, Player player) {
+    private int executeCorpsePiler(ServerLevel level, Player player, float dmgMult) {
         int stage = AshOfWarComboManager.getActiveComboStage(player, AshOfWarType.CORPSE_PILER);
         Vec3 forward = player.getLookAngle().normalize();
 
         if (stage == 0) {
             lungeForward(player, forward, 0.25);
-            performBloodArcSlash(level, player, forward, 6.5, 1.4, 7.5f, 28.0f, 12.0f, 0.75f);
+            performBloodArcSlash(level, player, forward, 6.5, 1.4, 7.5f * dmgMult, 28.0f, 12.0f, 0.75f);
             AshOfWarComboManager.scheduleDelayedAction(level, 4, () -> {
                 if (player.isAlive() && player.level() == level) {
                     Vec3 followDir = player.getLookAngle().normalize();
-                    performBloodArcSlash(level, player, followDir, 6.5, 1.5, 7.5f, 28.0f, 12.0f, 0.90f);
+                    performBloodArcSlash(level, player, followDir, 6.5, 1.5, 7.5f * dmgMult, 28.0f, 12.0f, 0.90f);
                 }
             });
             AshOfWarComboManager.setComboStage(player, AshOfWarType.CORPSE_PILER, 1, 32);
             return 12;
         } else if (stage == 1) {
             lungeForward(player, forward, 0.30);
-            performBloodArcSlash(level, player, forward, 7.5, 1.7, 9.0f, 34.0f, 15.0f, 0.85f);
+            performBloodArcSlash(level, player, forward, 7.5, 1.7, 9.0f * dmgMult, 34.0f, 15.0f, 0.85f);
             AshOfWarComboManager.scheduleDelayedAction(level, 4, () -> {
                 if (player.isAlive() && player.level() == level) {
                     Vec3 followDir = player.getLookAngle().normalize();
-                    performBloodArcSlash(level, player, followDir, 7.5, 1.8, 9.0f, 34.0f, 15.0f, 1.05f);
+                    performBloodArcSlash(level, player, followDir, 7.5, 1.8, 9.0f * dmgMult, 34.0f, 15.0f, 1.05f);
                 }
             });
             AshOfWarComboManager.setComboStage(player, AshOfWarType.CORPSE_PILER, 2, 32);
             return 12;
         } else {
             lungeForward(player, forward, 0.42);
-            performBloodArcSlash(level, player, forward, 8.5, 2.2, 14.0f, 50.0f, 28.0f, 0.60f);
+            performBloodArcSlash(level, player, forward, 8.5, 2.2, 14.0f * dmgMult, 50.0f, 28.0f, 0.60f);
             level.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
                     player.getX() + forward.x * 3.0, player.getY() + 1.2, player.getZ() + forward.z * 3.0,
                     12, 1.2, 0.4, 1.2, 0.08);
@@ -247,7 +248,7 @@ public class EldenWeaponItem extends SwordItem {
      * - Shift + Right-Click: Long-range heavy vertical moonlight beam (high damage & poise break).
      * - Normal Right-Click: Wide horizontal moonlight slash wave (crowd control).
      */
-    private int executeTransientMoonlight(ServerLevel level, Player player, Vec3 forward) {
+    private int executeTransientMoonlight(ServerLevel level, Player player, Vec3 forward, float dmgMult) {
         Vec3 start = player.getEyePosition();
         Set<UUID> hitEntities = new HashSet<>();
 
@@ -266,7 +267,7 @@ public class EldenWeaponItem extends SwordItem {
                         center.x + 0.85, center.y + 1.8, center.z + 0.85);
                 for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
                     if (hitEntities.add(target.getUUID())) {
-                        target.hurt(player.damageSources().playerAttack(player), 17.0f);
+                        target.hurt(player.damageSources().playerAttack(player), 17.0f * dmgMult);
                         StatusBuildupManager.addBuildup(target, player, StatusEffectType.BLEED, 30.0f);
                         if (target instanceof EldenBossEntity boss) {
                             boss.applyPoiseDamage(48.0f);
@@ -298,7 +299,7 @@ public class EldenWeaponItem extends SwordItem {
                         center.x + 2.6, center.y + 1.0, center.z + 2.6);
                 for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
                     if (hitEntities.add(target.getUUID())) {
-                        target.hurt(player.damageSources().playerAttack(player), 12.0f);
+                        target.hurt(player.damageSources().playerAttack(player), 12.0f * dmgMult);
                         StatusBuildupManager.addBuildup(target, player, StatusEffectType.BLEED, 22.0f);
                         if (target instanceof EldenBossEntity boss) {
                             boss.applyPoiseDamage(28.0f);
@@ -313,7 +314,7 @@ public class EldenWeaponItem extends SwordItem {
     /**
      * Taker's Flames (Blasphemous Blade): Blazing flame trail + lifesteal on hit.
      */
-    private void executeTakersFlames(ServerLevel level, Player player, Vec3 forward) {
+    private void executeTakersFlames(ServerLevel level, Player player, Vec3 forward, float dmgMult) {
         player.playSound(SoundEvents.BLAZE_SHOOT, 1.5f, 0.75f);
         Vec3 horizontalForward = new Vec3(forward.x, 0.0, forward.z);
         Vec3 dir = horizontalForward.lengthSqr() > 1.0E-4 ? horizontalForward.normalize() : new Vec3(0.0, 0.0, 1.0);
@@ -329,7 +330,7 @@ public class EldenWeaponItem extends SwordItem {
             AABB hitBox = new AABB(pos.x - 1.6, pos.y - 0.8, pos.z - 1.6, pos.x + 1.6, pos.y + 2.2, pos.z + 1.6);
             for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
                 if (hitEntities.add(target.getUUID())) {
-                    target.hurt(player.damageSources().playerAttack(player), 15.0f);
+                    target.hurt(player.damageSources().playerAttack(player), 15.0f * dmgMult);
                     target.setSecondsOnFire(4);
                     if (target instanceof EldenBossEntity boss) {
                         boss.applyPoiseDamage(32.0f);
@@ -348,7 +349,7 @@ public class EldenWeaponItem extends SwordItem {
      * Starcaller Cry (Starscourge Greatsword): Pulls nearby enemies in with gravity,
      * followed by a heavy gravity slam explosion after 14 ticks.
      */
-    private void executeStarcallerCry(ServerLevel level, Player player) {
+    private void executeStarcallerCry(ServerLevel level, Player player, float dmgMult) {
         player.playSound(SoundEvents.ENDERMAN_SCREAM, 1.5f, 0.55f);
         level.sendParticles(ParticleTypes.PORTAL, player.getX(), player.getY() + 1.0, player.getZ(), 45, 3.0, 1.0, 3.0, 0.2);
 
@@ -361,7 +362,7 @@ public class EldenWeaponItem extends SwordItem {
                 target.setDeltaMovement(velocity.x, 0.28, velocity.z);
                 target.hurtMarked = true;
             }
-            target.hurt(player.damageSources().playerAttack(player), 6.0f);
+            target.hurt(player.damageSources().playerAttack(player), 6.0f * dmgMult);
             if (target instanceof EldenBossEntity boss) {
                 boss.applyPoiseDamage(18.0f);
             }
@@ -378,7 +379,7 @@ public class EldenWeaponItem extends SwordItem {
             AABB slamBox = player.getBoundingBox().inflate(6.0, 2.5, 6.0);
             for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, slamBox, e -> e != player && e.isAlive())) {
                 target.invulnerableTime = 0;
-                target.hurt(player.damageSources().playerAttack(player), 18.0f);
+                target.hurt(player.damageSources().playerAttack(player), 18.0f * dmgMult);
                 Vec3 push = target.position().subtract(player.position()).normalize();
                 target.setDeltaMovement(push.x * 0.6, 0.45, push.z * 0.6);
                 target.hurtMarked = true;
@@ -393,7 +394,7 @@ public class EldenWeaponItem extends SwordItem {
      * Destined Death (Maliketh's Black Blade): 3-tick swirling dome of crimson-black slashes
      * dealing % max HP burst damage and Wither.
      */
-    private void executeDestinedDeath(ServerLevel level, Player player, Vec3 forward) {
+    private void executeDestinedDeath(ServerLevel level, Player player, Vec3 forward, float dmgMult) {
         Vec3 center = player.position().add(forward.x * 3.2, 1.0, forward.z * 3.2);
         Runnable pulse = () -> {
             if (!player.isAlive() || player.level() != level) {
@@ -408,7 +409,7 @@ public class EldenWeaponItem extends SwordItem {
             for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, dome, e -> e != player && e.isAlive())) {
                 float pctDamage = Math.min(18.0f, target.getMaxHealth() * 0.03f);
                 target.invulnerableTime = 0;
-                target.hurt(player.damageSources().playerAttack(player), 7.0f + pctDamage);
+                target.hurt(player.damageSources().playerAttack(player), 7.0f * dmgMult + pctDamage);
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
                 if (target instanceof EldenBossEntity boss) {
                     boss.applyPoiseDamage(16.0f);
@@ -424,8 +425,8 @@ public class EldenWeaponItem extends SwordItem {
     /**
      * Bloodhound's Finesse (Bloodhound's Fang): Heavy bleed slash followed by an evasive backflip.
      */
-    private void executeBloodhoundsFinesse(ServerLevel level, Player player, Vec3 forward) {
-        performBloodArcSlash(level, player, forward, 5.2, 1.8, 14.0f, 35.0f, 32.0f, 0.8f);
+    private void executeBloodhoundsFinesse(ServerLevel level, Player player, Vec3 forward, float dmgMult) {
+        performBloodArcSlash(level, player, forward, 5.2, 1.8, 14.0f * dmgMult, 35.0f, 32.0f, 0.8f);
         Vec3 horizontalForward = new Vec3(forward.x, 0.0, forward.z);
         if (horizontalForward.lengthSqr() > 1.0E-4) {
             Vec3 back = horizontalForward.normalize().scale(-1.15);
@@ -454,7 +455,7 @@ public class EldenWeaponItem extends SwordItem {
     /**
      * Ancient Lightning Spear (Bolt of Gransax): Long-range piercing red lightning bolt.
      */
-    private void executeAncientLightningSpear(ServerLevel level, Player player, Vec3 forward) {
+    private void executeAncientLightningSpear(ServerLevel level, Player player, Vec3 forward, float dmgMult) {
         player.playSound(SoundEvents.TRIDENT_THROW, 1.6f, 0.8f);
         player.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 0.8f, 1.4f);
 
@@ -470,7 +471,7 @@ public class EldenWeaponItem extends SwordItem {
             AABB hitBox = new AABB(pos.x - 1.0, pos.y - 1.0, pos.z - 1.0, pos.x + 1.0, pos.y + 1.0, pos.z + 1.0);
             for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
                 if (hitEntities.add(target.getUUID())) {
-                    target.hurt(player.damageSources().lightningBolt(), 19.0f);
+                    target.hurt(player.damageSources().lightningBolt(), 19.0f * dmgMult);
                     if (target instanceof EldenBossEntity boss) {
                         boss.applyPoiseDamage(40.0f);
                     }
@@ -509,7 +510,22 @@ public class EldenWeaponItem extends SwordItem {
     }
 
     @Override
+    public Component getName(ItemStack stack) {
+        Component base = super.getName(stack);
+        int upgradeLevel = WeaponUpgradeManager.getUpgradeLevel(stack);
+        if (upgradeLevel > 0) {
+            return base.copy().append(Component.literal(" +" + upgradeLevel).withStyle(ChatFormatting.GOLD));
+        }
+        return base;
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        int upgradeLevel = WeaponUpgradeManager.getUpgradeLevel(stack);
+        int maxLevel = WeaponUpgradeManager.getMaxLevel(stack);
+        String stoneName = WeaponUpgradeManager.isSomberWeapon(stack) ? "Somber Smithing Stone" : "Smithing Stone";
+        tooltip.add(Component.literal("Upgrade: +" + upgradeLevel + " / +" + maxLevel + " (" + stoneName + ")")
+                .withStyle(ChatFormatting.YELLOW));
         if (this.ashOfWar != AshOfWarType.NONE) {
             tooltip.add(Component.literal("Ash of War: " + this.ashOfWar.name().replace('_', ' '))
                     .withStyle(ChatFormatting.GOLD));
