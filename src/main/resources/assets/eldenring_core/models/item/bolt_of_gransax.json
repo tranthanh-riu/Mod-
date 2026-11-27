@@ -1,0 +1,9 @@
+{
+    "parent":  "eldenring_core:custom/bolt_of_gransax",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/polished_deepslate",
+                     "1":  "eldenring_core:item/weapons/polished_blackstone",
+                     "2":  "eldenring_core:item/weapons/anvil",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

@@ -1,0 +1,11 @@
+{
+    "parent":  "eldenring_core:custom/rivers_of_blood",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/redstone_block",
+                     "2":  "eldenring_core:item/weapons/raw_iron_block",
+                     "3":  "eldenring_core:item/weapons/stripped_dark_oak_log",
+                     "4":  "eldenring_core:item/weapons/polished_blackstone",
+                     "5":  "eldenring_core:item/weapons/gold_block",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

@@ -21,14 +21,20 @@ public class ModCreativeTabs {
                         output.accept(ModItems.MOONVEIL.get());
                         output.accept(ModItems.DARK_MOON_GREATSWORD.get());
                         output.accept(ModItems.HAND_OF_MALENIA.get());
+                        output.accept(ModItems.BLASPHEMOUS_BLADE.get());
+                        output.accept(ModItems.STARSCOURGE_GREATSWORD.get());
+                        output.accept(ModItems.MALIKETHS_BLACK_BLADE.get());
+                        output.accept(ModItems.BLOODHOUNDS_FANG.get());
+                        output.accept(ModItems.GOLDEN_HALBERD.get());
+                        output.accept(ModItems.BOLT_OF_GRANSAX.get());
                         output.accept(ModItems.FLASK_OF_CRIMSON_TEARS.get());
+                        output.accept(ModItems.FLASK_OF_CERULEAN_TEARS.get());
                         output.accept(ModItems.SMITHING_STONE.get());
                         output.accept(ModItems.SOMBER_SMITHING_STONE.get());
                         output.accept(ModItems.SITE_OF_GRACE_ITEM.get());
                         output.accept(ModItems.FOG_GATE_ITEM.get());
                         output.accept(ModItems.BOSS_ARENA_CONTROLLER_ITEM.get());
                         output.accept(ModItems.MARGIT_SPAWN_EGG.get());
-                        output.accept(ModItems.FLASK_OF_CERULEAN_TEARS.get());
                     })
                     .build());
 }

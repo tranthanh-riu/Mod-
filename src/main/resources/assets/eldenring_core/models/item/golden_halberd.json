@@ -1,0 +1,10 @@
+{
+    "parent":  "eldenring_core:custom/golden_halberd",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/smooth_stone_slab_side",
+                     "1":  "eldenring_core:item/weapons/anvil",
+                     "2":  "eldenring_core:item/weapons/iron_block",
+                     "3":  "eldenring_core:item/weapons/stripped_spruce_log",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

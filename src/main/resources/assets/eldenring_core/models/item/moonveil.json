@@ -1,0 +1,11 @@
+{
+    "parent":  "eldenring_core:custom/moonveil",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/iron_block",
+                     "1":  "eldenring_core:item/weapons/tube_coral_block",
+                     "2":  "eldenring_core:item/weapons/smooth_stone_slab_side",
+                     "3":  "eldenring_core:item/weapons/polished_andesite",
+                     "4":  "eldenring_core:item/weapons/anvil",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

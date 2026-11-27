@@ -1,0 +1,11 @@
+{
+    "parent":  "eldenring_core:custom/starscourge_greatsword",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/polished_blackstone",
+                     "1":  "eldenring_core:item/weapons/coal_block",
+                     "2":  "eldenring_core:item/weapons/gold_block",
+                     "3":  "eldenring_core:item/weapons/raw_iron_block",
+                     "4":  "eldenring_core:item/weapons/raw_gold_block",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

@@ -1,0 +1,13 @@
+{
+    "parent":  "eldenring_core:custom/bloodhounds_fang",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/iron_block",
+                     "1":  "eldenring_core:item/weapons/anvil",
+                     "2":  "eldenring_core:item/weapons/netherite_block",
+                     "3":  "eldenring_core:item/weapons/dead_fire_coral_block",
+                     "5":  "eldenring_core:item/weapons/polished_deepslate",
+                     "6":  "eldenring_core:item/weapons/jukebox_side",
+                     "7":  "eldenring_core:item/weapons/smooth_stone_slab_side",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}
