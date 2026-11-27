@@ -35,7 +35,8 @@
   - Cài đặt: `/function eldenring_core:wave1/install` (một lần), vào map: `/function eldenring_core:wave1/enter`. Boss `tree_sentinel` và `godrick` chờ nhóm Boss đăng ký entity.
 - [x] **Khu vực Wave 2 — Liurnia & Caelid**: Học viện Raya Lucaria (Rennala) & Đấu trường cát đỏ (Radahn).
   - Cài đặt: `/function eldenring_core:wave2/install`, vào map: `/function eldenring_core:wave2/enter`. Arena: `rennala` (Grand Library, 2 Fog Gate), `radahn` (Wailing Dunes).
-- [ ] **Khu vực Wave 3–4 — Leyndell, Cây Erdtree khổng lồ & Haligtree**: Dựng cây Erdtree phát sáng nhìn thấy từ xa bằng *Distant Horizons*.
+- [x] **Khu vực Wave 3–4 — Leyndell, Cây Erdtree khổng lồ & Haligtree**: Dựng cây Erdtree phát sáng nhìn thấy từ xa bằng *Distant Horizons*.
+  - Cài đặt: `/function eldenring_core:wave3_4/install`, vào map: `/function eldenring_core:wave3_4/enter`. Arena: `morgott` (Capital Plaza), `godfrey` (Erdtree Sanctuary), `radagon` (Elden Throne), `malenia` (Haligtree Roots). Cây Erdtree cao tới y 230.
 
 ### Giai đoạn 3 — Chắt lọc Modpack *EldenCraft* & Vá Xung Đột
 - [ ] Lọc danh sách mod cần giữ từ *EldenCraft* (ưu tiên: *Epic Fight*, *Iron's Spells 'n Spellbooks*, *Shoulder Surfing*, *AmbientSounds 6*, *Distant Horizons*, *Nightreign Gear*).
