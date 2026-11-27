@@ -59,4 +59,35 @@ public class ModItems {
     // Boss Spawn Egg (for testing)
     public static final RegistryObject<Item> MARGIT_SPAWN_EGG = ITEMS.register("margit_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARGIT, 0x3D352E, 0xD4AF37, new Item.Properties()));
+
+    // Wave 2 Elden Ring Weapons (Part 2 - Weapons & Combat)
+    public static final RegistryObject<Item> BLASPHEMOUS_BLADE = ITEMS.register("blasphemous_blade",
+            () -> new EldenWeaponItem(Tiers.NETHERITE, 8, -2.7f,
+                    new Item.Properties().rarity(Rarity.EPIC).fireResistant(),
+                    AshOfWarType.TAKERS_FLAMES, StatusEffectType.NONE, 0.0f, 32.0f));
+
+    public static final RegistryObject<Item> STARSCOURGE_GREATSWORD = ITEMS.register("starscourge_greatsword",
+            () -> new EldenWeaponItem(Tiers.NETHERITE, 10, -3.0f,
+                    new Item.Properties().rarity(Rarity.EPIC).fireResistant(),
+                    AshOfWarType.STARCALLER_CRY, StatusEffectType.NONE, 0.0f, 42.0f));
+
+    public static final RegistryObject<Item> MALIKETHS_BLACK_BLADE = ITEMS.register("malikeths_black_blade",
+            () -> new EldenWeaponItem(Tiers.NETHERITE, 10, -2.9f,
+                    new Item.Properties().rarity(Rarity.EPIC).fireResistant(),
+                    AshOfWarType.DESTINED_DEATH, StatusEffectType.NONE, 0.0f, 40.0f));
+
+    public static final RegistryObject<Item> BLOODHOUNDS_FANG = ITEMS.register("bloodhounds_fang",
+            () -> new EldenWeaponItem(Tiers.NETHERITE, 7, -2.5f,
+                    new Item.Properties().rarity(Rarity.RARE).fireResistant(),
+                    AshOfWarType.BLOODHOUNDS_FINESSE, StatusEffectType.BLEED, 26.0f, 30.0f));
+
+    public static final RegistryObject<Item> GOLDEN_HALBERD = ITEMS.register("golden_halberd",
+            () -> new EldenWeaponItem(Tiers.NETHERITE, 8, -2.8f,
+                    new Item.Properties().rarity(Rarity.RARE).fireResistant(),
+                    AshOfWarType.GOLDEN_VOW, StatusEffectType.NONE, 0.0f, 34.0f));
+
+    public static final RegistryObject<Item> BOLT_OF_GRANSAX = ITEMS.register("bolt_of_gransax",
+            () -> new EldenWeaponItem(Tiers.NETHERITE, 6, -2.4f,
+                    new Item.Properties().rarity(Rarity.EPIC).fireResistant(),
+                    AshOfWarType.ANCIENT_LIGHTNING_SPEAR, StatusEffectType.NONE, 0.0f, 28.0f));
 }

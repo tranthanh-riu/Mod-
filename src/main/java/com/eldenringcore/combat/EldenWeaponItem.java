@@ -9,6 +9,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -90,6 +94,12 @@ public class EldenWeaponItem extends SwordItem {
             case TRANSIENT_MOONLIGHT -> 40;
             case MOONLIGHT_WAVE -> 60;
             case WATERFOWL_DANCE -> 80;
+            case TAKERS_FLAMES -> 55;
+            case STARCALLER_CRY -> 70;
+            case DESTINED_DEATH -> 75;
+            case BLOODHOUNDS_FINESSE -> 40;
+            case GOLDEN_VOW -> 120;
+            case ANCIENT_LIGHTNING_SPEAR -> 55;
             default -> 20;
         };
     }
@@ -120,6 +130,24 @@ public class EldenWeaponItem extends SwordItem {
                     }
                 }
                 level.sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX(), player.getY() + 1.1, player.getZ(), 16, 2.5, 0.6, 2.5, 0.1);
+            }
+            case TAKERS_FLAMES -> {
+                executeTakersFlames(level, player, forward);
+            }
+            case STARCALLER_CRY -> {
+                executeStarcallerCry(level, player);
+            }
+            case DESTINED_DEATH -> {
+                executeDestinedDeath(level, player, forward);
+            }
+            case BLOODHOUNDS_FINESSE -> {
+                executeBloodhoundsFinesse(level, player, forward);
+            }
+            case GOLDEN_VOW -> {
+                executeGoldenVow(level, player);
+            }
+            case ANCIENT_LIGHTNING_SPEAR -> {
+                executeAncientLightningSpear(level, player, forward);
             }
             default -> {
             }
@@ -279,6 +307,184 @@ public class EldenWeaponItem extends SwordItem {
                 }
             }
             return 32;
+        }
+    }
+
+    /**
+     * Taker's Flames (Blasphemous Blade): Blazing flame trail + lifesteal on hit.
+     */
+    private void executeTakersFlames(ServerLevel level, Player player, Vec3 forward) {
+        player.playSound(SoundEvents.BLAZE_SHOOT, 1.5f, 0.75f);
+        Vec3 horizontalForward = new Vec3(forward.x, 0.0, forward.z);
+        Vec3 dir = horizontalForward.lengthSqr() > 1.0E-4 ? horizontalForward.normalize() : new Vec3(0.0, 0.0, 1.0);
+        Vec3 start = player.position().add(0.0, 0.3, 0.0);
+
+        Set<UUID> hitEntities = new HashSet<>();
+        float totalHeal = 0.0f;
+        for (double d = 1.2; d <= 12.0; d += 0.85) {
+            Vec3 pos = start.add(dir.scale(d));
+            level.sendParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.3, pos.z, 8, 0.45, 0.35, 0.45, 0.04);
+            level.sendParticles(ParticleTypes.LAVA, pos.x, pos.y + 0.2, pos.z, 2, 0.3, 0.2, 0.3, 0.02);
+
+            AABB hitBox = new AABB(pos.x - 1.6, pos.y - 0.8, pos.z - 1.6, pos.x + 1.6, pos.y + 2.2, pos.z + 1.6);
+            for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
+                if (hitEntities.add(target.getUUID())) {
+                    target.hurt(player.damageSources().playerAttack(player), 15.0f);
+                    target.setSecondsOnFire(4);
+                    if (target instanceof EldenBossEntity boss) {
+                        boss.applyPoiseDamage(32.0f);
+                    }
+                    totalHeal = Math.min(10.0f, totalHeal + 2.5f);
+                }
+            }
+        }
+        if (totalHeal > 0.0f) {
+            player.heal(totalHeal);
+            level.sendParticles(ParticleTypes.HEART, player.getX(), player.getY() + 1.8, player.getZ(), 5, 0.4, 0.3, 0.4, 0.02);
+        }
+    }
+
+    /**
+     * Starcaller Cry (Starscourge Greatsword): Pulls nearby enemies in with gravity,
+     * followed by a heavy gravity slam explosion after 14 ticks.
+     */
+    private void executeStarcallerCry(ServerLevel level, Player player) {
+        player.playSound(SoundEvents.ENDERMAN_SCREAM, 1.5f, 0.55f);
+        level.sendParticles(ParticleTypes.PORTAL, player.getX(), player.getY() + 1.0, player.getZ(), 45, 3.0, 1.0, 3.0, 0.2);
+
+        AABB pullBox = player.getBoundingBox().inflate(9.0, 3.0, 9.0);
+        for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, pullBox, e -> e != player && e.isAlive())) {
+            Vec3 pullVec = player.position().subtract(target.position());
+            double dist = pullVec.length();
+            if (dist > 1.5) {
+                Vec3 velocity = pullVec.normalize().scale(Math.min(1.4, dist * 0.22));
+                target.setDeltaMovement(velocity.x, 0.28, velocity.z);
+                target.hurtMarked = true;
+            }
+            target.hurt(player.damageSources().playerAttack(player), 6.0f);
+            if (target instanceof EldenBossEntity boss) {
+                boss.applyPoiseDamage(18.0f);
+            }
+        }
+
+        AshOfWarComboManager.scheduleDelayedAction(level, 14, () -> {
+            if (!player.isAlive() || player.level() != level) {
+                return;
+            }
+            player.playSound(SoundEvents.GENERIC_EXPLODE, 1.6f, 0.7f);
+            level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, player.getX(), player.getY() + 0.8, player.getZ(), 2, 1.0, 0.5, 1.0, 0.0);
+            level.sendParticles(ParticleTypes.DRAGON_BREATH, player.getX(), player.getY() + 0.6, player.getZ(), 35, 3.2, 0.6, 3.2, 0.06);
+
+            AABB slamBox = player.getBoundingBox().inflate(6.0, 2.5, 6.0);
+            for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, slamBox, e -> e != player && e.isAlive())) {
+                target.invulnerableTime = 0;
+                target.hurt(player.damageSources().playerAttack(player), 18.0f);
+                Vec3 push = target.position().subtract(player.position()).normalize();
+                target.setDeltaMovement(push.x * 0.6, 0.45, push.z * 0.6);
+                target.hurtMarked = true;
+                if (target instanceof EldenBossEntity boss) {
+                    boss.applyPoiseDamage(45.0f);
+                }
+            }
+        });
+    }
+
+    /**
+     * Destined Death (Maliketh's Black Blade): 3-tick swirling dome of crimson-black slashes
+     * dealing % max HP burst damage and Wither.
+     */
+    private void executeDestinedDeath(ServerLevel level, Player player, Vec3 forward) {
+        Vec3 center = player.position().add(forward.x * 3.2, 1.0, forward.z * 3.2);
+        Runnable pulse = () -> {
+            if (!player.isAlive() || player.level() != level) {
+                return;
+            }
+            player.playSound(SoundEvents.WITHER_SHOOT, 1.2f, 0.65f);
+            level.sendParticles(ParticleTypes.CRIMSON_SPORE, center.x, center.y, center.z, 30, 2.5, 1.4, 2.5, 0.05);
+            level.sendParticles(ParticleTypes.SQUID_INK, center.x, center.y, center.z, 20, 2.2, 1.2, 2.2, 0.06);
+            level.sendParticles(ParticleTypes.SWEEP_ATTACK, center.x, center.y, center.z, 6, 2.0, 0.8, 2.0, 0.0);
+
+            AABB dome = new AABB(center.x - 4.2, center.y - 2.0, center.z - 4.2, center.x + 4.2, center.y + 2.5, center.z + 4.2);
+            for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, dome, e -> e != player && e.isAlive())) {
+                float pctDamage = Math.min(18.0f, target.getMaxHealth() * 0.03f);
+                target.invulnerableTime = 0;
+                target.hurt(player.damageSources().playerAttack(player), 7.0f + pctDamage);
+                target.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
+                if (target instanceof EldenBossEntity boss) {
+                    boss.applyPoiseDamage(16.0f);
+                }
+            }
+        };
+
+        pulse.run();
+        AshOfWarComboManager.scheduleDelayedAction(level, 5, pulse);
+        AshOfWarComboManager.scheduleDelayedAction(level, 10, pulse);
+    }
+
+    /**
+     * Bloodhound's Finesse (Bloodhound's Fang): Heavy bleed slash followed by an evasive backflip.
+     */
+    private void executeBloodhoundsFinesse(ServerLevel level, Player player, Vec3 forward) {
+        performBloodArcSlash(level, player, forward, 5.2, 1.8, 14.0f, 35.0f, 32.0f, 0.8f);
+        Vec3 horizontalForward = new Vec3(forward.x, 0.0, forward.z);
+        if (horizontalForward.lengthSqr() > 1.0E-4) {
+            Vec3 back = horizontalForward.normalize().scale(-1.15);
+            player.setDeltaMovement(back.x, 0.42, back.z);
+            player.hurtMarked = true;
+        }
+        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 12, 2, false, false));
+        level.sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.5, player.getZ(), 12, 0.4, 0.2, 0.4, 0.06);
+    }
+
+    /**
+     * Golden Vow (Golden Halberd): Radiant golden aura buffing Attack Damage and Defense for 20s.
+     */
+    private void executeGoldenVow(ServerLevel level, Player player) {
+        player.playSound(SoundEvents.BEACON_ACTIVATE, 1.4f, 1.15f);
+        level.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1.0, player.getZ(), 32, 2.0, 0.8, 2.0, 0.06);
+        level.sendParticles(ParticleTypes.WAX_ON, player.getX(), player.getY() + 1.2, player.getZ(), 24, 1.8, 0.8, 1.8, 0.05);
+
+        AABB auraBox = player.getBoundingBox().inflate(8.0, 4.0, 8.0);
+        for (Player ally : level.getEntitiesOfClass(Player.class, auraBox, Player::isAlive)) {
+            ally.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 400, 0));
+            ally.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 400, 0));
+        }
+    }
+
+    /**
+     * Ancient Lightning Spear (Bolt of Gransax): Long-range piercing red lightning bolt.
+     */
+    private void executeAncientLightningSpear(ServerLevel level, Player player, Vec3 forward) {
+        player.playSound(SoundEvents.TRIDENT_THROW, 1.6f, 0.8f);
+        player.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 0.8f, 1.4f);
+
+        Vec3 start = player.getEyePosition();
+        Set<UUID> hitEntities = new HashSet<>();
+        boolean spawnedBolt = false;
+
+        for (double d = 1.5; d <= 22.0; d += 0.75) {
+            Vec3 pos = start.add(forward.scale(d));
+            level.sendParticles(ParticleTypes.ELECTRIC_SPARK, pos.x, pos.y - 0.1, pos.z, 4, 0.15, 0.15, 0.15, 0.03);
+            level.sendParticles(ParticleTypes.CRIMSON_SPORE, pos.x, pos.y - 0.1, pos.z, 3, 0.12, 0.12, 0.12, 0.02);
+
+            AABB hitBox = new AABB(pos.x - 1.0, pos.y - 1.0, pos.z - 1.0, pos.x + 1.0, pos.y + 1.0, pos.z + 1.0);
+            for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
+                if (hitEntities.add(target.getUUID())) {
+                    target.hurt(player.damageSources().lightningBolt(), 19.0f);
+                    if (target instanceof EldenBossEntity boss) {
+                        boss.applyPoiseDamage(40.0f);
+                    }
+                    if (!spawnedBolt) {
+                        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+                        if (bolt != null) {
+                            bolt.moveTo(target.getX(), target.getY(), target.getZ());
+                            bolt.setVisualOnly(true);
+                            level.addFreshEntity(bolt);
+                        }
+                        spawnedBolt = true;
+                    }
+                }
+            }
         }
     }
 

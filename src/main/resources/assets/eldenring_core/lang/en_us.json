@@ -10,5 +10,11 @@
   "item.eldenring_core.somber_smithing_stone": "Somber Smithing Stone",
   "item.eldenring_core.margit_spawn_egg": "Margit, the Fell Omen Spawn Egg",
   "block.eldenring_core.site_of_grace": "Site of Grace",
-  "block.eldenring_core.fog_gate": "Golden Fog Gate"
+  "block.eldenring_core.fog_gate": "Golden Fog Gate",
+  "item.eldenring_core.blasphemous_blade": "Blasphemous Blade",
+  "item.eldenring_core.starscourge_greatsword": "Starscourge Greatsword",
+  "item.eldenring_core.malikeths_black_blade": "Maliketh's Black Blade",
+  "item.eldenring_core.bloodhounds_fang": "Bloodhound's Fang",
+  "item.eldenring_core.golden_halberd": "Golden Halberd",
+  "item.eldenring_core.bolt_of_gransax": "Bolt of Gransax"
 }

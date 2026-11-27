@@ -27,6 +27,12 @@ public class ModCreativeTabs {
                         output.accept(ModItems.SITE_OF_GRACE_ITEM.get());
                         output.accept(ModItems.FOG_GATE_ITEM.get());
                         output.accept(ModItems.MARGIT_SPAWN_EGG.get());
+                        output.accept(ModItems.BLASPHEMOUS_BLADE.get());
+                        output.accept(ModItems.STARSCOURGE_GREATSWORD.get());
+                        output.accept(ModItems.MALIKETHS_BLACK_BLADE.get());
+                        output.accept(ModItems.BLOODHOUNDS_FANG.get());
+                        output.accept(ModItems.GOLDEN_HALBERD.get());
+                        output.accept(ModItems.BOLT_OF_GRANSAX.get());
                     })
                     .build());
 }

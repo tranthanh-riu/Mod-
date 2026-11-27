@@ -1,0 +1,10 @@
+{
+  "type": "epicfight:spear",
+  "attributes": {
+    "common": {
+      "armor_negation": 22.0,
+      "impact": 2.2,
+      "max_strikes": 3
+    }
+  }
+}
