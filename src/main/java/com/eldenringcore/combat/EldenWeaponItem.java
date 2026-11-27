@@ -78,6 +78,9 @@ public class EldenWeaponItem extends SwordItem {
             int stage = AshOfWarComboManager.getActiveComboStage(player, AshOfWarType.CORPSE_PILER);
             return stage == 0 ? this.ashOfWar.getBaseFpCost() : 10.0f;
         }
+        if (this.ashOfWar == AshOfWarType.TRANSIENT_MOONLIGHT && player.isShiftKeyDown()) {
+            return 20.0f;
+        }
         return this.ashOfWar.getBaseFpCost();
     }
 
@@ -98,8 +101,7 @@ public class EldenWeaponItem extends SwordItem {
                 return executeCorpsePiler(level, player);
             }
             case TRANSIENT_MOONLIGHT -> {
-                player.playSound(SoundEvents.TRIDENT_RIPTIDE_2, 1.4f, 1.4f);
-                performLineSlash(level, player, forward, 9.0, 13.0f, ParticleTypes.SOUL_FIRE_FLAME, StatusEffectType.BLEED, 25.0f, 35.0f);
+                return executeTransientMoonlight(level, player, forward);
             }
             case MOONLIGHT_WAVE -> {
                 player.playSound(SoundEvents.GLASS_BREAK, 1.4f, 0.9f);
@@ -212,6 +214,74 @@ public class EldenWeaponItem extends SwordItem {
         }
     }
 
+    /**
+     * Transient Moonlight (Moonveil):
+     * - Shift + Right-Click: Long-range heavy vertical moonlight beam (high damage & poise break).
+     * - Normal Right-Click: Wide horizontal moonlight slash wave (crowd control).
+     */
+    private int executeTransientMoonlight(ServerLevel level, Player player, Vec3 forward) {
+        Vec3 start = player.getEyePosition();
+        Set<UUID> hitEntities = new HashSet<>();
+
+        if (player.isShiftKeyDown()) {
+            // Heavy Vertical Wave (long range, tall narrow beam, heavy stance damage)
+            player.playSound(SoundEvents.TRIDENT_RIPTIDE_3, 1.6f, 1.15f);
+            for (double d = 1.2; d <= 13.0; d += 0.75) {
+                Vec3 center = start.add(forward.scale(d));
+                for (double yOff = -0.8; yOff <= 1.4; yOff += 0.55) {
+                    level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, center.x, center.y + yOff, center.z, 2, 0.08, 0.08, 0.08, 0.01);
+                }
+                level.sendParticles(ParticleTypes.END_ROD, center.x, center.y + 0.2, center.z, 1, 0.05, 0.35, 0.05, 0.01);
+
+                AABB hitBox = new AABB(
+                        center.x - 0.85, center.y - 1.6, center.z - 0.85,
+                        center.x + 0.85, center.y + 1.8, center.z + 0.85);
+                for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
+                    if (hitEntities.add(target.getUUID())) {
+                        target.hurt(player.damageSources().playerAttack(player), 17.0f);
+                        StatusBuildupManager.addBuildup(target, player, StatusEffectType.BLEED, 30.0f);
+                        if (target instanceof EldenBossEntity boss) {
+                            boss.applyPoiseDamage(48.0f);
+                        }
+                    }
+                }
+            }
+            return 45;
+        } else {
+            // Light Horizontal Wave (wide crescent arc)
+            player.playSound(SoundEvents.TRIDENT_RIPTIDE_2, 1.4f, 1.45f);
+            Vec3 horizontalForward = new Vec3(forward.x, 0.0, forward.z);
+            Vec3 right = horizontalForward.lengthSqr() > 1.0E-4
+                    ? horizontalForward.normalize().cross(new Vec3(0.0, 1.0, 0.0)).normalize()
+                    : new Vec3(1.0, 0.0, 0.0);
+
+            for (double d = 1.2; d <= 8.5; d += 0.8) {
+                Vec3 center = start.add(forward.scale(d));
+                for (double side = -2.4; side <= 2.4; side += 0.6) {
+                    Vec3 p = center.add(right.scale(side));
+                    level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, p.x, p.y - 0.25, p.z, 2, 0.1, 0.08, 0.1, 0.01);
+                }
+                if (d >= 7.0) {
+                    level.sendParticles(ParticleTypes.SWEEP_ATTACK, center.x, center.y - 0.25, center.z, 3, 1.2, 0.15, 1.2, 0.0);
+                }
+
+                AABB hitBox = new AABB(
+                        center.x - 2.6, center.y - 1.0, center.z - 2.6,
+                        center.x + 2.6, center.y + 1.0, center.z + 2.6);
+                for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, hitBox, e -> e != player && e.isAlive())) {
+                    if (hitEntities.add(target.getUUID())) {
+                        target.hurt(player.damageSources().playerAttack(player), 12.0f);
+                        StatusBuildupManager.addBuildup(target, player, StatusEffectType.BLEED, 22.0f);
+                        if (target instanceof EldenBossEntity boss) {
+                            boss.applyPoiseDamage(28.0f);
+                        }
+                    }
+                }
+            }
+            return 32;
+        }
+    }
+
     private void performLineSlash(ServerLevel level, Player player, Vec3 forward, double range, float damage,
                                   ParticleOptions particle, StatusEffectType status, float buildup, float poise) {
         Vec3 start = player.getEyePosition();
@@ -242,6 +312,11 @@ public class EldenWeaponItem extends SwordItem {
             if (this.ashOfWar == AshOfWarType.CORPSE_PILER) {
                 tooltip.add(Component.literal("Right-Click repeatedly: 3-stage blood slash combo")
                         .withStyle(ChatFormatting.DARK_RED));
+            } else if (this.ashOfWar == AshOfWarType.TRANSIENT_MOONLIGHT) {
+                tooltip.add(Component.literal("Right-Click: Wide horizontal wave (15 FP)")
+                        .withStyle(ChatFormatting.BLUE));
+                tooltip.add(Component.literal("Shift + Right-Click: Long-range vertical wave (20 FP)")
+                        .withStyle(ChatFormatting.DARK_AQUA));
             }
         }
         if (this.statusType != StatusEffectType.NONE) {
