@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "eldenring_core:block/fog_gate"
+    }
+  }
+}

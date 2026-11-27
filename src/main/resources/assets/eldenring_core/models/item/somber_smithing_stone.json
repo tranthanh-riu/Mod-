@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "eldenring_core:item/somber_smithing_stone"
+  }
+}

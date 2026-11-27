@@ -1,0 +1,272 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.godfrey",
+        "texture_width": 64,
+        "texture_height": 64,
+        "visible_bounds_width": 5,
+        "visible_bounds_height": 6,
+        "visible_bounds_offset": [
+          0,
+          3.0,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": []
+        },
+        {
+          "name": "body",
+          "parent": "root",
+          "pivot": [
+            0,
+            22.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.5,
+                22.5,
+                -5.0
+              ],
+              "size": [
+                15.0,
+                22.5,
+                10.0
+              ],
+              "uv": [
+                0,
+                16
+              ]
+            },
+            {
+              "origin": [
+                5,
+                36,
+                4
+              ],
+              "size": [
+                14,
+                14,
+                14
+              ],
+              "uv": [
+                4,
+                44
+              ]
+            }
+          ]
+        },
+        {
+          "name": "head",
+          "parent": "body",
+          "pivot": [
+            0,
+            45.0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6.25,
+                45.0,
+                -6.25
+              ],
+              "size": [
+                12.5,
+                12.5,
+                12.5
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -7,
+                54,
+                -7
+              ],
+              "size": [
+                14,
+                5,
+                14
+              ],
+              "uv": [
+                24,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -6,
+                42,
+                4
+              ],
+              "size": [
+                12,
+                14,
+                4
+              ],
+              "uv": [
+                4,
+                44
+              ]
+            }
+          ]
+        },
+        {
+          "name": "right_arm",
+          "parent": "body",
+          "pivot": [
+            -10.0,
+            42.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -13.75,
+                22.5,
+                -3.75
+              ],
+              "size": [
+                6.25,
+                21.25,
+                7.5
+              ],
+              "uv": [
+                32,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -14,
+                18,
+                -28
+              ],
+              "size": [
+                3,
+                4,
+                36
+              ],
+              "uv": [
+                48,
+                40
+              ]
+            },
+            {
+              "origin": [
+                -16,
+                12,
+                -34
+              ],
+              "size": [
+                7,
+                16,
+                12
+              ],
+              "uv": [
+                24,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "left_arm",
+          "parent": "body",
+          "pivot": [
+            10.0,
+            42.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7.5,
+                22.5,
+                -3.75
+              ],
+              "size": [
+                6.25,
+                21.25,
+                7.5
+              ],
+              "uv": [
+                32,
+                16
+              ]
+            }
+          ]
+        },
+        {
+          "name": "right_leg",
+          "parent": "root",
+          "pivot": [
+            -4.375,
+            22.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.5,
+                0,
+                -3.75
+              ],
+              "size": [
+                6.25,
+                22.5,
+                7.5
+              ],
+              "uv": [
+                32,
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "name": "left_leg",
+          "parent": "root",
+          "pivot": [
+            4.375,
+            22.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.25,
+                0,
+                -3.75
+              ],
+              "size": [
+                6.25,
+                22.5,
+                7.5
+              ],
+              "uv": [
+                32,
+                40
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

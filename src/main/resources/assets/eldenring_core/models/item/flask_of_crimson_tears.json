@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "eldenring_core:item/flask_of_crimson_tears"
+  }
+}

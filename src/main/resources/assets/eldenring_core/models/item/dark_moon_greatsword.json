@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "eldenring_core:item/dark_moon_greatsword"
+  }
+}
