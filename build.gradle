@@ -52,6 +52,9 @@ mixin {
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs_dev'
+    }
     maven {
         name = 'GeckoLib'
         url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
@@ -74,6 +77,14 @@ dependencies {
 
     // GeckoLib 4 for Boss models & animations
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
+
+    // Local dev runtime mods (automatically deobfuscated by ForgeGradle for runClient)
+    runtimeOnly fg.deobf("local:xaerominimap-forge-1.20.1-26.6.0:1.0")
+    runtimeOnly fg.deobf("local:xaeroworldmap-forge-1.20.1-1.47.0:1.0")
+    runtimeOnly fg.deobf("local:worldedit-mod-7.2.15:1.0")
+    runtimeOnly fg.deobf("local:DungeonsArise-1.20.x-2.1.58-release:1.0")
+    runtimeOnly fg.deobf("local:YungsApi-1.20-Forge-4.0.6:1.0")
+    runtimeOnly fg.deobf("local:YungsBetterDungeons-1.20-Forge-4.0.4:1.0")
 
     // Mixin annotation processor
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

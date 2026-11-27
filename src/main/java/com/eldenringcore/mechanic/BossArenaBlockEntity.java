@@ -56,6 +56,11 @@ public class BossArenaBlockEntity extends BlockEntity {
         return this.bossId;
     }
 
+    public void setBossId(String bossId) {
+        this.bossId = bossId;
+        this.setChanged();
+    }
+
     public void resetArena() {
         if (this.level instanceof ServerLevel serverLevel && this.activeBossUuid != null) {
             Entity existing = serverLevel.getEntity(this.activeBossUuid);

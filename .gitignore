@@ -4,6 +4,7 @@ run/
 out/
 reference/*.jar
 reference/*.zip
+libs_dev/
 .idea/
 *.iml
 .vscode/

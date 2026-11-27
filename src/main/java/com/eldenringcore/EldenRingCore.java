@@ -2,13 +2,17 @@ package com.eldenringcore;
 
 import com.eldenringcore.boss.*;
 import com.eldenringcore.combat.StatusBuildupManager;
+import com.eldenringcore.mechanic.EldenStoryCommand;
+import com.eldenringcore.mechanic.RegionDifficultyManager;
 import com.eldenringcore.registry.ModBlockEntities;
 import com.eldenringcore.registry.ModBlocks;
 import com.eldenringcore.registry.ModCreativeTabs;
 import com.eldenringcore.registry.ModEntities;
 import com.eldenringcore.registry.ModItems;
+import com.eldenringcore.registry.ModWorldgen;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -31,10 +35,13 @@ public class EldenRingCore {
         ModItems.ITEMS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        ModWorldgen.BIOME_SOURCES.register(modEventBus);
 
         modEventBus.addListener(this::registerAttributes);
 
         MinecraftForge.EVENT_BUS.register(new StatusBuildupManager());
+        MinecraftForge.EVENT_BUS.register(new RegionDifficultyManager());
+        MinecraftForge.EVENT_BUS.addListener((RegisterCommandsEvent event) -> EldenStoryCommand.register(event.getDispatcher()));
 
         LOGGER.info("Elden Ring Core initialized with 13 Elden Ring Bosses (Waves 1-4).");
     }

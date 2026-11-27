@@ -1,0 +1,18 @@
+{
+  "type": "eldenring_core:lands_between",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "eldenring_core:lands_between",
+      "limgrave": "eldenring_core:limgrave",
+      "liurnia": "eldenring_core:liurnia",
+      "caelid": "eldenring_core:caelid",
+      "altus_plateau": "eldenring_core:altus_plateau",
+      "mt_gelmir": "eldenring_core:mt_gelmir",
+      "mountaintops": "eldenring_core:mountaintops",
+      "haligtree": "eldenring_core:haligtree",
+      "ocean": "minecraft:deep_ocean"
+    }
+  }
+}

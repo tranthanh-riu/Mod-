@@ -393,6 +393,10 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
     public void die(DamageSource cause) {
         super.die(cause);
         if (this.level() instanceof ServerLevel serverLevel) {
+            net.minecraft.resources.ResourceLocation key = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(this.getType());
+            if (key != null) {
+                com.eldenringcore.mechanic.StoryProgressionManager.get(serverLevel).recordBossDefeated(serverLevel, key.getPath());
+            }
             Component banner = Component.literal(this.getVictoryBannerText())
                     .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
             for (ServerPlayer player : serverLevel.getPlayers(p -> p.distanceToSqr(this) <= 64.0 * 64.0)) {
