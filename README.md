@@ -4,11 +4,13 @@ Dự án mod Minecraft **Elden Ring** chơi nội bộ cùng bạn bè (không p
 
 ---
 
-## Mục lục từng phần (Click để xem chi tiết)
-1. **[Phần 1: Hệ thống Boss & AI](docs/01_BOSS.md)**
-2. **[Phần 2: Vũ khí, Ash of War & Combat](docs/02_WEAPONS.md)**
-3. **[Phần 3: Bản đồ, Thế giới & Cơ chế Sinh tồn](docs/03_MAP_WORLD.md)**
-4. **[Phần 4: Chia nhóm & Quy trình Git](docs/04_TEAM_WORKFLOW.md)**
+## Mục lục kế hoạch chi tiết từng phần (Click để xem checklist việc cần làm)
+1. **[Phần 1: Hệ thống Boss & AI (`part/boss-ai`)](docs/01_BOSS.md)**
+2. **[Phần 2: Vũ khí, Ash of War & Combat (`part/weapons-combat`)](docs/02_WEAPONS.md)**
+3. **[Phần 3: Bản đồ, Đấu trường & Cơ chế (`part/map-mechanics`)](docs/03_MAP_WORLD.md)**
+4. **[Phần 4: 3D Model, Animation & Texture (`part/art-models`)](docs/05_ART_MODELS.md)**
+5. **[Phần 5: Âm thanh, UI/HUD & Playtest (`part/audio-ui-qa`)](docs/06_AUDIO_UI_QA.md)**
+6. **[Hướng dẫn Chia nhóm & Quy trình Git](docs/04_TEAM_WORKFLOW.md)**
 
 ---
 
