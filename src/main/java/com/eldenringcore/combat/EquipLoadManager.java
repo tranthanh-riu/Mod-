@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Mod.EventBusSubscriber(modid = EldenRingCore.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EquipLoadManager {
     private static final UUID EQUIP_LOAD_SPEED_UUID = UUID.fromString("a3c1f4d0-5e8b-4f92-b7a1-9c2d6e4f8a11");
-    public static final float DEFAULT_MAX_LOAD = 50.0f;
+    public static final float DEFAULT_MAX_LOAD = 60.0f;
 
     private static final Map<UUID, LoadTier> LAST_TIER = new ConcurrentHashMap<>();
 
@@ -68,7 +68,7 @@ public class EquipLoadManager {
 
         for (ItemStack armorStack : player.getArmorSlots()) {
             if (!armorStack.isEmpty() && armorStack.getItem() instanceof ArmorItem armor) {
-                total += armor.getDefense() * 1.1f + armor.getToughness() * 1.5f;
+                total += armor.getDefense() * 0.95f + armor.getToughness() * 1.5f;
             }
         }
 
