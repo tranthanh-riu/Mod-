@@ -1,0 +1,11 @@
+{
+    "parent":  "eldenring_core:custom/blasphemous_blade",
+    "textures":  {
+                     "3":  "eldenring_core:item/weapons/dead_brain_coral_block",
+                     "4":  "eldenring_core:item/weapons/bone_block_top",
+                     "5":  "eldenring_core:item/weapons/ancient_debris_side",
+                     "6":  "eldenring_core:item/weapons/polished_deepslate",
+                     "8":  "eldenring_core:item/weapons/nether_quartz_ore",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

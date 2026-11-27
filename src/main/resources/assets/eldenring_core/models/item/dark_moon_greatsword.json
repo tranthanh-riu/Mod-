@@ -1,0 +1,12 @@
+{
+    "parent":  "eldenring_core:custom/dark_moon_greatsword",
+    "textures":  {
+                     "4":  "eldenring_core:item/weapons/anvil",
+                     "5":  "eldenring_core:item/weapons/smooth_stone_slab_side",
+                     "7":  "eldenring_core:item/weapons/iron_block",
+                     "8":  "eldenring_core:item/weapons/gold_block",
+                     "9":  "eldenring_core:item/weapons/raw_gold_block",
+                     "10":  "eldenring_core:item/weapons/lapis_block",
+                     "particle":  "eldenring_core:item/weapons/blackbladeitem"
+                 }
+}
