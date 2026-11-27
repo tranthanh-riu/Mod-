@@ -29,3 +29,10 @@ description='''${mod_description}'''
     versionRange="[4.4,)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="epicfight"
+    mandatory=true
+    versionRange="[20.15,)"
+    ordering="AFTER"
+    side="BOTH"

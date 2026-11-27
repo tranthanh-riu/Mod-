@@ -10,6 +10,11 @@
 > - `part/weapons-combat` phụ trách **Vũ khí 3D, Ash of War, FP, Nâng cấp Smithing & Equip Load**.
 > - `part/combat-mechanics` phụ trách **Thao tác chiến đấu cốt lõi của nhân vật** (Stamina, Né đòn Roll/i-frames, Đỡ đòn/Parry, Khóa mục tiêu Lock-on, Phá thế Riposte & HUD chiến đấu).
 
+> **Quyết định kiến trúc (2026-11-27): dùng Epic Fight làm dependency bắt buộc.**
+> - `eldenring_core` khai báo `epicfight` là `mandatory=true` trong `mods.toml` (bản `20.15.2-mc1.20.1-forge`, tải qua Modrinth maven trong `build.gradle`). Người chơi phải cài Epic Fight.
+> - **Không copy/tỉa code của Epic Fight** vào mod: Epic Fight dùng giấy phép **GPL-3.0-or-later**, còn mod mình là "All Rights Reserved". Chỉ gọi API/event của Epic Fight.
+> - Stamina, Roll, Guard và animation người chơi: **dùng của Epic Fight**. Phần này chỉ làm những gì Epic Fight chưa có hoặc cần gắn với Boss (`EldenBossEntity`): i-frames khớp `performArcHitbox`/`performAoeHitbox`, Riposte khi Boss `STAGGERED`, Guard Counter lên Poise Boss, HUD/Lock-on nếu thiếu.
+
 ---
 
 ## Checklist Công Việc Theo Từng Giai Đoạn

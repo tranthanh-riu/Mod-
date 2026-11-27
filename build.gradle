@@ -67,6 +67,13 @@ repositories {
             includeGroup 'curse.maven'
         }
     }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
 }
 
 dependencies {
@@ -74,6 +81,9 @@ dependencies {
 
     // GeckoLib 4 for Boss models & animations
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
+
+    // Epic Fight (required): Souls-like stamina, roll, guard and animations
+    implementation fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
 
     // Mixin annotation processor
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

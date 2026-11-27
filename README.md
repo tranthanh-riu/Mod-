@@ -1,6 +1,6 @@
 # Elden Ring Core (`eldenring_core`) — Minecraft 1.20.1 Forge
 
-Dự án mod Minecraft **Elden Ring** chơi nội bộ cùng bạn bè (không phát hành công khai), xây dựng theo kiến trúc **Hybrid** trên **Minecraft 1.20.1 + Forge 47.3.0 + GeckoLib 4 + Mixin**.
+Dự án mod Minecraft **Elden Ring** chơi nội bộ cùng bạn bè (không phát hành công khai), xây dựng theo kiến trúc **Hybrid** trên **Minecraft 1.20.1 + Forge 47.4.4 + GeckoLib 4 + Epic Fight 20.15 + Mixin**.
 
 ---
 
