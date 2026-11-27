@@ -92,31 +92,15 @@ dependencies {
     // Epic Fight (required): Souls-like stamina, roll, guard and animations
     implementation fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
 
-    // Local dev runtime mods (automatically deobfuscated by ForgeGradle for runClient)
-    runtimeOnly fg.deobf("local:xaerominimap-forge-1.20.1-26.6.0:1.0")
-    runtimeOnly fg.deobf("local:xaeroworldmap-forge-1.20.1-1.47.0:1.0")
-    runtimeOnly fg.deobf("local:worldedit-mod-7.2.15:1.0")
-    runtimeOnly fg.deobf("local:Terralith_1.20.x_v2.5.4:1.0")
-    runtimeOnly fg.deobf("local:DungeonsArise-1.20.x-2.1.58-release:1.0")
-    runtimeOnly fg.deobf("local:Structory_1.20.x_v1.3.5:1.0")
-    runtimeOnly fg.deobf("local:Structory_Towers_1.20.x_v1.0.7:1.0")
-    runtimeOnly fg.deobf("local:explorify-1.6.6:1.0")
-    runtimeOnly fg.deobf("local:YungsApi-1.20-Forge-4.0.6:1.0")
-    runtimeOnly fg.deobf("local:YungsBetterDungeons-1.20-Forge-4.0.4:1.0")
-    runtimeOnly fg.deobf("local:YungsBetterStrongholds-1.20-Forge-4.0.3:1.0")
-    runtimeOnly fg.deobf("local:YungsBetterMineshafts-1.20-Forge-4.0.4:1.0")
-
-    // DawnCraft-style Field Bosses & Mega Boss Dungeons (free Modrinth 1.20.1 Forge)
-    runtimeOnly fg.deobf("local:curios-forge-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:lionfishapi-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:L_Enders_Cataclysm-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:mowziesmobs-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:CerbonsAPI-Forge-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:cloth-config-forge-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:BOMD-Forge-1.20.1-1.1.2:1.0")
-    runtimeOnly fg.deobf("local:villagerstradingplus-1.20.1:1.0")
-    runtimeOnly fg.deobf("local:graveyard-forge-4.0.1:1.0")
-    runtimeOnly fg.deobf("local:born_in_chaos-1.20.1:1.0")
+    // Local dev runtime mods in libs_dev/ (auto-loaded if present & deobfuscated by ForgeGradle)
+    // Teammates can run: python scripts/download_dev_mods.py to fetch all 22 free Modrinth jars
+    def libsDevDir = file('libs_dev')
+    if (libsDevDir.exists() && libsDevDir.isDirectory()) {
+        libsDevDir.listFiles()?.findAll { it.name.endsWith('.jar') }?.sort { it.name }?.each { jarFile ->
+            def baseName = jarFile.name.substring(0, jarFile.name.length() - 4)
+            runtimeOnly fg.deobf("local:${baseName}:1.0")
+        }
+    }
 
     // Mixin annotation processor
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
