@@ -28,5 +28,8 @@
   "message.eldenring_core.grace.invalid_name": "Choose a Site of Grace and a name of 1–64 characters.",
   "message.eldenring_core.grace.named": "Site of Grace named %s.",
   "message.eldenring_core.grace.destination_unavailable": "This Site of Grace is missing or its landing area is blocked.",
-  "message.eldenring_core.grace.travel_hint": "Crouch and interact with empty hands to fast travel."
+  "message.eldenring_core.grace.travel_hint": "Crouch and interact with empty hands to fast travel.",
+  "message.eldenring_core.wave1.already_built": "Wave 1 is already installed. Run /function eldenring_core:wave1/enter to visit.",
+  "message.eldenring_core.wave1.install_first": "Run /function eldenring_core:wave1/install first.",
+  "message.eldenring_core.wave1.ready": "Wave 1 is ready. Run /function eldenring_core:wave1/enter to visit."
 }

@@ -26,12 +26,13 @@
 
 ### Giai đoạn 2 — Xây dựng Adventure Map "The Lands Between" (Wave 1 → 4)
 *(Nhóm Builder dùng **WorldEdit / Axiom** trên Minecraft 1.20.1 Forge)*
-- [ ] **Khu vực Wave 1 — Limgrave & Stormveil**:
-  - [ ] Điểm xuất phát **The First Step** + Site of Grace đầu tiên.
-  - [ ] Khu vực mở đặt **Boss Arena Controller (`tree_sentinel`)**.
-  - [ ] **Church of Elleh** (khu rèn vũ khí bằng Smithing Stones).
-  - [ ] **Cầu Stormveil** đặt Fog Gate + **Boss Arena Controller (`margit`)**.
-  - [ ] **Lâu đài Stormveil** dẫn tới sân đấu **Godrick**.
+- [x] **Khu vực Wave 1 — Limgrave & Stormveil**:
+  - [x] Điểm xuất phát **The First Step** + Site of Grace đầu tiên.
+  - [x] Khu vực mở đặt **Boss Arena Controller (`tree_sentinel`)**.
+  - [x] **Church of Elleh** (khu rèn vũ khí bằng Smithing Stones).
+  - [x] **Cầu Stormveil** đặt Fog Gate + **Boss Arena Controller (`margit`)**.
+  - [x] **Lâu đài Stormveil** dẫn tới sân đấu **Godrick**.
+  - Cài đặt: `/function eldenring_core:wave1/install` (một lần), vào map: `/function eldenring_core:wave1/enter`. Boss `tree_sentinel` và `godrick` chờ nhóm Boss đăng ký entity.
 - [ ] **Khu vực Wave 2 — Liurnia & Caelid**: Học viện Raya Lucaria (Rennala) & Đấu trường cát đỏ (Radahn).
 - [ ] **Khu vực Wave 3–4 — Leyndell, Cây Erdtree khổng lồ & Haligtree**: Dựng cây Erdtree phát sáng nhìn thấy từ xa bằng *Distant Horizons*.
 
