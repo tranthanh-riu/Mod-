@@ -5,6 +5,9 @@ import com.eldenringcore.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -14,13 +17,17 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -30,11 +37,15 @@ import java.util.UUID;
  * - When Boss is defeated -> marks arena cleared and spawns a Site of Grace at pos.above().
  */
 public class BossArenaBlockEntity extends BlockEntity {
+    private static final int MAX_GATE_OFFSET = 64;
+    private static final int MAX_GATE_BLOCKS = 256;
+    private final Set<BlockPos> fogGates = new LinkedHashSet<>();
     private String bossId = "eldenring_core:margit";
     private double triggerRadius = 14.0;
     private double resetRadius = 34.0;
     private boolean defeated = false;
     private UUID activeBossUuid = null;
+    private long bossChunk;
     private int tickCounter = 0;
 
     public BossArenaBlockEntity(BlockPos pos, BlockState state) {
@@ -54,6 +65,9 @@ public class BossArenaBlockEntity extends BlockEntity {
         }
         this.activeBossUuid = null;
         this.defeated = false;
+        if (this.level instanceof ServerLevel serverLevel) {
+            updateFogGates(serverLevel, true);
+        }
         this.setChanged();
     }
 
@@ -65,29 +79,39 @@ public class BossArenaBlockEntity extends BlockEntity {
         if (arena.tickCounter % 20 != 0) {
             return; // Check once per second
         }
-        if (arena.defeated) {
-            return;
-        }
-
-        if (arena.activeBossUuid == null) {
+        if (!arena.defeated && arena.activeBossUuid == null) {
             List<Player> challengers = findActiveChallengers(serverLevel, pos, arena.triggerRadius);
             if (!challengers.isEmpty()) {
                 arena.spawnBoss(serverLevel, pos);
             }
-        } else {
+        } else if (!arena.defeated) {
             Entity bossEntity = serverLevel.getEntity(arena.activeBossUuid);
-            if (bossEntity == null || !bossEntity.isAlive()) {
-                // Boss defeated!
+            if (bossEntity == null) {
+                if (serverLevel.areEntitiesLoaded(arena.bossChunk)) {
+                    arena.resetArena();
+                }
+            } else if (!bossEntity.isAlive()) {
                 arena.onBossDefeated(serverLevel, pos);
-                return;
-            }
-
-            // Check if all challengers died or left the arena
-            List<Player> remaining = findActiveChallengers(serverLevel, pos, arena.resetRadius);
-            if (remaining.isEmpty()) {
-                bossEntity.discard();
-                arena.activeBossUuid = null;
+            } else if (findActiveChallengers(serverLevel, pos, arena.resetRadius).isEmpty()) {
+                arena.resetArena();
+            } else if (arena.bossChunk != bossEntity.chunkPosition().toLong()) {
+                arena.bossChunk = bossEntity.chunkPosition().toLong();
                 arena.setChanged();
+            }
+        }
+        // Reconcile gates whose chunks were unloaded when the fight changed state.
+        arena.updateFogGates(serverLevel, arena.activeBossUuid == null);
+    }
+
+    void updateFogGates(ServerLevel level, boolean open) {
+        for (BlockPos offset : this.fogGates) {
+            BlockPos gatePos = this.worldPosition.offset(offset);
+            if (!level.hasChunkAt(gatePos)) {
+                continue;
+            }
+            BlockState gate = level.getBlockState(gatePos);
+            if (gate.is(ModBlocks.FOG_GATE.get()) && gate.getValue(FogGateBlock.OPEN) != open) {
+                level.setBlock(gatePos, gate.setValue(FogGateBlock.OPEN, open), Block.UPDATE_ALL);
             }
         }
     }
@@ -104,7 +128,7 @@ public class BossArenaBlockEntity extends BlockEntity {
             return;
         }
         EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(id);
-        if (type == null) {
+        if (type == null || !ForgeRegistries.ENTITY_TYPES.containsKey(id)) {
             return;
         }
         Entity entity = type.create(level);
@@ -113,8 +137,11 @@ public class BossArenaBlockEntity extends BlockEntity {
             if (living instanceof Mob mob) {
                 mob.setPersistenceRequired();
             }
-            level.addFreshEntity(living);
+            if (!level.addFreshEntity(living)) {
+                return;
+            }
             this.activeBossUuid = living.getUUID();
+            this.bossChunk = living.chunkPosition().toLong();
             this.setChanged();
 
             level.playSound(null, pos, SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 1.4f, 0.7f);
@@ -142,8 +169,14 @@ public class BossArenaBlockEntity extends BlockEntity {
         tag.putDouble("TriggerRadius", this.triggerRadius);
         tag.putDouble("ResetRadius", this.resetRadius);
         tag.putBoolean("Defeated", this.defeated);
+        ListTag gates = new ListTag();
+        for (BlockPos offset : this.fogGates) {
+            gates.add(NbtUtils.writeBlockPos(offset));
+        }
+        tag.put("FogGates", gates);
         if (this.activeBossUuid != null) {
             tag.putUUID("ActiveBoss", this.activeBossUuid);
+            tag.putLong("BossChunk", this.bossChunk);
         }
     }
 
@@ -155,5 +188,21 @@ public class BossArenaBlockEntity extends BlockEntity {
         if (tag.contains("ResetRadius")) this.resetRadius = tag.getDouble("ResetRadius");
         this.defeated = tag.getBoolean("Defeated");
         this.activeBossUuid = tag.hasUUID("ActiveBoss") ? tag.getUUID("ActiveBoss") : null;
+        this.bossChunk = tag.contains("BossChunk", Tag.TAG_LONG) ? tag.getLong("BossChunk") : new ChunkPos(worldPosition).toLong();
+        this.fogGates.clear();
+        ListTag gates = tag.getList("FogGates", Tag.TAG_COMPOUND);
+        for (int i = 0; i < Math.min(gates.size(), MAX_GATE_BLOCKS); i++) {
+            CompoundTag gate = gates.getCompound(i);
+            if (gate.contains("X", Tag.TAG_INT) && gate.contains("Y", Tag.TAG_INT) && gate.contains("Z", Tag.TAG_INT)) {
+                BlockPos offset = NbtUtils.readBlockPos(gate);
+                if (withinGateRange(offset.getX()) && withinGateRange(offset.getY()) && withinGateRange(offset.getZ())) {
+                    this.fogGates.add(offset);
+                }
+            }
+        }
+    }
+
+    private static boolean withinGateRange(int offset) {
+        return offset >= -MAX_GATE_OFFSET && offset <= MAX_GATE_OFFSET;
     }
 }

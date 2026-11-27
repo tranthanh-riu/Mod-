@@ -11,5 +11,6 @@
   "item.eldenring_core.margit_spawn_egg": "Trứng Triệu Hồi Margit",
   "block.eldenring_core.site_of_grace": "Site of Grace",
   "block.eldenring_core.fog_gate": "Cổng Sương Vàng (Fog Gate)",
-  "block.eldenring_core.boss_arena_controller": "Bộ Điều Khiển Đấu Trường Boss"
+  "block.eldenring_core.boss_arena_controller": "Bộ Điều Khiển Đấu Trường Boss",
+  "message.eldenring_core.arena.configure": "[Đấu Trường Boss] Bấm để chỉnh lệnh đổi BossId."
 }

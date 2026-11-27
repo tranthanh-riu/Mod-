@@ -3,7 +3,10 @@ package com.eldenringcore.mechanic;
 import com.eldenringcore.registry.ModBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -52,14 +55,32 @@ public class BossArenaBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide() && player.isCreative()) {
-            if (level.getBlockEntity(pos) instanceof BossArenaBlockEntity arena) {
+        if (!player.isCreative()) {
+            return InteractionResult.PASS;
+        }
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof BossArenaBlockEntity arena) {
+            if (player.isShiftKeyDown() && player.hasPermissions(2)) {
+                ResourceLocation boss = ResourceLocation.tryParse(arena.getBossId());
+                String command = "/data merge block " + pos.getX() + " " + pos.getY() + " " + pos.getZ()
+                        + " {BossId:\"" + (boss == null ? "eldenring_core:margit" : boss) + "\"}";
+                player.sendSystemMessage(Component.translatable("message.eldenring_core.arena.configure")
+                        .withStyle(style -> style.withColor(ChatFormatting.GOLD)
+                                .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command))));
+            } else {
                 arena.resetArena();
                 player.sendSystemMessage(Component.literal("[Boss Arena] Reset! Boss: " + arena.getBossId())
                         .withStyle(ChatFormatting.GOLD));
             }
-            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moving) {
+        if (!state.is(newState.getBlock()) && level instanceof ServerLevel
+                && level.getBlockEntity(pos) instanceof BossArenaBlockEntity arena) {
+            arena.resetArena();
+        }
+        super.onRemove(state, level, pos, newState, moving);
     }
 }

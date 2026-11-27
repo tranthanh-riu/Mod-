@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "open=false": { "model": "eldenring_core:block/fog_gate" },
+    "open=true": { "model": "eldenring_core:block/fog_gate_open" }
+  }
+}

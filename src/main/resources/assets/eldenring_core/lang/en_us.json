@@ -11,5 +11,6 @@
   "item.eldenring_core.margit_spawn_egg": "Margit, the Fell Omen Spawn Egg",
   "block.eldenring_core.site_of_grace": "Site of Grace",
   "block.eldenring_core.fog_gate": "Golden Fog Gate",
-  "block.eldenring_core.boss_arena_controller": "Boss Arena Controller"
+  "block.eldenring_core.boss_arena_controller": "Boss Arena Controller",
+  "message.eldenring_core.arena.configure": "[Boss Arena] Click to edit the BossId command."
 }
