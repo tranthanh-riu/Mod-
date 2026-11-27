@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:caelid"
+    "eldenring_core:caelid",
+    "eldenring_core:mt_gelmir"
   ]
 }

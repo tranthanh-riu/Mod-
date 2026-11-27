@@ -69,8 +69,12 @@ public class LandsBetweenBiomeSource extends BiomeSource {
 
     @Override
     public Holder<Biome> getNoiseBiome(int quartX, int quartY, int quartZ, Climate.Sampler sampler) {
-        double bx = quartX * 4.0;
-        double bz = quartZ * 4.0;
+        // Wrap coordinates across a 4096x4096 ocean-bordered archipelago tile:
+        // - Inside [-2048, +2048] (the main Lands Between continent + coastal sea): exact 1:1 coordinates.
+        // - Beyond +-2048 (deep ocean seam, completely invisible): repeats the 7-region archipelago so
+        //   /locate structure, Cataclysm Eyes, and BOMD Soul Stars NEVER scan infinite empty ocean & freeze!
+        double bx = wrapTile(quartX * 4.0, 4096.0);
+        double bz = wrapTile(quartZ * 4.0, 4096.0);
 
         // Subtle organic coastline warp so borders look natural, not straight lines
         double warpX = Math.sin(bz * 0.0045) * 95.0 + Math.cos(bz * 0.011) * 35.0;
@@ -92,6 +96,13 @@ public class LandsBetweenBiomeSource extends BiomeSource {
         if ((s = ellipseScore(x, z,    0,-1450, 380, 320)) > bestScore) { bestScore = s; chosen = this.haligtree; }
 
         return chosen;
+    }
+
+    private static double wrapTile(double coord, double size) {
+        double half = size * 0.5;
+        double shifted = (coord + half) % size;
+        if (shifted < 0) shifted += size;
+        return shifted - half;
     }
 
     private static double ellipseScore(double x, double z, double cx, double cz, double rx, double rz) {

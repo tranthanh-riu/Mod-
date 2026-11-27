@@ -24,6 +24,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 "${mod_id}" {
@@ -42,6 +44,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
             arg '-mixin.config=eldenring_core.mixins.json'
+            jvmArgs '-Xmx4G'
         }
     }
 }
@@ -94,7 +97,7 @@ dependencies {
     runtimeOnly fg.deobf("local:xaeroworldmap-forge-1.20.1-1.47.0:1.0")
     runtimeOnly fg.deobf("local:worldedit-mod-7.2.15:1.0")
     runtimeOnly fg.deobf("local:lithostitched-forge-1.20.1-1.4.12:1.0")
-    runtimeOnly fg.deobf("local:tectonic-3.0.17-forge-1.20.1:1.0")
+    runtimeOnly fg.deobf("local:tectonic-forge-1.20.1-2.4.1:1.0")
     runtimeOnly fg.deobf("local:DungeonsArise-1.20.x-2.1.58-release:1.0")
     runtimeOnly fg.deobf("local:Structory_1.20.x_v1.3.5:1.0")
     runtimeOnly fg.deobf("local:Structory_Towers_1.20.x_v1.0.7:1.0")
