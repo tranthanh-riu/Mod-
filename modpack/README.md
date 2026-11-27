@@ -47,3 +47,10 @@ Chơi chung: cùng một bản `.mrpack`, một người mở LAN (qua Radmin VP
 - Sửa map: chỉnh vùng/độ cao trong `MapGen.java` rồi chạy
   `java tools/mapgen/MapGen.java src/main/resources/eldenring_core_worldgen` (JDK 17), xem `preview.png`, build lại. Có thể vẽ tay thẳng lên `height.png` bằng app chỉnh ảnh hỗ trợ 16-bit (giá trị = (Y + 64) × 64).
 - Thế giới cũ đã sinh chunk thì không đổi; cần tạo thế giới mới để thấy địa hình mới.
+
+## Vùng thử: Limgrave
+
+- `/function eldenring_core:lands_between/limgrave/install` dựng 2 cụm lên địa hình (chạy 1 lần), `/function eldenring_core:lands_between/limgrave/enter` để vào:
+  - **Cửa ngõ** (đồng bằng phía nam, nền Y 74): The First Step, cánh đồng Tree Sentinel, nhà nguyện Elleh.
+  - **Lâu đài** (mỏm đá phía bắc, nền Y 93): cầu Margit có Fog Gate, keep của Godrick.
+- Các build được `tools/mapgen/SiteGen.java` dời từ map Wave 1 sang địa hình: tự đo độ cao dưới chân, san nền, đắp móng, cắt đồi phía trên. Sửa vị trí trong `UNITS` rồi chạy `java tools/mapgen/SiteGen.java` để sinh lại.
