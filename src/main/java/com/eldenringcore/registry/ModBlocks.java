@@ -1,6 +1,7 @@
 package com.eldenringcore.registry;
 
 import com.eldenringcore.EldenRingCore;
+import com.eldenringcore.mechanic.BossArenaBlock;
 import com.eldenringcore.mechanic.FogGateBlock;
 import com.eldenringcore.mechanic.SiteOfGraceBlock;
 import net.minecraft.world.level.block.Block;
@@ -30,4 +31,10 @@ public class ModBlocks {
                     .lightLevel(state -> 10)
                     .noOcclusion()
                     .sound(SoundType.WOOL)));
+
+    public static final RegistryObject<Block> BOSS_ARENA_CONTROLLER = BLOCKS.register("boss_arena_controller",
+            () -> new BossArenaBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(-1.0f, 3600000.0f)
+                    .sound(SoundType.STONE)));
 }

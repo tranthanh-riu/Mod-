@@ -26,6 +26,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.SOMBER_SMITHING_STONE.get());
                         output.accept(ModItems.SITE_OF_GRACE_ITEM.get());
                         output.accept(ModItems.FOG_GATE_ITEM.get());
+                        output.accept(ModItems.BOSS_ARENA_CONTROLLER_ITEM.get());
                         output.accept(ModItems.MARGIT_SPAWN_EGG.get());
                     })
                     .build());

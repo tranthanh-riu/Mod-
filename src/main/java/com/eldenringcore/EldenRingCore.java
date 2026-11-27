@@ -2,6 +2,7 @@ package com.eldenringcore;
 
 import com.eldenringcore.boss.MargitEntity;
 import com.eldenringcore.combat.StatusBuildupManager;
+import com.eldenringcore.registry.ModBlockEntities;
 import com.eldenringcore.registry.ModBlocks;
 import com.eldenringcore.registry.ModCreativeTabs;
 import com.eldenringcore.registry.ModEntities;
@@ -26,6 +27,7 @@ public class EldenRingCore {
         GeckoLib.initialize();
 
         ModBlocks.BLOCKS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);

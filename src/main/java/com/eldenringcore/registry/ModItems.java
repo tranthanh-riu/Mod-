@@ -56,6 +56,9 @@ public class ModItems {
     public static final RegistryObject<Item> FOG_GATE_ITEM = ITEMS.register("fog_gate",
             () -> new BlockItem(ModBlocks.FOG_GATE.get(), new Item.Properties().rarity(Rarity.RARE)));
 
+    public static final RegistryObject<Item> BOSS_ARENA_CONTROLLER_ITEM = ITEMS.register("boss_arena_controller",
+            () -> new BlockItem(ModBlocks.BOSS_ARENA_CONTROLLER.get(), new Item.Properties().rarity(Rarity.EPIC)));
+
     // Boss Spawn Egg (for testing)
     public static final RegistryObject<Item> MARGIT_SPAWN_EGG = ITEMS.register("margit_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARGIT, 0x3D352E, 0xD4AF37, new Item.Properties()));
