@@ -45,6 +45,8 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
             SynchedEntityData.defineId(EldenBossEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<String> DATA_CURRENT_ANIM =
             SynchedEntityData.defineId(EldenBossEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Boolean> DATA_PHASE_TWO =
+            SynchedEntityData.defineId(EldenBossEntity.class, EntityDataSerializers.BOOLEAN);
 
     private final AnimatableInstanceCache animCache = GeckoLibUtil.createInstanceCache(this);
     protected final ServerBossEvent bossEvent;
@@ -118,6 +120,11 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         super.defineSynchedData();
         this.entityData.define(DATA_BOSS_STATE, BossState.IDLE.ordinal());
         this.entityData.define(DATA_CURRENT_ANIM, "");
+        this.entityData.define(DATA_PHASE_TWO, false);
+    }
+
+    public boolean isSyncedPhaseTwo() {
+        return this.entityData.get(DATA_PHASE_TWO);
     }
 
     @Override
@@ -164,6 +171,7 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         // Trigger Phase 2 transition
         if (!this.phaseTwo && (this.getHealth() / this.getMaxHealth()) <= this.getPhaseTwoThreshold()) {
             this.phaseTwo = true;
+            this.entityData.set(DATA_PHASE_TWO, true);
             this.currentMove = null;
             this.enterState(BossState.PHASE_TRANSITION);
             this.onPhaseTwoStart();
