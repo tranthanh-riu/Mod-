@@ -1,0 +1,10 @@
+{
+    "parent":  "eldenring_core:custom/hand_of_malenia",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/anvil",
+                     "1":  "eldenring_core:item/weapons/smooth_stone_slab_side",
+                     "2":  "eldenring_core:item/weapons/iron_block",
+                     "3":  "eldenring_core:item/weapons/gilded_blackstone",
+                     "particle":  "eldenring_core:item/weapons/logo"
+                 }
+}

@@ -1,0 +1,11 @@
+{
+    "parent":  "eldenring_core:custom/malikeths_black_blade",
+    "textures":  {
+                     "0":  "eldenring_core:item/weapons/raw_gold_block",
+                     "3":  "eldenring_core:item/weapons/diamond_block",
+                     "4":  "eldenring_core:item/weapons/coal_block",
+                     "5":  "eldenring_core:item/weapons/polished_deepslate",
+                     "6":  "eldenring_core:item/weapons/gold_block",
+                     "particle":  "eldenring_core:item/weapons/blackbladeitem"
+                 }
+}
