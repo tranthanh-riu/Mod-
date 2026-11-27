@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "eldenring_core:limgrave",
+    "eldenring_core:liurnia",
+    "eldenring_core:altus_plateau",
+    "eldenring_core:haligtree"
+  ]
+}

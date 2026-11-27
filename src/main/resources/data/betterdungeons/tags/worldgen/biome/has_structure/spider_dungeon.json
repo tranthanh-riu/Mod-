@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "eldenring_core:liurnia",
+    "eldenring_core:caelid",
+    "eldenring_core:haligtree"
+  ]
+}

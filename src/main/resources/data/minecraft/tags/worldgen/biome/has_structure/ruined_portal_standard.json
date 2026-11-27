@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "eldenring_core:limgrave",
+    "eldenring_core:liurnia",
+    "eldenring_core:caelid",
+    "eldenring_core:altus_plateau",
+    "eldenring_core:mt_gelmir",
+    "eldenring_core:mountaintops",
+    "eldenring_core:haligtree"
+  ]
+}
