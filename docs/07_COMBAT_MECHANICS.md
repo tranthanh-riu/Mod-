@@ -13,7 +13,9 @@
 > **Quyết định kiến trúc (2026-11-27): dùng Epic Fight làm dependency bắt buộc.**
 > - `eldenring_core` khai báo `epicfight` là `mandatory=true` trong `mods.toml` (bản `20.15.2-mc1.20.1-forge`, tải qua Modrinth maven trong `build.gradle`). Người chơi phải cài Epic Fight.
 > - **Không copy/tỉa code của Epic Fight** vào mod: Epic Fight dùng giấy phép **GPL-3.0-or-later**, còn mod mình là "All Rights Reserved". Chỉ gọi API/event của Epic Fight.
-> - Stamina, Roll, Guard và animation người chơi: **dùng của Epic Fight**. Phần này chỉ làm những gì Epic Fight chưa có hoặc cần gắn với Boss (`EldenBossEntity`): i-frames khớp `performArcHitbox`/`performAoeHitbox`, Riposte khi Boss `STAGGERED`, Guard Counter lên Poise Boss, HUD/Lock-on nếu thiếu.
+> - **Toàn bộ combat lấy của Epic Fight** (chốt 2026-11-27): Stamina + HUD, Roll/Step, Guard/Parry, Lock-on, hệ thống Skill/Skill Book, kỹ năng vũ khí và animation người chơi. **Không tự viết lại** `StaminaManager`, `DodgeRollManager`, `LockOnHandler`.
+> - Nhánh này chỉ làm phần **nối Epic Fight với Boss** (`EldenBossEntity`): i-frames của Epic Fight né được `performArcHitbox`/`performAoeHitbox`, Guard/Parry của Epic Fight trừ Poise Boss, Riposte khi Boss `STAGGERED`, Lock-on nhắm đúng Boss to.
+> - Các checklist bên dưới giữ làm mô tả hành vi mong muốn; phần nào Epic Fight đã có thì chỉ cần kiểm tra lại với Boss.
 
 ---
 
