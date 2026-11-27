@@ -15,14 +15,14 @@
 - [x] **Flask of Crimson Tears (`CrimsonFlaskItem`)**: 5 bình máu, hồi lại ở Site of Grace.
 - [x] **Golden Fog Gate (`FogGateBlock`)**: Cổng sương vàng cho đấu trường.
 - [x] **Boss Arena Controller (`BossArenaBlock` + `BossArenaBlockEntity`)**: Tự triệu hồi Boss, tự reset nếu chết, tự mọc Site of Grace khi thắng.
-- [ ] **Nâng cấp Boss Arena Controller**:
-  - [ ] Tự động đóng/mở **Fog Gate** xung quanh đấu trường khi trận đấu bắt đầu/kết thúc.
-  - [ ] Cho phép nhóm Map đổi `BossId` dễ dàng bằng lệnh `/data merge block` hoặc item cấu hình trong Creative.
-- [ ] **Hệ thống Runes rơi khi chết**:
-  - [ ] Lưu lượng Runes của người chơi; khi chết tạo 1 thực thể cột sáng vàng tại chỗ chết.
-  - [ ] Chạm vào để nhặt lại; nếu chết lần 2 trước khi nhặt thì mất sạch.
-- [ ] **Bình Mana (`Flask of Cerulean Tears`)**: Hồi FP/Mana dùng cho Ash of War & Phép thuật.
-- [ ] **Site of Grace Fast Travel**: Đặt tên từng điểm Grace trên map và mở GUI dịch chuyển qua lại giữa các Grace đã khám phá.
+- [x] **Nâng cấp Boss Arena Controller**:
+  - [x] Tự động đóng/mở **Fog Gate** xung quanh đấu trường khi trận đấu bắt đầu/kết thúc.
+  - [x] Cho phép nhóm Map đổi `BossId` dễ dàng bằng lệnh `/data merge block` hoặc item cấu hình trong Creative.
+- [x] **Hệ thống Runes rơi khi chết**:
+  - [x] Lưu lượng Runes của người chơi; khi chết tạo 1 thực thể cột sáng vàng tại chỗ chết.
+  - [x] Chạm vào để nhặt lại; nếu chết lần 2 trước khi nhặt thì mất sạch.
+- [x] **Bình Mana (`Flask of Cerulean Tears`)**: Hồi FP/Mana dùng cho Ash of War & Phép thuật.
+- [x] **Site of Grace Fast Travel**: Đặt tên từng điểm Grace trên map và mở GUI dịch chuyển qua lại giữa các Grace đã khám phá.
 
 ### Giai đoạn 2 — Xây dựng Adventure Map "The Lands Between" (Wave 1 → 4)
 *(Nhóm Builder dùng **WorldEdit / Axiom** trên Minecraft 1.20.1 Forge)*
