@@ -1,8 +1,6 @@
 package com.eldenringcore;
 
-import com.eldenringcore.boss.GodrickEntity;
-import com.eldenringcore.boss.MargitEntity;
-import com.eldenringcore.boss.TreeSentinelEntity;
+import com.eldenringcore.boss.*;
 import com.eldenringcore.combat.StatusBuildupManager;
 import com.eldenringcore.registry.ModBlocks;
 import com.eldenringcore.registry.ModCreativeTabs;
@@ -36,12 +34,26 @@ public class EldenRingCore {
 
         MinecraftForge.EVENT_BUS.register(new StatusBuildupManager());
 
-        LOGGER.info("Elden Ring Core initialized for Minecraft 1.20.1 Forge.");
+        LOGGER.info("Elden Ring Core initialized with 13 Elden Ring Bosses (Waves 1-4).");
     }
 
     private void registerAttributes(EntityAttributeCreationEvent event) {
+        // Wave 1
         event.put(ModEntities.MARGIT.get(), MargitEntity.createAttributes().build());
         event.put(ModEntities.TREE_SENTINEL.get(), TreeSentinelEntity.createAttributes().build());
         event.put(ModEntities.GODRICK.get(), GodrickEntity.createAttributes().build());
+        // Wave 2
+        event.put(ModEntities.RENNALA.get(), RennalaEntity.createAttributes().build());
+        event.put(ModEntities.RADAHN.get(), RadahnEntity.createAttributes().build());
+        // Wave 3
+        event.put(ModEntities.MORGOTT.get(), MorgottEntity.createAttributes().build());
+        event.put(ModEntities.RYKARD.get(), RykardEntity.createAttributes().build());
+        event.put(ModEntities.MOHG.get(), MohgEntity.createAttributes().build());
+        event.put(ModEntities.FIRE_GIANT.get(), FireGiantEntity.createAttributes().build());
+        // Wave 4
+        event.put(ModEntities.MALENIA.get(), MaleniaEntity.createAttributes().build());
+        event.put(ModEntities.MALIKETH.get(), MalikethEntity.createAttributes().build());
+        event.put(ModEntities.GODFREY.get(), GodfreyEntity.createAttributes().build());
+        event.put(ModEntities.RADAGON.get(), RadagonEntity.createAttributes().build());
     }
 }

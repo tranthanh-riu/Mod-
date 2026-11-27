@@ -18,20 +18,20 @@
 - [x] **Gắn GeckoLib Client Renderer (`EldenBossRenderer` + `ClientModEvents`)**: Sẵn sàng nạp model từ nhánh `part/art-models` cho cả 3 Boss Wave 1.
 
 ### Wave 2 — Liurnia & Caelid
-- [ ] **Rennala, Queen of the Full Moon (`RennalaEntity`)**: Phase 1 cơ chế khiên bảo vệ + Phase 2 bắn phép *Comet Azur*, triệu hồi tinh linh (*Spirit Summons*).
-- [ ] **Starscourge Radahn (`RadahnEntity`)**: Bắn cung trọng lực tầm xa, kéo hút trọng lực (*Starcaller Cry*), Phase 2 bay lên trời rồi lao thiên thạch nổ cực lớn.
+- [x] **Rennala, Queen of the Full Moon (`RennalaEntity`)**: Glintstone Barrage, Lunar Barrier, Phase 2 Comet Azur, Full Moon Orb & Spirit Summon Wolves.
+- [x] **Starscourge Radahn (`RadahnEntity`)**: Gravity Greatbow, Colossal Dual Cleave, Starcaller Cry (hút trọng lực + nổ), Phase 2 Meteor Crash lao thiên thạch.
 
 ### Wave 3 — Leyndell, Volcano & Mohgwyn
-- [ ] **Morgott, the Omen King**: Nâng cấp từ khung Margit + mưa kiếm ánh sáng (*Cursed-Blood Slice*).
-- [ ] **Rykard, Lord of Blasphemy**: Đòn quét lửa diện rộng + hộp sọ nổ đuổi theo người chơi.
-- [ ] **Mohg, Lord of Blood**: Cơ chế đếm 3 vòng máu (*NIHIL!*) gây Bleed toàn đấu trường ở Phase 2.
-- [ ] **Fire Giant**: Kích thước khổng lồ, điểm yếu ở mắt cá chân, Phase 2 cầu lửa lăn.
+- [x] **Morgott, the Omen King (`MorgottEntity`)**: Holy Spear Charge, Sword Rain, Phase 2 Cursed-Blood Slice tích tụ Bleed.
+- [x] **Rykard, Lord of Blasphemy (`RykardEntity`)**: Magma Sweep, Ground Eruption, Phase 2 Rancor Skull Storm + câu thoại *"TOGETHAAA!"*.
+- [x] **Mohg, Lord of Blood (`MohgEntity`)**: Trident Sweep, Bloodboon Rain, Phase 2 **"NIHIL!"** hồi máu & kích nổ Bleed toàn sân.
+- [x] **Fire Giant (`FireGiantEntity`)**: 1600 HP, Plate Snow Sweep, Colossal Roll, Phase 2 Fell God Flame Pillars.
 
 ### Wave 4 — Endgame (Đỉnh cao)
-- [ ] **Malenia, Blade of Miquella**: Hồi máu mỗi khi đánh trúng người chơi (kể cả khi đỡ khiên), chiêu *Waterfowl Dance* 3 đợt chém lốc, Phase 2 *Scarlet Aeonia* (nổ hoa Scarlet Rot).
-- [ ] **Maliketh, the Black Blade**: Tốc độ cao, nhảy bám trụ, hiệu ứng *Destined Death* rút máu tối đa.
-- [ ] **Godfrey / Hoarah Loux**: Phase 1 rìu & dậm đất toàn sân, Phase 2 vật cận chiến.
-- [ ] **Radagon & Elden Beast**: Chuyển tiếp 2 Boss liên tiếp.
+- [x] **Malenia, Blade of Miquella (`MaleniaEntity`)**: Hút máu mỗi đòn đánh, *Waterfowl Dance* 3 đợt chém lốc, Phase 2 *Goddess of Rot* + *Scarlet Aeonia* (Scarlet Rot) + rơi *Hand of Malenia*.
+- [x] **Maliketh, the Black Blade (`MalikethEntity`)**: Beast Claw, Acrobatic Slash, Phase 2 *Destined Death* gây Wither nặng.
+- [x] **Godfrey / Hoarah Loux (`GodfreyEntity`)**: Great-Axe Cleave, Arena Stomp, Phase 2 *Hoarah Loux, Warrior* + *Earthshaker*.
+- [x] **Radagon of the Golden Order (`RadagonEntity`)**: Golden Teleport Smash, Lightning Spear, Phase 2 *Triple Golden Order Slam* + banner **GOD SLAIN**.
 
 ---
 

@@ -56,13 +56,31 @@ public class ModItems {
     public static final RegistryObject<Item> FOG_GATE_ITEM = ITEMS.register("fog_gate",
             () -> new BlockItem(ModBlocks.FOG_GATE.get(), new Item.Properties().rarity(Rarity.RARE)));
 
-    // Boss Spawn Eggs (Wave 1)
+    // Boss Spawn Eggs (Waves 1-4)
     public static final RegistryObject<Item> MARGIT_SPAWN_EGG = ITEMS.register("margit_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARGIT, 0x3D352E, 0xD4AF37, new Item.Properties()));
-
     public static final RegistryObject<Item> TREE_SENTINEL_SPAWN_EGG = ITEMS.register("tree_sentinel_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.TREE_SENTINEL, 0xC9A227, 0x5C4813, new Item.Properties()));
-
     public static final RegistryObject<Item> GODRICK_SPAWN_EGG = ITEMS.register("godrick_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.GODRICK, 0x6B1D1D, 0xD4AF37, new Item.Properties()));
+    public static final RegistryObject<Item> RENNALA_SPAWN_EGG = ITEMS.register("rennala_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.RENNALA, 0x1A2A4A, 0x7EC8E3, new Item.Properties()));
+    public static final RegistryObject<Item> RADAHN_SPAWN_EGG = ITEMS.register("radahn_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.RADAHN, 0x4A1828, 0x9B59B6, new Item.Properties()));
+    public static final RegistryObject<Item> MORGOTT_SPAWN_EGG = ITEMS.register("morgott_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MORGOTT, 0x4E4234, 0xFFD700, new Item.Properties()));
+    public static final RegistryObject<Item> RYKARD_SPAWN_EGG = ITEMS.register("rykard_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.RYKARD, 0x5A1A1A, 0xFF5722, new Item.Properties()));
+    public static final RegistryObject<Item> MOHG_SPAWN_EGG = ITEMS.register("mohg_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MOHG, 0x1A0A0A, 0xB71C1C, new Item.Properties()));
+    public static final RegistryObject<Item> FIRE_GIANT_SPAWN_EGG = ITEMS.register("fire_giant_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.FIRE_GIANT, 0x8D3B24, 0xFF9800, new Item.Properties()));
+    public static final RegistryObject<Item> MALENIA_SPAWN_EGG = ITEMS.register("malenia_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MALENIA, 0xC62828, 0xFFD54F, new Item.Properties()));
+    public static final RegistryObject<Item> MALIKETH_SPAWN_EGG = ITEMS.register("maliketh_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MALIKETH, 0x121212, 0xD32F2F, new Item.Properties()));
+    public static final RegistryObject<Item> GODFREY_SPAWN_EGG = ITEMS.register("godfrey_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.GODFREY, 0xD7CCC8, 0xFFC107, new Item.Properties()));
+    public static final RegistryObject<Item> RADAGON_SPAWN_EGG = ITEMS.register("radagon_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.RADAGON, 0x262626, 0xFFE082, new Item.Properties()));
 }
