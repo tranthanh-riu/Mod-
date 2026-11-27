@@ -380,6 +380,71 @@
             "size": 1778129,
             "client": "required",
             "server": "required"
+        },
+        {
+            "slug": "shoulder-surfing-reloaded",
+            "project_id": "kepjj2sy",
+            "version": "1.20.1-5.3.1+forge",
+            "version_id": "NyjIxasR",
+            "file": "ShoulderSurfing-Forge-1.20.1-5.3.1.jar",
+            "url": "https://cdn.modrinth.com/data/kepjj2sy/versions/NyjIxasR/ShoulderSurfing-Forge-1.20.1-5.3.1.jar",
+            "sha1": "5fe11417cc720235a1206f57a883722743b352a5",
+            "sha512": "93b28a35301855dfad8c423232d9626d2ed368d5b45a7f27eac65c249fc906590a0ab5750895891f1736226b1327d3cb3a90ffa07a5a18ebc67d41894ce4e841",
+            "size": 436450,
+            "client": "required",
+            "server": "unsupported"
+        },
+        {
+            "slug": "jade",
+            "project_id": "nvQzSEkH",
+            "version": "11.13.3+forge",
+            "version_id": "xJQHCmWJ",
+            "file": "Jade-1.20.1-Forge-11.13.3.jar",
+            "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/xJQHCmWJ/Jade-1.20.1-Forge-11.13.3.jar",
+            "sha1": "d08e64e66521d69e083c8525f1fc507f1c202384",
+            "sha512": "72025c4ad6d26522bafe3d5d6ac9d4702c006a868312cb34df8a7a2398a4618205839607b129c167fd176e58cb7655f08e3afbf1993925c80d4fcc559c45a037",
+            "size": 553487,
+            "client": "required",
+            "server": "required"
+        },
+        {
+            "slug": "oculus",
+            "project_id": "GchcoXML",
+            "version": "1.20.1-1.8.0",
+            "version_id": "iQ1SwGc3",
+            "file": "oculus-mc1.20.1-1.8.0.jar",
+            "url": "https://cdn.modrinth.com/data/GchcoXML/versions/iQ1SwGc3/oculus-mc1.20.1-1.8.0.jar",
+            "sha1": "984f774e71790deaec674c7587bd24e0711871b2",
+            "sha512": "1bb4ac77400d6684347988ed298a692c2cb15cf7923693607eb8739b171a20fef7412259e9e157111d9ce21779badab386029956f7d2283a9e611722a373e9d5",
+            "size": 2851119,
+            "client": "required",
+            "server": "unsupported"
+        },
+        {
+            "slug": "sound-physics-remastered",
+            "project_id": "qyVF9oeo",
+            "version": "forge-1.20.1-1.5.1",
+            "version_id": "x0sJ9PeR",
+            "file": "sound-physics-remastered-forge-1.20.1-1.5.1.jar",
+            "url": "https://cdn.modrinth.com/data/qyVF9oeo/versions/x0sJ9PeR/sound-physics-remastered-forge-1.20.1-1.5.1.jar",
+            "sha1": "944b4673bcab118f411d050b2cd6b693262bb664",
+            "sha512": "5509a7b51ec1d57aae2af0a0200bda474539fcfe28303f3ff0158ba95b8e7a88ae023d8a9bd97d4626a6a8ce809506e19cdcb05b76e8be5bf8a0450c5d6a46b1",
+            "size": 206984,
+            "client": "required",
+            "server": "unsupported"
+        },
+        {
+            "slug": "appleskin",
+            "project_id": "EsAfCjCV",
+            "version": "2.5.1+mc1.20.1",
+            "version_id": "XdXDExVF",
+            "file": "appleskin-forge-mc1.20.1-2.5.1.jar",
+            "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/XdXDExVF/appleskin-forge-mc1.20.1-2.5.1.jar",
+            "sha1": "81919356f84eab14258db98924b66c3c38e372b1",
+            "sha512": "3176f928fb6c60d27f5edb610ca4ab0236175404eebf32797a1ec6cdd794bb294a260231579578536d03571377e43c6181adc75d8dd2c0733f17fce4f7e636b9",
+            "size": 47428,
+            "client": "required",
+            "server": "optional"
         }
     ]
 }

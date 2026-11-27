@@ -93,8 +93,12 @@ dependencies {
     // Pinned in modpack/mods.json, fetched from Modrinth maven. Off by default so a plain
     // build stays fast; turn on with: .\gradlew.bat runClient -Pmodpack
     if (project.hasProperty('modpack')) {
+        def isServerOnlyRun = gradle.startParameter.taskNames.any { it.contains('Server') } &&
+                              !gradle.startParameter.taskNames.any { it.contains('Client') }
         def modpackSpec = new groovy.json.JsonSlurper().parse(file('modpack/mods.json'))
-        modpackSpec.mods.findAll { !(it.slug in ['epic-fight', 'geckolib']) }.each { m ->
+        modpackSpec.mods.findAll { m ->
+            !(m.slug in ['epic-fight', 'geckolib']) && !(isServerOnlyRun && m.server == 'unsupported')
+        }.each { m ->
             runtimeOnly fg.deobf("maven.modrinth:${m.project_id}:${m.version_id}")
         }
     }
