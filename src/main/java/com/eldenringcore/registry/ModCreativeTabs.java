@@ -27,6 +27,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.SITE_OF_GRACE_ITEM.get());
                         output.accept(ModItems.FOG_GATE_ITEM.get());
                         output.accept(ModItems.MARGIT_SPAWN_EGG.get());
+                        output.accept(ModItems.TREE_SENTINEL_SPAWN_EGG.get());
+                        output.accept(ModItems.GODRICK_SPAWN_EGG.get());
                     })
                     .build());
 }

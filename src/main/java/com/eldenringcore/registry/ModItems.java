@@ -56,7 +56,13 @@ public class ModItems {
     public static final RegistryObject<Item> FOG_GATE_ITEM = ITEMS.register("fog_gate",
             () -> new BlockItem(ModBlocks.FOG_GATE.get(), new Item.Properties().rarity(Rarity.RARE)));
 
-    // Boss Spawn Egg (for testing)
+    // Boss Spawn Eggs (Wave 1)
     public static final RegistryObject<Item> MARGIT_SPAWN_EGG = ITEMS.register("margit_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARGIT, 0x3D352E, 0xD4AF37, new Item.Properties()));
+
+    public static final RegistryObject<Item> TREE_SENTINEL_SPAWN_EGG = ITEMS.register("tree_sentinel_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.TREE_SENTINEL, 0xC9A227, 0x5C4813, new Item.Properties()));
+
+    public static final RegistryObject<Item> GODRICK_SPAWN_EGG = ITEMS.register("godrick_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.GODRICK, 0x6B1D1D, 0xD4AF37, new Item.Properties()));
 }

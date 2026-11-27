@@ -1,6 +1,8 @@
 package com.eldenringcore;
 
+import com.eldenringcore.boss.GodrickEntity;
 import com.eldenringcore.boss.MargitEntity;
+import com.eldenringcore.boss.TreeSentinelEntity;
 import com.eldenringcore.combat.StatusBuildupManager;
 import com.eldenringcore.registry.ModBlocks;
 import com.eldenringcore.registry.ModCreativeTabs;
@@ -39,5 +41,7 @@ public class EldenRingCore {
 
     private void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.MARGIT.get(), MargitEntity.createAttributes().build());
+        event.put(ModEntities.TREE_SENTINEL.get(), TreeSentinelEntity.createAttributes().build());
+        event.put(ModEntities.GODRICK.get(), GodrickEntity.createAttributes().build());
     }
 }

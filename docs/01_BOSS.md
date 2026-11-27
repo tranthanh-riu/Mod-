@@ -12,18 +12,10 @@
 
 ### Wave 1 — Limgrave & Stormveil *(Ưu tiên cao nhất)*
 - [x] **Khung dùng chung `EldenBossEntity`**: State Machine, Delayed Attack, Phase 2, Poise Break, Arc/AoE Hitbox, Boss Bar & Banner.
-- [x] **Margit, the Fell Omen (`MargitEntity`)**: Khung 4 chiêu cơ bản + Phase 2.
-- [ ] **Hoàn thiện Margit (`MargitEntity`)**:
-  - [ ] Thêm chiêu `tail_sweep` (quét đuôi khi người chơi đứng sau lưng).
-  - [ ] Thêm chiêu `holy_sword_combo` ở Phase 2 (chém liên hoàn 3 nhịp kiếm ánh sáng).
-  - [ ] Gắn `GeoEntityRenderer` (client) kết nối với model từ nhánh `part/art-models`.
-  - [ ] Gắn Loot Table: rơi *Margit's Shackle* / *Somber Smithing Stone* + Runes.
-- [ ] **Tree Sentinel (`TreeSentinelEntity`)**:
-  - [ ] Tạo class kế thừa `EldenBossEntity` (máu ~600, giáp cao, Poise 160).
-  - [ ] Moveset: `halberd_charge` (phi ngựa húc), `halberd_sweep` (quét rộng), `shield_bash` (đập khiên AoE Phase 2), `magic_reflect` (phản phép thuật).
-- [ ] **Godrick the Grafted (`GodrickEntity`)**:
-  - [ ] Moveset Phase 1: `axe_whirlwind` (lốc gió), `delayed_axe_slam` (đập rìu chậm), `earthquake_slam` (đập đất 2 nhịp AoE).
-  - [ ] Moveset Phase 2 (< 50% HP): gắn đầu rồng phun lửa (`dragon_fire_breath` hình nón + `fire_tornado`).
+- [x] **Margit, the Fell Omen (`MargitEntity`)**: Đủ 6 chiêu (*Delayed Cane Slam, Golden Dagger Combo, Tail Sweep, Glintblade Throw, Phase 2 Hammer Leap, Holy Sword 3-Hit Combo*) + Loot rơi.
+- [x] **Tree Sentinel (`TreeSentinelEntity`)**: Đủ 5 chiêu (*Halberd Charge, Wide Sweep, Delayed Smash, Phase 2 Golden Shield Slam, Erdtree Retaliation*) + Loot rơi.
+- [x] **Godrick the Grafted (`GodrickEntity`)**: Đủ 4 chiêu (*Delayed Axe Cleave, Storm Whirlwind, 2-Hit Earthquake Slam, Phase 2 Dragon Fire Breath* + câu thoại *"BEAR WITNESS!"*) + Loot rơi.
+- [x] **Gắn GeckoLib Client Renderer (`EldenBossRenderer` + `ClientModEvents`)**: Sẵn sàng nạp model từ nhánh `part/art-models` cho cả 3 Boss Wave 1.
 
 ### Wave 2 — Liurnia & Caelid
 - [ ] **Rennala, Queen of the Full Moon (`RennalaEntity`)**: Phase 1 cơ chế khiên bảo vệ + Phase 2 bắn phép *Comet Azur*, triệu hồi tinh linh (*Spirit Summons*).
