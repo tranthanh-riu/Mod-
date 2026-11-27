@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:liurnia",
-    "eldenring_core:altus_plateau"
+    "terralith:moonlight_valley",
+    "terralith:orchid_swamp",
+    "terralith:moonlight_grove",
+    "terralith:yellowstone",
+    "terralith:birch_taiga",
+    "terralith:haze_mountain"
   ]
 }

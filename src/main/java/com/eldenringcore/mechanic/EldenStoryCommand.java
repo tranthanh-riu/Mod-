@@ -44,17 +44,17 @@ public class EldenStoryCommand {
                         }
                         String dim = ModWorldgen.LANDS_BETWEEN_LEVEL.location().toString();
                         GraceFastTravelManager graces = GraceFastTravelManager.get(landsBetween);
-                        graces.registerGrace(new BlockPos(-300, 90, 700),   "Vùng 1 — Limgrave (Chương 1-2)", dim, true);
-                        graces.registerGrace(new BlockPos(-750, 90, -150),  "Vùng 2 — Liurnia of the Lakes (Chương 3)", dim, true);
-                        graces.registerGrace(new BlockPos(650, 90, 550),    "Vùng 3 — Caelid - Vùng Đất Đỏ (Chương 3)", dim, true);
-                        graces.registerGrace(new BlockPos(50, 90, -700),    "Vùng 4 — Altus Plateau / Leyndell (Chương 4)", dim, true);
-                        graces.registerGrace(new BlockPos(-750, 90, -950),  "Vùng 5 — Mt. Gelmir / Volcano Manor (Chương 4)", dim, true);
-                        graces.registerGrace(new BlockPos(800, 90, -1050),  "Vùng 6 — Mountaintops of the Giants (Chương 5)", dim, true);
-                        graces.registerGrace(new BlockPos(0, 90, -1450),    "Vùng 7 — Haligtree / Far North (Chương 6-7)", dim, true);
+                        graces.registerGrace(new BlockPos(-500, 90, 1200),   "Vùng 1 — Limgrave (Chương 1-2)", dim, true);
+                        graces.registerGrace(new BlockPos(-1300, 90, -250),  "Vùng 2 — Liurnia of the Lakes (Chương 3)", dim, true);
+                        graces.registerGrace(new BlockPos(1150, 90, 950),    "Vùng 3 — Caelid - Vùng Đất Đỏ (Chương 3)", dim, true);
+                        graces.registerGrace(new BlockPos(100, 90, -1150),   "Vùng 4 — Altus Plateau / Leyndell (Chương 4)", dim, true);
+                        graces.registerGrace(new BlockPos(-1300, 90, -1600), "Vùng 5 — Mt. Gelmir / Volcano Manor (Chương 4)", dim, true);
+                        graces.registerGrace(new BlockPos(1400, 90, -1750),  "Vùng 6 — Mountaintops of the Giants (Chương 5)", dim, true);
+                        graces.registerGrace(new BlockPos(0, 90, -2450),     "Vùng 7 — Haligtree / Far North (Chương 6-7)", dim, true);
 
-                        landsBetween.getChunk(new BlockPos(-300, 80, 700));
-                        int y = Math.max(landsBetween.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, -300, 700) + 2, 75);
-                        player.teleportTo(landsBetween, -300.5, y, 700.5, 180.0f, 0.0f);
+                        landsBetween.getChunk(new BlockPos(-500, 80, 1200));
+                        int y = Math.max(landsBetween.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, -500, 1200) + 2, 75);
+                        player.teleportTo(landsBetween, -500.5, y, 1200.5, 180.0f, 0.0f);
                         player.sendSystemMessage(Component.literal("Chào mừng tới THE LANDS BETWEEN (7 Vùng Đất Elden Ring + Hang Động + Hầm Ngục)!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
                         graces.sendFastTravelMenu(player);
                     }

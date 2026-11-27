@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:limgrave",
-    "eldenring_core:altus_plateau"
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau",
+    "terralith:yellowstone",
+    "terralith:birch_taiga",
+    "terralith:haze_mountain"
   ]
 }

@@ -24,15 +24,17 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Authentic Elden Ring Area Difficulty Scaling & Region Entry Banners:
- * - Displays iconic Region Title + Danger Tier banner when entering each of the 7 regions.
+ * - Maps all 27 Terralith biomes (7 main regions + sub-biomes + underground caves) to their Elden Ring Region Tier.
+ * - Displays Region Title + Danger Tier banner only when crossing into a NEW region (no spam between sub-biomes).
  * - Scales non-boss hostile mob HP, Damage, and Armor according to Elden Ring area scaling (Limgrave -> Haligtree).
- * - Adds regional environmental hazards (e.g., standing in water in Caelid builds up Scarlet Rot!).
+ * - Adds regional environmental hazards (standing in water in Caelid builds up Scarlet Rot; Mt. Gelmir mobs resist fire).
  */
 public class RegionDifficultyManager {
     private static final String TAG_SCALED = "eldenring_region_scaled";
@@ -49,29 +51,92 @@ public class RegionDifficultyManager {
             boolean rotWaterHazard
     ) {}
 
-    private static final Map<String, RegionProfile> PROFILES = Map.of(
-            "eldenring_core:limgrave", new RegionProfile(
-                    "LIMGRAVE", "Tier I — Vùng Khởi Đầu (Máu x1.0 | Sát thương x1.0)",
-                    ChatFormatting.GOLD, 1.0, 1.0, 0.0, false, false),
-            "eldenring_core:liurnia", new RegionProfile(
-                    "LIURNIA OF THE LAKES", "Tier II — Vùng Đầm Lầy Phép Thuật (Máu x1.5 | ST x1.35)",
-                    ChatFormatting.AQUA, 1.5, 1.35, 2.0, false, false),
-            "eldenring_core:caelid", new RegionProfile(
-                    "CAELID", "Tier III — Vùng Đất Mục Rữa Scarlet Rot (Máu x2.2 | ST x1.75)",
-                    ChatFormatting.DARK_RED, 2.2, 1.75, 4.0, false, true),
-            "eldenring_core:altus_plateau", new RegionProfile(
-                    "ALTUS PLATEAU", "Tier IV — Cao Nguyên Hoàng Kim (Máu x2.6 | ST x2.0)",
-                    ChatFormatting.YELLOW, 2.6, 2.0, 6.0, false, false),
-            "eldenring_core:mt_gelmir", new RegionProfile(
-                    "MT. GELMIR", "Tier IV — Núi Lửa Dung Nham (Máu x2.8 | ST x2.1 | Kháng Lửa)",
-                    ChatFormatting.RED, 2.8, 2.1, 6.0, true, false),
-            "eldenring_core:mountaintops", new RegionProfile(
-                    "MOUNTAINTOPS OF THE GIANTS", "Tier V — Đỉnh Núi Người Khổng Lồ (Máu x3.5 | ST x2.5)",
-                    ChatFormatting.WHITE, 3.5, 2.5, 10.0, false, false),
-            "eldenring_core:haligtree", new RegionProfile(
-                    "MIQUELLA'S HALIGTREE", "Tier VI — Vùng Endgame Khó Nhất (Máu x4.5 | ST x3.0)",
-                    ChatFormatting.LIGHT_PURPLE, 4.5, 3.0, 12.0, false, false)
-    );
+    private static final RegionProfile LIMGRAVE = new RegionProfile(
+            "LIMGRAVE", "Tier I — Vùng Khởi Đầu (Máu x1.0 | Sát thương x1.0)",
+            ChatFormatting.GOLD, 1.0, 1.0, 0.0, false, false);
+    private static final RegionProfile LIURNIA = new RegionProfile(
+            "LIURNIA OF THE LAKES", "Tier II — Vùng Đầm Lầy Ánh Trăng (Máu x1.5 | ST x1.35)",
+            ChatFormatting.AQUA, 1.5, 1.35, 2.0, false, false);
+    private static final RegionProfile CAELID = new RegionProfile(
+            "CAELID", "Tier III — Vùng Đất Đỏ Scarlet Rot (Máu x2.2 | ST x1.75)",
+            ChatFormatting.DARK_RED, 2.2, 1.75, 4.0, false, true);
+    private static final RegionProfile ALTUS = new RegionProfile(
+            "ALTUS PLATEAU", "Tier IV — Cao Nguyên Hoàng Kim (Máu x2.6 | ST x2.0)",
+            ChatFormatting.YELLOW, 2.6, 2.0, 6.0, false, false);
+    private static final RegionProfile MT_GELMIR = new RegionProfile(
+            "MT. GELMIR", "Tier IV — Núi Lửa Dung Nham (Máu x2.8 | ST x2.1 | Kháng Lửa)",
+            ChatFormatting.RED, 2.8, 2.1, 6.0, true, false);
+    private static final RegionProfile MOUNTAINTOPS = new RegionProfile(
+            "MOUNTAINTOPS OF THE GIANTS", "Tier V — Đỉnh Núi Người Khổng Lồ (Máu x3.5 | ST x2.5)",
+            ChatFormatting.WHITE, 3.5, 2.5, 10.0, false, false);
+    private static final RegionProfile HALIGTREE = new RegionProfile(
+            "MIQUELLA'S HALIGTREE", "Tier VI — Vùng Endgame Khó Nhất (Máu x4.5 | ST x3.0)",
+            ChatFormatting.LIGHT_PURPLE, 4.5, 3.0, 12.0, false, false);
+
+    private static final Map<String, RegionProfile> PROFILES = new HashMap<>();
+
+    static {
+        // Region 1 — Limgrave
+        register(LIMGRAVE,
+                "eldenring_core:limgrave",
+                "terralith:highlands",
+                "terralith:forested_highlands",
+                "terralith:blooming_plateau",
+                "terralith:white_cliffs");
+
+        // Region 2 — Liurnia of the Lakes
+        register(LIURNIA,
+                "eldenring_core:liurnia",
+                "terralith:moonlight_valley",
+                "terralith:orchid_swamp",
+                "terralith:moonlight_grove",
+                "terralith:cave/crystal_caves");
+
+        // Region 3 — Caelid
+        register(CAELID,
+                "eldenring_core:caelid",
+                "terralith:scarlet_mountains",
+                "terralith:ashen_savanna",
+                "terralith:red_oasis",
+                "terralith:cave/fungal_caves");
+
+        // Region 4 — Altus Plateau / Leyndell
+        register(ALTUS,
+                "eldenring_core:altus_plateau",
+                "terralith:yellowstone",
+                "terralith:birch_taiga",
+                "terralith:haze_mountain",
+                "terralith:cave/underground_jungle");
+
+        // Region 5 — Mt. Gelmir / Volcano Manor
+        register(MT_GELMIR,
+                "eldenring_core:mt_gelmir",
+                "terralith:volcanic_crater",
+                "terralith:volcanic_peaks",
+                "terralith:basalt_cliffs",
+                "terralith:cave/mantle_caves");
+
+        // Region 6 — Mountaintops of the Giants
+        register(MOUNTAINTOPS,
+                "eldenring_core:mountaintops",
+                "terralith:wintry_lowlands",
+                "terralith:frozen_cliffs",
+                "terralith:ice_marsh",
+                "terralith:cave/frostfire_caves");
+
+        // Region 7 — Miquella's Haligtree
+        register(HALIGTREE,
+                "eldenring_core:haligtree",
+                "terralith:sakura_grove",
+                "terralith:amethyst_rainforest",
+                "terralith:snowy_cherry_grove");
+    }
+
+    private static void register(RegionProfile profile, String... biomeIds) {
+        for (String id : biomeIds) {
+            PROFILES.put(id, profile);
+        }
+    }
 
     @SubscribeEvent
     public void onMobSpawn(EntityJoinLevelEvent event) {
@@ -119,8 +184,9 @@ public class RegionDifficultyManager {
         RegionProfile profile = PROFILES.get(biomeId);
         if (profile == null) return;
 
-        String prev = LAST_REGION.put(player.getUUID(), biomeId);
-        if (!biomeId.equals(prev)) {
+        String regionKey = profile.displayName();
+        String prev = LAST_REGION.put(player.getUUID(), regionKey);
+        if (!regionKey.equals(prev)) {
             player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 55, 20));
             player.connection.send(new ClientboundSetTitleTextPacket(
                     Component.literal(profile.displayName()).withStyle(profile.color(), ChatFormatting.BOLD)));

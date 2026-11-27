@@ -1,12 +1,26 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:limgrave",
-    "eldenring_core:liurnia",
-    "eldenring_core:caelid",
-    "eldenring_core:altus_plateau",
-    "eldenring_core:mt_gelmir",
-    "eldenring_core:mountaintops",
-    "eldenring_core:haligtree"
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau",
+    "terralith:moonlight_valley",
+    "terralith:orchid_swamp",
+    "terralith:moonlight_grove",
+    "terralith:scarlet_mountains",
+    "terralith:ashen_savanna",
+    "terralith:red_oasis",
+    "terralith:yellowstone",
+    "terralith:birch_taiga",
+    "terralith:haze_mountain",
+    "terralith:volcanic_crater",
+    "terralith:volcanic_peaks",
+    "terralith:basalt_cliffs",
+    "terralith:wintry_lowlands",
+    "terralith:frozen_cliffs",
+    "terralith:ice_marsh",
+    "terralith:sakura_grove",
+    "terralith:amethyst_rainforest",
+    "terralith:snowy_cherry_grove"
   ]
 }

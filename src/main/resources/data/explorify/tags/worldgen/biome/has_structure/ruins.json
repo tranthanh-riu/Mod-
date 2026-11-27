@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:liurnia",
-    "eldenring_core:haligtree"
+    "terralith:moonlight_valley",
+    "terralith:orchid_swamp",
+    "terralith:moonlight_grove",
+    "terralith:sakura_grove",
+    "terralith:amethyst_rainforest",
+    "terralith:snowy_cherry_grove"
   ]
 }

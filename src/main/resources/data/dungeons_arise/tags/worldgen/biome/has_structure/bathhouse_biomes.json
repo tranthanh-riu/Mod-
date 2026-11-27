@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:liurnia"
+    "terralith:moonlight_valley",
+    "terralith:orchid_swamp",
+    "terralith:moonlight_grove"
   ]
 }

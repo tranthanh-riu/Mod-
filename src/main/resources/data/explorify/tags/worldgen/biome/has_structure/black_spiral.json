@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:mt_gelmir"
+    "terralith:volcanic_crater",
+    "terralith:volcanic_peaks",
+    "terralith:basalt_cliffs"
   ]
 }

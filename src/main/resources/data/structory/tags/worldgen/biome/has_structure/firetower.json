@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:haligtree",
-    "eldenring_core:limgrave"
+    "terralith:sakura_grove",
+    "terralith:amethyst_rainforest",
+    "terralith:snowy_cherry_grove",
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau"
   ]
 }

@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:mountaintops",
-    "eldenring_core:limgrave"
+    "terralith:wintry_lowlands",
+    "terralith:frozen_cliffs",
+    "terralith:ice_marsh",
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau"
   ]
 }

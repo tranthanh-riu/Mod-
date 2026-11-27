@@ -1,9 +1,17 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:limgrave",
-    "eldenring_core:caelid",
-    "eldenring_core:mt_gelmir",
-    "eldenring_core:altus_plateau"
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau",
+    "terralith:scarlet_mountains",
+    "terralith:ashen_savanna",
+    "terralith:red_oasis",
+    "terralith:volcanic_crater",
+    "terralith:volcanic_peaks",
+    "terralith:basalt_cliffs",
+    "terralith:yellowstone",
+    "terralith:birch_taiga",
+    "terralith:haze_mountain"
   ]
 }

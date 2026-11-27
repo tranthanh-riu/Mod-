@@ -1,8 +1,14 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:caelid",
-    "eldenring_core:mt_gelmir",
-    "eldenring_core:mountaintops"
+    "terralith:scarlet_mountains",
+    "terralith:ashen_savanna",
+    "terralith:red_oasis",
+    "terralith:volcanic_crater",
+    "terralith:volcanic_peaks",
+    "terralith:basalt_cliffs",
+    "terralith:wintry_lowlands",
+    "terralith:frozen_cliffs",
+    "terralith:ice_marsh"
   ]
 }

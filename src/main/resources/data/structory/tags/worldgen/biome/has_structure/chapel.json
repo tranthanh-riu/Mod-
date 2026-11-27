@@ -1,9 +1,17 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:limgrave",
-    "eldenring_core:liurnia",
-    "eldenring_core:altus_plateau",
-    "eldenring_core:haligtree"
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau",
+    "terralith:moonlight_valley",
+    "terralith:orchid_swamp",
+    "terralith:moonlight_grove",
+    "terralith:yellowstone",
+    "terralith:birch_taiga",
+    "terralith:haze_mountain",
+    "terralith:sakura_grove",
+    "terralith:amethyst_rainforest",
+    "terralith:snowy_cherry_grove"
   ]
 }

@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:liurnia",
-    "eldenring_core:caelid"
+    "terralith:moonlight_valley",
+    "terralith:orchid_swamp",
+    "terralith:moonlight_grove",
+    "terralith:scarlet_mountains",
+    "terralith:ashen_savanna",
+    "terralith:red_oasis"
   ]
 }

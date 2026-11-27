@@ -1,8 +1,14 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:caelid",
-    "eldenring_core:mountaintops",
-    "eldenring_core:haligtree"
+    "terralith:scarlet_mountains",
+    "terralith:ashen_savanna",
+    "terralith:red_oasis",
+    "terralith:wintry_lowlands",
+    "terralith:frozen_cliffs",
+    "terralith:ice_marsh",
+    "terralith:sakura_grove",
+    "terralith:amethyst_rainforest",
+    "terralith:snowy_cherry_grove"
   ]
 }

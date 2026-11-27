@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:altus_plateau"
+    "terralith:yellowstone",
+    "terralith:birch_taiga",
+    "terralith:haze_mountain"
   ]
 }

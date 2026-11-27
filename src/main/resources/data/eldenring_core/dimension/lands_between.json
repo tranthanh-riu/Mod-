@@ -5,13 +5,49 @@
     "settings": "minecraft:overworld",
     "biome_source": {
       "type": "eldenring_core:lands_between",
-      "limgrave": "eldenring_core:limgrave",
-      "liurnia": "eldenring_core:liurnia",
-      "caelid": "eldenring_core:caelid",
-      "altus_plateau": "eldenring_core:altus_plateau",
-      "mt_gelmir": "eldenring_core:mt_gelmir",
-      "mountaintops": "eldenring_core:mountaintops",
-      "haligtree": "eldenring_core:haligtree",
+      "limgrave": {
+        "main": "terralith:highlands",
+        "sub1": "terralith:forested_highlands",
+        "sub2": "terralith:blooming_plateau",
+        "cave": "terralith:cave/crystal_caves"
+      },
+      "liurnia": {
+        "main": "terralith:moonlight_valley",
+        "sub1": "terralith:orchid_swamp",
+        "sub2": "terralith:moonlight_grove",
+        "cave": "terralith:cave/crystal_caves"
+      },
+      "caelid": {
+        "main": "terralith:scarlet_mountains",
+        "sub1": "terralith:ashen_savanna",
+        "sub2": "terralith:red_oasis",
+        "cave": "terralith:cave/fungal_caves"
+      },
+      "altus_plateau": {
+        "main": "terralith:yellowstone",
+        "sub1": "terralith:birch_taiga",
+        "sub2": "terralith:haze_mountain",
+        "cave": "terralith:cave/underground_jungle"
+      },
+      "mt_gelmir": {
+        "main": "terralith:volcanic_crater",
+        "sub1": "terralith:volcanic_peaks",
+        "sub2": "terralith:basalt_cliffs",
+        "cave": "terralith:cave/mantle_caves"
+      },
+      "mountaintops": {
+        "main": "terralith:wintry_lowlands",
+        "sub1": "terralith:frozen_cliffs",
+        "sub2": "terralith:ice_marsh",
+        "cave": "terralith:cave/frostfire_caves"
+      },
+      "haligtree": {
+        "main": "terralith:sakura_grove",
+        "sub1": "terralith:amethyst_rainforest",
+        "sub2": "terralith:snowy_cherry_grove",
+        "cave": "terralith:cave/underground_jungle"
+      },
+      "coast": "terralith:white_cliffs",
       "ocean": "minecraft:deep_ocean"
     }
   }

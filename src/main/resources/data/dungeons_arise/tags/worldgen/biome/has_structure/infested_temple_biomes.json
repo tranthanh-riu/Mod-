@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:caelid"
+    "terralith:scarlet_mountains",
+    "terralith:ashen_savanna",
+    "terralith:red_oasis"
   ]
 }

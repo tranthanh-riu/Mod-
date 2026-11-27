@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:limgrave"
+    "terralith:highlands",
+    "terralith:forested_highlands",
+    "terralith:blooming_plateau"
   ]
 }

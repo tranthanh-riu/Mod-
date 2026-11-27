@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:haligtree"
+    "terralith:sakura_grove",
+    "terralith:amethyst_rainforest",
+    "terralith:snowy_cherry_grove"
   ]
 }

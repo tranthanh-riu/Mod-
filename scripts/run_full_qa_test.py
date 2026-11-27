@@ -37,28 +37,28 @@ BOSSES = [
 ]
 
 BIOMES = [
-    ("limgrave", (-300, 100, 700), "eldenring_core:limgrave"),
-    ("liurnia", (-750, 100, -150), "eldenring_core:liurnia"),
-    ("caelid", (650, 100, 550), "eldenring_core:caelid"),
-    ("altus_plateau", (50, 100, -700), "eldenring_core:altus_plateau"),
-    ("mt_gelmir", (-750, 100, -950), "eldenring_core:mt_gelmir"),
-    ("mountaintops", (800, 100, -1050), "eldenring_core:mountaintops"),
-    ("haligtree", (0, 100, -1450), "eldenring_core:haligtree"),
+    ("limgrave", (-500, 100, 1200), "terralith:highlands"),
+    ("liurnia", (-1300, 100, -250), "terralith:moonlight_valley"),
+    ("caelid", (1150, 100, 950), "terralith:scarlet_mountains"),
+    ("altus_plateau", (100, 100, -1150), "terralith:yellowstone"),
+    ("mt_gelmir", (-1300, 100, -1600), "terralith:volcanic_crater"),
+    ("mountaintops", (1400, 100, -1750), "terralith:wintry_lowlands"),
+    ("haligtree", (0, 100, -2450), "terralith:sakura_grove"),
 ]
 
 STRUCTURES_TO_TEST = [
-    ("Limgrave", (-300, 120, 700), "mowziesmobs:wrought_chamber"),
-    ("Limgrave", (-300, 120, 700), "bosses_of_mass_destruction:void_blossom"),
-    ("Limgrave", (-300, 120, 700), "graveyard:crypt"),
-    ("Limgrave", (-300, 120, 700), "structory:abandoned_chapel"),
-    ("Limgrave", (-300, 120, 700), "betterstrongholds:stronghold"),
-    ("Liurnia", (-750, 120, -150), "bosses_of_mass_destruction:lich_tower"),
-    ("Altus", (50, 120, -700), "dungeons_arise:shiraz_palace"),
-    ("Altus", (50, 120, -700), "cataclysm:ancient_factory"),
-    ("Mt.Gelmir", (-750, 120, -950), "cataclysm:soul_black_smith"),
-    ("Mountaintops", (800, 120, -1050), "cataclysm:frosted_prison"),
-    ("Haligtree", (0, 120, -1450), "graveyard:lich_prison"),
-    ("Caelid", (650, 120, 550), "cataclysm:cursed_pyramid"),
+    ("Limgrave", (-500, 120, 1200), "mowziesmobs:wrought_chamber"),
+    ("Limgrave", (-500, 120, 1200), "bosses_of_mass_destruction:void_blossom"),
+    ("Limgrave", (-500, 120, 1200), "graveyard:crypt"),
+    ("Limgrave", (-500, 120, 1200), "structory:abandoned_chapel"),
+    ("Limgrave", (-500, 120, 1200), "betterstrongholds:stronghold"),
+    ("Liurnia", (-1300, 120, -250), "bosses_of_mass_destruction:lich_tower"),
+    ("Altus", (100, 120, -1150), "dungeons_arise:shiraz_palace"),
+    ("Altus", (100, 120, -1150), "cataclysm:ancient_factory"),
+    ("Mt.Gelmir", (-1300, 120, -1600), "cataclysm:soul_black_smith"),
+    ("Mountaintops", (1400, 120, -1750), "cataclysm:frosted_prison"),
+    ("Haligtree", (0, 120, -2450), "graveyard:lich_prison"),
+    ("Caelid", (1150, 120, 950), "cataclysm:cursed_pyramid"),
 ]
 
 

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "eldenring_core:mountaintops"
+    "terralith:wintry_lowlands",
+    "terralith:frozen_cliffs",
+    "terralith:ice_marsh"
   ]
 }
