@@ -48,6 +48,21 @@ public class MaleniaEntity extends EldenBossEntity {
     }
 
     @Override
+    protected boolean usesSecondHealthBar() {
+        return true; // Authentic Elden Ring: Phase 1 dies -> transforms into Goddess of Rot!
+    }
+
+    @Override
+    protected float getPhaseTwoStartHpRatio() {
+        return 0.8f; // Authentic Elden Ring: Goddess of Rot begins Phase 2 at 80% HP
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.CRIMSON_SPORE;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "DEMIGOD FELLED";
     }

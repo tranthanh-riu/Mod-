@@ -42,6 +42,23 @@ public class RadagonEntity extends EldenBossEntity {
     }
 
     @Override
+    protected boolean usesSecondHealthBar() {
+        return true; // Authentic: Radagon of the Golden Order -> Elden Beast!
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.END_ROD;
+    }
+
+    @Override
+    protected void onPhaseTwoStart() {
+        super.onPhaseTwoStart();
+        this.bossEvent.setName(Component.literal("Elden Beast").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+        this.bossEvent.setColor(BossEvent.BossBarColor.YELLOW);
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "GOD SLAIN";
     }

@@ -44,6 +44,11 @@ public class RadahnEntity extends EldenBossEntity {
     }
 
     @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.DRAGON_BREATH;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "DEMIGOD FELLED";
     }

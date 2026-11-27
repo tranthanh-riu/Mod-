@@ -46,6 +46,16 @@ public class MorgottEntity extends EldenBossEntity {
     }
 
     @Override
+    protected float getPhaseTwoThreshold() {
+        return 0.55f; // Authentic Elden Ring: Morgott unleashes Cursed Bloodflame at ~55% HP
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.CRIMSON_SPORE;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "DEMIGOD FELLED";
     }

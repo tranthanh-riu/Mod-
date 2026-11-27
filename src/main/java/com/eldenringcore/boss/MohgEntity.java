@@ -46,6 +46,11 @@ public class MohgEntity extends EldenBossEntity {
     }
 
     @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.CRIMSON_SPORE;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "DEMIGOD FELLED";
     }

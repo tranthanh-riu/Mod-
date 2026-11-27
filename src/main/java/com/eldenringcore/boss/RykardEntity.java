@@ -24,7 +24,7 @@ public class RykardEntity extends EldenBossEntity {
 
     public RykardEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level,
-                Component.literal("Rykard, Lord of Blasphemy").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD),
+                Component.literal("God-Devouring Serpent").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD),
                 BossEvent.BossBarColor.RED);
         this.maxPoise = 180.0f;
         this.currentPoise = 180.0f;
@@ -39,6 +39,16 @@ public class RykardEntity extends EldenBossEntity {
                 .add(Attributes.ARMOR, 14.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
                 .add(Attributes.FOLLOW_RANGE, 52.0);
+    }
+
+    @Override
+    protected boolean usesSecondHealthBar() {
+        return true; // Authentic: God-Devouring Serpent -> Rykard, Lord of Blasphemy
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.LAVA;
     }
 
     @Override
@@ -88,6 +98,7 @@ public class RykardEntity extends EldenBossEntity {
     @Override
     protected void onPhaseTwoStart() {
         super.onPhaseTwoStart();
+        this.bossEvent.setName(Component.literal("Rykard, Lord of Blasphemy").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         if (this.level() instanceof ServerLevel sl) {
             Component quote = Component.literal("Rykard: \"TOGETHAAA, we will devour the very gods!\"")
                     .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);

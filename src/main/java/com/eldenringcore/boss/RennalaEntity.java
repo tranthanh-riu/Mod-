@@ -46,6 +46,16 @@ public class RennalaEntity extends EldenBossEntity {
     }
 
     @Override
+    protected boolean usesSecondHealthBar() {
+        return true; // Authentic: Phase 1 Sweetings Shield -> Phase 2 Full Moon Arena
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.SOUL_FIRE_FLAME;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "LEGEND FELLED";
     }

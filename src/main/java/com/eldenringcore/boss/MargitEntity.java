@@ -42,6 +42,16 @@ public class MargitEntity extends EldenBossEntity {
     }
 
     @Override
+    protected float getPhaseTwoThreshold() {
+        return 0.6f; // Authentic Elden Ring: Margit pulls out the Golden Hammer at 60% HP
+    }
+
+    @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.WAX_ON;
+    }
+
+    @Override
     protected String getVictoryBannerText() {
         return "GREAT ENEMY FELLED";
     }

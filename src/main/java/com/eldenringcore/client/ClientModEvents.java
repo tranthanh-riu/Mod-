@@ -23,9 +23,8 @@ public class ClientModEvents {
         event.registerEntityRenderer(ModEntities.RYKARD.get(), ctx -> new EldenBossRenderer<>(ctx, "rykard"));
         event.registerEntityRenderer(ModEntities.MOHG.get(), ctx -> new EldenBossRenderer<>(ctx, "mohg"));
         event.registerEntityRenderer(ModEntities.FIRE_GIANT.get(), ctx -> new EldenBossRenderer<>(ctx, "fire_giant"));
-        // Wave 4 (Malenia uses authentic low-poly 3D mesh with Phase 1 -> Phase 2 Goddess of Rot wing transformation!)
-        event.registerEntityRenderer(ModEntities.MALENIA.get(),
-                ctx -> new MeshBossRenderer<>(ctx, "malenia_real.png", "malenia_phase1.mesh", "malenia_phase2.mesh"));
+        // Wave 4
+        event.registerEntityRenderer(ModEntities.MALENIA.get(), ctx -> new EldenBossRenderer<>(ctx, "malenia"));
         event.registerEntityRenderer(ModEntities.MALIKETH.get(), ctx -> new EldenBossRenderer<>(ctx, "maliketh"));
         event.registerEntityRenderer(ModEntities.GODFREY.get(), ctx -> new EldenBossRenderer<>(ctx, "godfrey"));
         event.registerEntityRenderer(ModEntities.RADAGON.get(), ctx -> new EldenBossRenderer<>(ctx, "radagon"));

@@ -29,8 +29,8 @@ public class MalikethEntity extends EldenBossEntity {
 
     public MalikethEntity(EntityType<? extends Monster> type, Level level) {
         super(type, level,
-                Component.literal("Maliketh, the Black Blade").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD),
-                BossEvent.BossBarColor.RED);
+                Component.literal("Beast Clergyman").withStyle(ChatFormatting.GRAY, ChatFormatting.BOLD),
+                BossEvent.BossBarColor.YELLOW);
         this.maxPoise = 110.0f;
         this.currentPoise = 110.0f;
         this.xpReward = 1800;
@@ -106,8 +106,14 @@ public class MalikethEntity extends EldenBossEntity {
     }
 
     @Override
+    protected net.minecraft.core.particles.ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.CRIMSON_SPORE;
+    }
+
+    @Override
     protected void onPhaseTwoStart() {
         super.onPhaseTwoStart();
+        this.bossEvent.setName(Component.literal("Maliketh, the Black Blade").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         if (this.level() instanceof ServerLevel sl) {
             Component quote = Component.literal("Maliketh: \"O, Death. Become my blade once more.\"")
                     .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);

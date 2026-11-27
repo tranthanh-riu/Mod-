@@ -74,6 +74,22 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         return 0.5f;
     }
 
+    /**
+     * Authentic Elden Ring 2-Health-Bar bosses (Malenia, Rykard, Rennala, Radagon->Elden Beast):
+     * When true, hitting 0 HP in Phase 1 triggers an invulnerable Phase 2 transition and refills HP!
+     */
+    protected boolean usesSecondHealthBar() {
+        return false;
+    }
+
+    protected float getPhaseTwoStartHpRatio() {
+        return 1.0f;
+    }
+
+    protected ParticleOptions getPhaseTwoAuraParticle() {
+        return ParticleTypes.FLAME;
+    }
+
     protected String getVictoryBannerText() {
         return "GREAT ENEMY FELLED";
     }
@@ -168,13 +184,17 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
             this.currentPoise = Math.min(this.maxPoise, this.currentPoise + 1.5f);
         }
 
-        // Trigger Phase 2 transition
-        if (!this.phaseTwo && (this.getHealth() / this.getMaxHealth()) <= this.getPhaseTwoThreshold()) {
-            this.phaseTwo = true;
-            this.entityData.set(DATA_PHASE_TWO, true);
-            this.currentMove = null;
-            this.enterState(BossState.PHASE_TRANSITION);
-            this.onPhaseTwoStart();
+        // Trigger mid-HP Phase 2 transition (for single-health-bar bosses)
+        if (!this.phaseTwo && !this.usesSecondHealthBar() && (this.getHealth() / this.getMaxHealth()) <= this.getPhaseTwoThreshold()) {
+            this.triggerPhaseTwo();
+        }
+
+        // Continuous Phase 2 Aura particles around the boss
+        if (this.phaseTwo && this.tickCount % 5 == 0 && this.level() instanceof ServerLevel serverLevel) {
+            ParticleOptions aura = this.getPhaseTwoAuraParticle();
+            if (aura != null) {
+                serverLevel.sendParticles(aura, getX(), getY() + 1.4, getZ(), 4, 0.7, 0.9, 0.7, 0.02);
+            }
         }
 
         LivingEntity target = this.getTarget();
@@ -333,6 +353,17 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
         }
     }
 
+    protected void triggerPhaseTwo() {
+        this.phaseTwo = true;
+        this.entityData.set(DATA_PHASE_TWO, true);
+        this.currentMove = null;
+        this.enterState(BossState.PHASE_TRANSITION);
+        if (this.usesSecondHealthBar()) {
+            this.setHealth(this.getMaxHealth() * this.getPhaseTwoStartHpRatio());
+        }
+        this.onPhaseTwoStart();
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (this.state == BossState.PHASE_TRANSITION) {
@@ -343,6 +374,14 @@ public abstract class EldenBossEntity extends Monster implements GeoEntity {
             finalDamage *= 1.75f; // Critical Riposte bonus while staggered
             this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1.5f, 0.8f);
         }
+
+        // True Second Health Bar: intercept lethal blow in Phase 1 and transition to Phase 2!
+        if (!this.phaseTwo && this.usesSecondHealthBar() && (this.getHealth() - finalDamage) <= 0.0f) {
+            this.setHealth(1.0f);
+            this.triggerPhaseTwo();
+            return true;
+        }
+
         boolean damaged = super.hurt(source, finalDamage);
         if (damaged && source.getEntity() instanceof LivingEntity) {
             this.applyPoiseDamage(Math.max(8.0f, amount * 1.2f));
