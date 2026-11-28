@@ -4,6 +4,8 @@ import com.eldenringcore.boss.*;
 import com.eldenringcore.combat.StatusBuildupManager;
 import com.eldenringcore.mechanic.EldenStoryCommand;
 import com.eldenringcore.mechanic.RegionDifficultyManager;
+import com.eldenringcore.nativecombat.NativeCombatManager;
+import com.eldenringcore.nativecombat.NativeCombatNetworking;
 import com.eldenringcore.registry.ModBlockEntities;
 import com.eldenringcore.registry.ModBlocks;
 import com.eldenringcore.registry.ModCreativeTabs;
@@ -39,6 +41,8 @@ public class EldenRingCore {
 
         modEventBus.addListener(this::registerAttributes);
 
+        NativeCombatNetworking.register();
+        MinecraftForge.EVENT_BUS.register(new NativeCombatManager());
         MinecraftForge.EVENT_BUS.register(new StatusBuildupManager());
         MinecraftForge.EVENT_BUS.register(new RegionDifficultyManager());
         MinecraftForge.EVENT_BUS.addListener((RegisterCommandsEvent event) -> EldenStoryCommand.register(event.getDispatcher()));

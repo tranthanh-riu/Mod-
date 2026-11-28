@@ -86,8 +86,8 @@ dependencies {
     // GeckoLib 4 for Boss models & animations
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
 
-    // Epic Fight (required): Souls-like stamina, roll, guard and animations
-    implementation fg.deobf("maven.modrinth:epic-fight:${epicfight_version}")
+    // playerAnimator (MIT): full-body player weapon combo, Unsheathe & Dodge Roll animations (no Epic Fight!)
+    implementation fg.deobf("maven.modrinth:playeranimator:${playeranimator_version}")
 
     // Modpack mods (Terralith, structure and boss mods, Open Loader...) for runClient/runServer.
     // Pinned in modpack/mods.json, fetched from Modrinth maven. Off by default so a plain
@@ -97,7 +97,7 @@ dependencies {
                               !gradle.startParameter.taskNames.any { it.contains('Client') }
         def modpackSpec = new groovy.json.JsonSlurper().parse(file('modpack/mods.json'))
         modpackSpec.mods.findAll { m ->
-            !(m.slug in ['epic-fight', 'geckolib']) && !(isServerOnlyRun && m.server == 'unsupported')
+            !(m.slug in ['playeranimator', 'geckolib']) && !(isServerOnlyRun && m.server == 'unsupported')
         }.each { m ->
             runtimeOnly fg.deobf("maven.modrinth:${m.project_id}:${m.version_id}")
         }

@@ -17,6 +17,7 @@ public class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.eldenring_core"))
                     .icon(() -> new ItemStack(ModItems.RIVERS_OF_BLOOD.get()))
                     .displayItems((params, output) -> {
+                        output.accept(ModItems.UCHIGATANA.get());
                         output.accept(ModItems.RIVERS_OF_BLOOD.get());
                         output.accept(ModItems.MOONVEIL.get());
                         output.accept(ModItems.DARK_MOON_GREATSWORD.get());

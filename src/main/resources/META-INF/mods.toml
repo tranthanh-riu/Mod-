@@ -31,8 +31,8 @@ description='''${mod_description}'''
     side="BOTH"
 
 [[dependencies.${mod_id}]]
-    modId="epicfight"
+    modId="playeranimator"
     mandatory=true
-    versionRange="[20.15,)"
+    versionRange="[1.0,)"
     ordering="AFTER"
-    side="BOTH"
+    side="CLIENT"

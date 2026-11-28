@@ -5,17 +5,17 @@
     "forge": "47.4.4",
     "mods": [
         {
-            "slug": "epic-fight",
-            "project_id": "vu3NZ5Ma",
-            "version": "20.15.2-mc1.20.1-forge",
-            "version_id": "HzEXjhNn",
-            "file": "epic-fight-20.15.2-mc1.20.1-forge.jar",
-            "url": "https://cdn.modrinth.com/data/vu3NZ5Ma/versions/HzEXjhNn/epic-fight-20.15.2-mc1.20.1-forge.jar",
-            "sha1": "632b46ff588f8fff240bf67e3252c4ea81fac5f4",
-            "sha512": "1dfdf1e61a6fa9f2d8f80ed256360f1eb4684d14ac0b82189b3292d9c6d141e0ad578579f5850152a43cb93a6262419d43bf84daf31e9aeff8190e75ffa0c36f",
-            "size": 8256577,
+            "slug": "playeranimator",
+            "project_id": "gedNE4y2",
+            "version": "1.0.2-rc1+1.20-forge",
+            "version_id": "xe2EVE6q",
+            "file": "player-animation-lib-forge-1.0.2-rc1+1.20.jar",
+            "url": "https://cdn.modrinth.com/data/gedNE4y2/versions/xe2EVE6q/player-animation-lib-forge-1.0.2-rc1%2B1.20.jar",
+            "sha1": "16808f94a41d45d8e986b4e4ea6b02ba57fa058a",
+            "sha512": "cb9f6a3aaa943823a85fdd716ddb3c7623af2b3520926c3a98d170c52d31908894808fb61c52bea39bae622dbab59d50b4bad56f7ca0533a9c3350d412c33729",
+            "size": 181437,
             "client": "required",
-            "server": "required"
+            "server": "optional"
         },
         {
             "slug": "geckolib",

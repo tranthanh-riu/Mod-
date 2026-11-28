@@ -6,6 +6,8 @@ import com.eldenringcore.combat.EldenWeaponItem;
 import com.eldenringcore.combat.StatusEffectType;
 import com.eldenringcore.mechanic.CeruleanFlaskItem;
 import com.eldenringcore.mechanic.CrimsonFlaskItem;
+import com.eldenringcore.nativecombat.EldenWeaponStyle;
+import com.eldenringcore.nativecombat.NativeKatanaItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -18,6 +20,12 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, EldenRingCore.MOD_ID);
+
+    // Native Elden Ring Combat Prototype (2D Minecraft Pixel-Art Style + playerAnimator, NO Epic Fight!)
+    public static final RegistryObject<Item> UCHIGATANA = ITEMS.register("uchigatana",
+            () -> new NativeKatanaItem(Tiers.IRON, 4, -2.0f,
+                    new Item.Properties().rarity(Rarity.RARE).durability(850),
+                    EldenWeaponStyle.KATANA, StatusEffectType.BLEED, 22.0f));
 
     // Wave 1 Elden Ring Weapons (3D Custom Models + Ash of War + FP + Status Build-up)
     public static final RegistryObject<Item> RIVERS_OF_BLOOD = ITEMS.register("rivers_of_blood",
