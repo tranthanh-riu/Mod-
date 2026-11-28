@@ -356,19 +356,6 @@
             "server": "required"
         },
         {
-            "slug": "modernfix",
-            "project_id": "nmDcB62a",
-            "version": "5.28.8+mc1.20.1",
-            "version_id": "Jj02bs5k",
-            "file": "modernfix-forge-5.28.8+mc1.20.1.jar",
-            "url": "https://cdn.modrinth.com/data/nmDcB62a/versions/Jj02bs5k/modernfix-forge-5.28.8%2Bmc1.20.1.jar",
-            "sha1": "cd3f8766aeb138e344a752ac6479f98980344464",
-            "sha512": "acbe9567af8072cb196f81758438d250bf0e8fc2db2b545d74a0e1e4ebd20237bc80b0e8f01c19d6358707ca300977b5925b6176a793b58ccfeaf2a4dc2ecd57",
-            "size": 1045652,
-            "client": "required",
-            "server": "required"
-        },
-        {
             "slug": "jei",
             "project_id": "u6dRKJwZ",
             "version": "15.56.0.205",
